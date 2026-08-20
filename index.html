@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4y</title>
+<title>AlpeNord Lesetrainer V0.4ya</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -761,6 +761,12 @@ html.tablet-focus-lock body{
 
 
 
+/* V0.4ya – Ergebnis-Popup im Übungsmodus. */
+.exercise-result-popup{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:12000;min-width:min(520px,78vw);max-width:min(680px,88vw);padding:16px 20px;border:1px solid #8c6b3d;border-radius:14px;background:rgba(30,25,20,.96);color:#f4efe7;text-align:center;font-size:14px;font-weight:800;line-height:1.55;box-shadow:0 8px 28px rgba(0,0,0,.38);pointer-events:none}
+.exercise-result-popup strong{font-size:22px;color:#ffe2a8}
+.exercise-result-popup.good{border-color:#6d805a}
+.exercise-result-popup.bad{border-color:#8a5a4c}
+.exercise-result-popup[hidden]{display:none!important}
 /* V0.4y – Rhythmus: eigener Übungsmodus über die volle Bildschirmbreite. */
 .rhythm-exercise-stage{position:fixed;inset:0;z-index:10050;background:#15120f;padding:8px;box-sizing:border-box;overflow:hidden}
 .rhythm-exercise-stage.active{display:block!important}
@@ -1205,6 +1211,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   <button id="tabletFocusExit" class="tablet-focus-exit" type="button">Übungsmodus beenden</button>
   <div id="tabletFocusScore" class="tablet-focus-notes">Notendarstellung wird vorbereitet …</div>
   <div id="tabletFocusBoardSlot" class="tablet-focus-board"></div>
+  <div id="tabletExerciseResult" class="exercise-result-popup" hidden></div>
   <div class="tablet-focus-actions">
     <button id="tabletFocusNew" type="button">Neue Übung</button>
     <button id="tabletFocusStart" class="primary" type="button">▶ Anzählen &amp; starten</button>
@@ -1214,6 +1221,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 <div id="rhythmExerciseStage" class="rhythm-exercise-stage" hidden>
   <button id="rhythmExerciseExit" class="tablet-focus-exit" type="button">Übungsmodus beenden</button>
   <div id="rhythmExerciseContent" class="rhythm-exercise-content"></div>
+  <div id="rhythmExerciseResult" class="exercise-result-popup" hidden></div>
 </div>
 
 <script>
@@ -1401,6 +1409,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     const total=Math.max(1,completed),pct=Math.round((correct/total)*100);
     roundResult.textContent=`Runde abgeschlossen · ${completed} Aufgaben · ${correct} richtig · ${wrong} mit Fehler · ${pct} %`;
     roundResult.hidden=false;
+    if(tabletFocusStage&&tabletFocusStage.classList.contains('active')&&tabletFocusKind==='tone')showExerciseResult(tabletExerciseResult,`<strong>${pct} %</strong><br>${completed} Aufgaben · ${correct} richtig · ${wrong} mit Fehler`,pct>=80?'good':'bad');
     setFeedback('Runde abgeschlossen.','correct');
     return true;
   }
@@ -2156,7 +2165,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 
   function registerTap(){if(!rhythmRunning)return;const t=performance.now()-rhythmStartPerf,firstEarlyWindow=Math.min(240,Math.max(150,beatMs()*.30));const allowed=rhythmPhase==='play'||(rhythmPhase==='countin'&&t>=-firstEarlyWindow&&rhythmTaps.length===0);if(!allowed)return;rhythmTaps.push(t);tapClick();tapButton.classList.add('pressed');schedule(()=>tapButton.classList.remove('pressed'),70)}
   function matchRhythm(exp,taps,offset,tol){const used=new Set(),results=[];let last=-1;for(let ei=0;ei<exp.length;ei++){const e0=exp[ei],e=e0+offset,currentTol=ei===0?Math.max(tol,Math.min(240,beatMs()*.30)):tol;let best=-1,bestD=Infinity;for(let i=last+1;i<taps.length;i++){if(used.has(i))continue;const d=Math.abs(taps[i]-e);if(d<bestD){bestD=d;best=i}if(taps[i]>e+currentTol&&best>=0)break}if(best>=0&&bestD<=currentTol){used.add(best);last=best;results.push({ok:true,delta:taps[best]-e0,rawDelta:taps[best]-e})}else results.push({ok:false})}const extras=taps.length-used.size,hits=results.filter(x=>x.ok).length,err=results.filter(x=>x.ok).reduce((a,x)=>a+Math.abs(x.rawDelta),0);return {offset,used,results,extras,hits,err}}
-  function evaluateRhythm(){setRhythmTouchLock(false);const exp=expectedOnsets(),taps=[...rhythmTaps],tol=Math.max(65,Math.min(130,unitMs()*.70)),maxOffset=Math.min(220,beatMs()*.28);const offsets=[0];for(const t of taps)for(const e of exp){const d=t-e;if(Math.abs(d)<=maxOffset)offsets.push(d)}let best=null;for(const off of offsets){const m=matchRhythm(exp,taps,off,tol);if(!best||m.hits>best.hits||(m.hits===best.hits&&m.extras<best.extras)||(m.hits===best.hits&&m.extras===best.extras&&m.err<best.err))best=m}const {results,extras,hits,offset}=best||matchRhythm(exp,taps,0,tol),perfect=hits===exp.length&&extras===0;timingStrip.innerHTML='';results.forEach(r=>{const d=document.createElement('div');d.className='timing-dot '+(r.ok?'hit':'miss');d.title=r.ok?`${Math.round(r.rawDelta)} ms nach Latenzkorrektur`:'Anschlag fehlt';d.textContent=r.ok?'✓':'×';timingStrip.appendChild(d)});for(let i=0;i<extras;i++){const d=document.createElement('div');d.className='timing-dot extra';d.textContent='+';d.title='zusätzlicher Anschlag';timingStrip.appendChild(d)}if(perfect){rhythmCorrect++;rhythmStreak++;setRhythmFeedback(`Richtig · ${hits} von ${exp.length} Anschlägen getroffen`,'correct')}else{rhythmWrong++;rhythmStreak=0;const extraText=extras?` · ${extras} zusätzlicher${extras===1?'':'e'} Anschlag${extras===1?'':'e'}`:'';setRhythmFeedback(`Noch einmal · ${hits} von ${exp.length} Anschlägen getroffen${extraText}`,'wrong')}rhythmCorrectEl.textContent=rhythmCorrect;rhythmWrongEl.textContent=rhythmWrong;rhythmStreakEl.textContent=rhythmStreak;metroStatus.textContent=Math.abs(offset)>20?`Auswertung abgeschlossen · Timing-Korrektur ${Math.round(offset)} ms`:'Auswertung abgeschlossen';rhythmRunning=false;rhythmPhase='idle';startRhythmBtn.disabled=false;startRhythmBtn.textContent='▶ Anzählen & starten';if(perfect){if(rhythmMode.hidden)return;generateRhythm(true);startRhythm()}}
+  function evaluateRhythm(){setRhythmTouchLock(false);const exp=expectedOnsets(),taps=[...rhythmTaps],tol=Math.max(65,Math.min(130,unitMs()*.70)),maxOffset=Math.min(220,beatMs()*.28);const offsets=[0];for(const t of taps)for(const e of exp){const d=t-e;if(Math.abs(d)<=maxOffset)offsets.push(d)}let best=null;for(const off of offsets){const m=matchRhythm(exp,taps,off,tol);if(!best||m.hits>best.hits||(m.hits===best.hits&&m.extras<best.extras)||(m.hits===best.hits&&m.extras===best.extras&&m.err<best.err))best=m}const {results,extras,hits,offset}=best||matchRhythm(exp,taps,0,tol),perfect=hits===exp.length&&extras===0;timingStrip.innerHTML='';results.forEach(r=>{const d=document.createElement('div');d.className='timing-dot '+(r.ok?'hit':'miss');d.title=r.ok?`${Math.round(r.rawDelta)} ms nach Latenzkorrektur`:'Anschlag fehlt';d.textContent=r.ok?'✓':'×';timingStrip.appendChild(d)});for(let i=0;i<extras;i++){const d=document.createElement('div');d.className='timing-dot extra';d.textContent='+';d.title='zusätzlicher Anschlag';timingStrip.appendChild(d)}if(perfect){rhythmCorrect++;rhythmStreak++;setRhythmFeedback(`Richtig · ${hits} von ${exp.length} Anschlägen getroffen`,'correct')}else{rhythmWrong++;rhythmStreak=0;const extraText=extras?` · ${extras} zusätzlicher${extras===1?'':'e'} Anschlag${extras===1?'':'e'}`:'';setRhythmFeedback(`Noch einmal · ${hits} von ${exp.length} Anschlägen getroffen${extraText}`,'wrong')}rhythmCorrectEl.textContent=rhythmCorrect;rhythmWrongEl.textContent=rhythmWrong;rhythmStreakEl.textContent=rhythmStreak;const rhythmPct=exp.length?Math.round(hits/exp.length*100):0;const rhythmErrors=(exp.length-hits)+extras;if(rhythmExerciseStage&&rhythmExerciseStage.classList.contains('active'))showExerciseResult(rhythmExerciseResult,`<strong>${rhythmPct} %</strong><br>${hits}/${exp.length} Anschläge getroffen · ${rhythmErrors} Fehler${extras?` · ${extras} zusätzlich`:''}`,perfect?'good':'bad');metroStatus.textContent=Math.abs(offset)>20?`Auswertung abgeschlossen · Timing-Korrektur ${Math.round(offset)} ms`:'Auswertung abgeschlossen';rhythmRunning=false;rhythmPhase='idle';startRhythmBtn.disabled=false;startRhythmBtn.textContent='▶ Anzählen & starten';if(perfect){if(rhythmMode.hidden)return;generateRhythm(true);startRhythm()}}
   updateMaterialDependencies();
   metroSubdivision.addEventListener('change',()=>{if(rhythmRunning)stopRhythmRun();});
   tempoRange.addEventListener('input',()=>{tempoValue.textContent=`${tempoRange.value} BPM`});rhythmMeter.addEventListener('change',()=>{
@@ -2206,6 +2215,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     return true;
   }
   function exitRhythmExerciseMode(){
+    hideExerciseResult();
     if(!rhythmExerciseRestore)return;
     rhythmExerciseRestore.forEach(({node,placeholder})=>{if(placeholder&&placeholder.parentNode)placeholder.replaceWith(node)});
     rhythmExerciseRestore=null;
@@ -2217,9 +2227,15 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   }
   if(rhythmExerciseMode)rhythmExerciseMode.addEventListener('click',()=>{if(rhythmExerciseRestore)exitRhythmExerciseMode();else enterRhythmExerciseMode()});
   if(rhythmExerciseExit)rhythmExerciseExit.addEventListener('click',exitRhythmExerciseMode);
+  if(newRhythmBtn)newRhythmBtn.addEventListener('click',hideExerciseResult);
+  if(startRhythmBtn)startRhythmBtn.addEventListener('click',hideExerciseResult);
 
   const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue');
   const tabletFocusStage=document.getElementById('tabletFocusStage'),tabletFocusExit=document.getElementById('tabletFocusExit'),tabletFocusScore=document.getElementById('tabletFocusScore'),tabletFocusBoardSlot=document.getElementById('tabletFocusBoardSlot'),tabletFocusNew=document.getElementById('tabletFocusNew'),tabletFocusStart=document.getElementById('tabletFocusStart');
+  const tabletExerciseResult=document.getElementById('tabletExerciseResult'),rhythmExerciseResult=document.getElementById('rhythmExerciseResult');
+  let exerciseResultTimer=null;
+  function hideExerciseResult(){clearTimeout(exerciseResultTimer);[tabletExerciseResult,rhythmExerciseResult].forEach(el=>{if(el)el.hidden=true})}
+  function showExerciseResult(el,html,state='good'){if(!el)return;hideExerciseResult();el.innerHTML=html;el.className='exercise-result-popup '+state;el.hidden=false;exerciseResultTimer=setTimeout(()=>{el.hidden=true},7000)}
   let melodyPattern=[],melodyEvents=[],melodyRunning=false,melodyPhase='idle',melodyStartPerf=0,melodyPlayed=[],melodyTimers=[],melodyHeldKeys=new Map();
   const melodyBeats=()=>Number(melodyMeter.value||4),melodyBars=()=>Number(melodyLength.value||2),melodyBeatMs=()=>60000/Number(melodyTempo.value||80),melodyUnitMs=()=>melodyBeatMs()/4,melodyMetroStepsPerBeat=()=>melodyMetroSubdivision.value==='eighth'?2:1,melodyPulseUnits=()=>melodyMetroSubdivision.value==='eighth'?2:4;
   const melodyPresets={
@@ -2580,6 +2596,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     melodyResult.innerHTML=`<strong>Gesamt: ${total} %</strong><br>Ton/Taste: ${pitchHits}/${expected.length} (${pPct} %)<br>Timing: ${timeHits}/${expected.length} (${tPct} %)${holdLine}<br>Zusätzliche Anschläge: ${Math.max(0,melodyPlayed.length-used.size)}`;
     melodyResult.className='melody-result '+(total>=80?'good':'bad');
     melodyResult.hidden=false;
+    if(tabletFocusStage&&tabletFocusStage.classList.contains('active')&&tabletFocusKind==='melody')showExerciseResult(tabletExerciseResult,melodyResult.innerHTML,total>=80?'good':'bad');
     melodyStatusLine.textContent='Auswertung abgeschlossen';
     melodySetFeedback(total>=80?'Gut gespielt.':'Noch einmal versuchen.',total>=80?'correct':'wrong');
 
@@ -2756,6 +2773,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   }
 
   function exitTabletFocus(){
+    hideExerciseResult();
     if(!tabletFocusRestore)return;
     clearTimeout(tabletFocusRenderRetry);
 
@@ -2793,13 +2811,13 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   });
 
   if(tabletFocusExit)tabletFocusExit.addEventListener('click',exitTabletFocus);
-  if(tabletFocusNew)tabletFocusNew.addEventListener('click',()=>{
+  if(tabletFocusNew)tabletFocusNew.addEventListener('click',()=>{hideExerciseResult();
     if(tabletFocusKind==='tone'){nextQuestion.click();setTimeout(cloneToneIntoFocus,40);return}
     newMelodyBtn.click();
     tabletFocusSystem=0;
     setTimeout(()=>renderTabletFocusSystem(0),40);
   });
-  if(tabletFocusStart)tabletFocusStart.addEventListener('click',()=>{
+  if(tabletFocusStart)tabletFocusStart.addEventListener('click',()=>{hideExerciseResult();
     if(tabletFocusKind==='tone'){showSolution.click();setTimeout(cloneToneIntoFocus,40);return}
     startMelodyBtn.click();
     syncTabletFocusStartButton();
