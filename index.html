@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4yze</title>
+<title>AlpeNord Lesetrainer V0.4yzf</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -786,200 +786,181 @@ html.tablet-focus-lock body{
 html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!important;height:100%!important;overscroll-behavior:none!important}
 
 
-/* V0.4yze – 1:1-Kalibrierung nur auf Touch-Tablets/iPad sichtbar */
+/* V0.4yzf – 1:1-Kalibrierung nur auf Touch-Tablets/iPad sichtbar */
 .board-calibration{display:none!important}
 @media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
   .board-calibration{display:inline-flex!important;align-items:center;gap:6px}
 }
 
-/* V0.4yze – gemeinsame Bedienoberfläche für Einzelton, Rhythmus und Blattlesen */
+/* V0.4yzf – GEMEINSAMES UI-SYSTEM: Einzelton / Rhythmus / Blattlesen */
 :root{
-  --an-control-h:38px;
-  --an-control-radius:9px;
-  --an-grid-gap:9px;
+  --an-ui-gap:8px;
+  --an-field-gap:9px;
+  --an-control-h:40px;
+  --an-radius:9px;
+  --an-desktop-width:1120px;
 }
 
-/* Gemeinsames Einstellungsraster */
-#toneMode .trainer-controls,
-#rhythmMode .rhythm-controls,
-#melodyMode .rhythm-controls{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:var(--an-grid-gap)!important;
+/* Ein gemeinsames Toolbar-Raster für ALLE drei Modi. */
+#toneMode .an-toolbar,
+#rhythmMode .an-toolbar,
+#melodyMode .an-toolbar{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:var(--an-ui-gap)!important;
+  align-items:stretch!important;
+  width:100%!important;
+  margin:4px 0 11px!important;
+  box-sizing:border-box!important;
 }
-
-/* Alle normalen Wahlfelder gleich hoch und gleich breit */
-#toneMode .trainer-control select,
-#toneMode .round-control select,
-#rhythmMode .rhythm-control select,
-#melodyMode .rhythm-control select,
-#melodyMode .material-grid select{
+#toneMode .an-toolbar > button, #toneMode .an-toolbar > label,
+#rhythmMode .an-toolbar > button, #rhythmMode .an-toolbar > label,
+#melodyMode .an-toolbar > button, #melodyMode .an-toolbar > label{
   width:100%!important;
   min-width:0!important;
+  max-width:none!important;
   height:var(--an-control-h)!important;
   min-height:var(--an-control-h)!important;
-  border-radius:var(--an-control-radius)!important;
+  max-height:var(--an-control-h)!important;
+  margin:0!important;
+  padding:7px 10px!important;
   box-sizing:border-box!important;
-  margin-top:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+}
+#toneMode .an-toolbar select,
+#rhythmMode .an-toolbar select,
+#melodyMode .an-toolbar select{
+  height:30px!important;
+  min-height:30px!important;
+  min-width:82px!important;
+  max-width:128px!important;
+  margin:0 0 0 5px!important;
+  box-sizing:border-box!important;
 }
 
-/* Tempo optisch wie ein normales Wahlfeld */
-#rhythmMode .tempo-line,
-#melodyMode .tempo-line{
-  height:var(--an-control-h)!important;
-  min-height:var(--an-control-h)!important;
-  border-radius:var(--an-control-radius)!important;
+/* Ein gemeinsames Einstellungsraster für ALLE drei Modi. */
+#toneMode .an-settings-grid,
+#rhythmMode .an-settings-grid,
+#melodyMode .an-settings-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:var(--an-field-gap)!important;
+  width:100%!important;
+  margin-bottom:0!important;
   box-sizing:border-box!important;
 }
-
-/* Einheitliche Beschriftungen */
-#toneMode .trainer-control label,
-#toneMode .round-control label,
-#rhythmMode .rhythm-control label,
-#melodyMode .rhythm-control label,
-#melodyMode .melody-settings-bottom .material-grid label:has(select){
+#toneMode .an-field,
+#rhythmMode .an-field,
+#melodyMode .an-field{
+  display:grid!important;
+  grid-template-rows:auto var(--an-control-h)!important;
+  gap:4px!important;
+  min-width:0!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+#toneMode .an-field > label,
+#rhythmMode .an-field > label,
+#melodyMode .an-field > label{
   font-size:9px!important;
   letter-spacing:.09em!important;
   text-transform:uppercase!important;
   color:#968b7d!important;
   font-weight:850!important;
+  margin:0!important;
 }
-
-/* Tonmaterial im Blattlesen ebenfalls als sauberes Raster */
-#melodyMode .melody-settings-bottom .material-panel:first-child .material-grid{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:var(--an-grid-gap)!important;
+#toneMode .an-field > select, #toneMode .an-field .tempo-line,
+#rhythmMode .an-field > select, #rhythmMode .an-field .tempo-line,
+#melodyMode .an-field > select, #melodyMode .an-field .tempo-line{
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:var(--an-control-h)!important;
+  min-height:var(--an-control-h)!important;
+  max-height:var(--an-control-h)!important;
+  border-radius:var(--an-radius)!important;
+  box-sizing:border-box!important;
+  margin:0!important;
 }
-#melodyMode .melody-settings-bottom .material-panel:first-child .material-grid label{
+#toneMode .an-field .tempo-line,
+#rhythmMode .an-field .tempo-line,
+#melodyMode .an-field .tempo-line{
   display:grid!important;
-  gap:4px!important;
-  align-items:stretch!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:0 9px!important;
 }
 
-/* Einstellungsblöcke visuell zusammenfassen */
+/* Dieselbe visuelle Hülle um die Einstellungsbereiche. */
 #toneMode .tone-settings,
 #rhythmMode .rhythm-settings,
 #melodyMode .melody-settings-top{
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
   border:1px solid #35302b;
   border-radius:11px;
   background:#171411;
   padding:10px;
   margin-bottom:11px;
-  box-sizing:border-box;
-}
-#toneMode .tone-settings .trainer-controls,
-#rhythmMode .rhythm-settings .rhythm-controls,
-#melodyMode .melody-settings-top .rhythm-controls{
-  margin-bottom:0!important;
 }
 
-/* Checkbox-Zeilen im Einzelton gleichmässiger */
-#toneMode .toggle-row{
-  min-height:var(--an-control-h);
-  box-sizing:border-box;
-  margin-top:8px;
-  margin-bottom:0;
-}
-
-/* Trainingsrunde passt ins gemeinsame Raster */
-#toneMode .round-row{
-  grid-template-columns:minmax(0,1fr) minmax(120px,160px)!important;
-  gap:var(--an-grid-gap)!important;
-  margin-top:9px!important;
-}
-#toneMode .round-reset{
-  height:var(--an-control-h)!important;
-  min-height:var(--an-control-h)!important;
-}
-
-/* Gemeinsame obere Bedienleiste */
-#toneMode .tone-view-toolbar,
-#rhythmMode .rhythm-view-toolbar,
-#melodyMode .melody-view-toolbar{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:8px!important;
-  align-items:stretch!important;
-  margin:4px 0 11px!important;
-}
-#rhythmMode .rhythm-view-toolbar{
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-}
-#toneMode .tone-view-toolbar button,
-#toneMode .tone-view-toolbar label,
-#rhythmMode .rhythm-view-toolbar button,
-#rhythmMode .rhythm-view-toolbar label,
-#melodyMode .melody-view-toolbar button,
-#melodyMode .melody-view-toolbar label{
-  min-height:38px!important;
-  height:auto!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  justify-content:center!important;
-  margin:0!important;
-  padding:7px 9px!important;
-}
-#toneMode .tone-view-toolbar select,
-#melodyMode .melody-view-toolbar select{
-  min-width:92px!important;
-  height:30px!important;
-}
-
-/* Material-Blöcke optisch gleich behandeln */
-#rhythmMode .material-panel,
-#melodyMode .material-panel{
-  border-radius:11px!important;
-  padding:11px!important;
-}
-#rhythmMode .material-title,
-#melodyMode .material-title{
-  margin-bottom:9px!important;
-}
-
-/* Etwas klarere Trennung zwischen Einstellungen und Aufgabe */
-#toneMode .task-head,
-#rhythmMode .task-head,
-#melodyMode .task-head{
-  margin-top:3px!important;
-  padding-top:2px;
-}
-
-/* Tablet: zwei Spalten */
-@media (max-width:1000px){
-  #toneMode .trainer-controls,
-  #rhythmMode .rhythm-controls,
-  #melodyMode .rhythm-controls,
-  #melodyMode .melody-settings-bottom .material-panel:first-child .material-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+/* Desktop: dieselbe Gesamtbreite für die drei Modi. */
+@media (pointer:fine) and (min-width:1001px){
+  .workspace.rhythm-only{
+    display:grid!important;
+    grid-template-columns:minmax(0,var(--an-desktop-width))!important;
+    width:min(100%,var(--an-desktop-width))!important;
+    max-width:var(--an-desktop-width)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    justify-content:center!important;
+    justify-items:stretch!important;
+    padding:0!important;
   }
-  #toneMode .tone-view-toolbar,
-  #melodyMode .melody-view-toolbar{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  .workspace.rhythm-only .trainer-card{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
   }
 }
 
-/* Schmal: eine Spalte */
+/* iPad/Tablet: dieselbe 2-Spalten-Logik in allen drei Modi. */
+@media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
+  #toneMode .an-settings-grid,
+  #rhythmMode .an-settings-grid,
+  #melodyMode .an-settings-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  /* Toolbar bleibt bewusst im gleichen 4er-Raster wie auf Desktop.
+     Weniger Elemente lassen rechts einfach freie Plätze – dadurch sind
+     gleiche Funktionen tatsächlich gleich gross. */
+  #toneMode .an-toolbar,
+  #rhythmMode .an-toolbar,
+  #melodyMode .an-toolbar{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+}
+
+/* Schmale Geräte: einspaltig. */
 @media (max-width:620px){
-  #toneMode .trainer-controls,
-  #rhythmMode .rhythm-controls,
-  #melodyMode .rhythm-controls,
-  #melodyMode .melody-settings-bottom .material-panel:first-child .material-grid,
-  #toneMode .tone-view-toolbar,
-  #rhythmMode .rhythm-view-toolbar,
-  #melodyMode .melody-view-toolbar{
-    grid-template-columns:1fr!important;
-  }
-  #toneMode .round-row{
+  #toneMode .an-settings-grid, #rhythmMode .an-settings-grid, #melodyMode .an-settings-grid,
+  #toneMode .an-toolbar, #rhythmMode .an-toolbar, #melodyMode .an-toolbar{
     grid-template-columns:1fr!important;
   }
 }
 
-/* V0.4yze – grössere Rhythmusnotation: etwas mehr Luft in der Notenbox */
-#rhythmMode .rhythm-note-box{height:280px}
-#rhythmMode .rhythm-note-box.multibar-2{height:320px}
-#rhythmMode .rhythm-note-box.multibar-4{height:430px}
-#rhythmMode .rhythm-note-box.multibar-8{height:690px}
+/* 1:1-Kalibrierung bleibt nur auf Touch-Tablets/iPad sichtbar. */
+.board-calibration{display:none!important}
+@media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
+  .board-calibration{display:flex!important}
+}
 
-/* V0.4yze – Rhythmus optisch an Einzelton/Blattlesen angleichen */
+/* Rhythmus-Notendarstellung: bewährte Größe/Fit aus dem funktionierenden Stand. */
 #rhythmMode .rhythm-note-box{
   min-height:280px;
   height:auto!important;
@@ -989,8 +970,13 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 #rhythmMode .rhythm-note-box.multibar-2{min-height:310px}
 #rhythmMode .rhythm-note-box.multibar-4{min-height:390px}
 #rhythmMode .rhythm-note-box.multibar-8{min-height:590px}
-#rhythmMode .rhythm-note-box svg{
-  max-width:100%!important;
+#rhythmMode .rhythm-note-box svg{max-width:100%!important}
+
+/* Übungsmodus bleibt bildschirmbreit. */
+.rhythm-exercise-stage #rhythmMode,
+.rhythm-exercise-stage #rhythmNote{
+  width:100%!important;
+  max-width:none!important;
 }
 .rhythm-exercise-stage #rhythmNote{
   height:100%!important;
@@ -1002,307 +988,13 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   max-height:100%!important;
 }
 
-/* V0.4yze – Desktopbreite der drei Modi vereinheitlichen */
-@media (pointer:fine) and (min-width:1001px){
-  #rhythmMode{
-    width:min(100%,1040px)!important;
-    max-width:1040px!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-  }
-  #rhythmMode .rhythm-note-box,
-  #rhythmMode .rhythm-settings,
-  #rhythmMode .rhythm-view-toolbar,
-  #rhythmMode .rhythm-actions,
-  #rhythmMode .metro-panel,
-  #rhythmMode .rhythm-feedback,
-  #rhythmMode .timing-strip{
-    max-width:1040px!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-    box-sizing:border-box!important;
-  }
-}
-
-/* Im Übungsmodus bleibt Rhythmus weiterhin bildschirmbreit. */
-.rhythm-exercise-stage #rhythmMode,
-.rhythm-exercise-stage #rhythmNote{
-  max-width:none!important;
-  width:100%!important;
-}
-
-/* V0.4yze – Rhythmus auf Desktop inklusive Kopf/Modus-Tabs gleich breit */
-@media (pointer:fine) and (min-width:1001px){
-  .workspace.rhythm-only{
-    width:min(100%,1040px)!important;
-    max-width:1040px!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-    padding:0!important;
-  }
-  .workspace.rhythm-only .trainer-card{
-    width:100%!important;
-    max-width:1040px!important;
-    box-sizing:border-box!important;
-  }
-}
-
-/* Übungsmodus bleibt weiterhin bildschirmbreit. */
-.rhythm-exercise-stage{
-  max-width:none!important;
-}
-
-/* V0.4yze – Rhythmus exakt gleiche Desktopbreite wie Einzelton/Blattlesen unten quer */
-@media (pointer:fine) and (min-width:1001px){
-  .workspace.rhythm-only{
-    display:grid!important;
-    grid-template-columns:minmax(760px,1120px)!important;
-    width:min(100%,1120px)!important;
-    max-width:1120px!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-    padding:0!important;
-    justify-content:center!important;
-    justify-items:center!important;
-  }
-  .workspace.rhythm-only .trainer-card{
-    width:min(100%,1120px)!important;
-    max-width:1120px!important;
-    justify-self:center!important;
-    box-sizing:border-box!important;
-  }
-}
-
-/* V0.4yze – Rhythmus-Bedienoberfläche: KEINE eigenen Sondermasse mehr */
-@media (pointer:fine) and (min-width:1001px){
-  /* Äusserer Container exakt wie Einzelton/Blattlesen unten quer */
-  .workspace.rhythm-only{
-    display:grid!important;
-    grid-template-columns:minmax(760px,1120px)!important;
-    width:min(100%,1120px)!important;
-    max-width:1120px!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-    padding:0!important;
-    justify-content:center!important;
-    justify-items:stretch!important;
-  }
-  .workspace.rhythm-only .trainer-card{
-    width:100%!important;
-    max-width:none!important;
-    justify-self:stretch!important;
-    box-sizing:border-box!important;
-  }
-
-  /* Alte 1040-px-Begrenzungen vollständig neutralisieren */
-  #rhythmMode,
-  #rhythmMode .rhythm-note-box,
-  #rhythmMode .rhythm-settings,
-  #rhythmMode .rhythm-view-toolbar,
-  #rhythmMode .rhythm-actions,
-  #rhythmMode .metro-panel,
-  #rhythmMode .rhythm-feedback,
-  #rhythmMode .timing-strip,
-  #rhythmMode .material-panel,
-  #rhythmMode .score,
-  #rhythmMode .rhythm-help{
-    width:100%!important;
-    max-width:none!important;
-    margin-left:0!important;
-    margin-right:0!important;
-    box-sizing:border-box!important;
-  }
-
-  /* Gleiche Toolbar-Geometrie wie bei Einzelton/Blattlesen:
-     jedes Bedienelement belegt genau 1/4 der Zeile. */
-  #rhythmMode .rhythm-view-toolbar{
-    display:grid!important;
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
-    gap:8px!important;
-    align-items:stretch!important;
-  }
-  #rhythmMode .rhythm-view-toolbar button,
-  #rhythmMode .rhythm-view-toolbar label{
-    width:100%!important;
-    min-height:38px!important;
-    height:38px!important;
-    padding:7px 9px!important;
-    box-sizing:border-box!important;
-    margin:0!important;
-  }
-
-  /* Haupt-Einstellungen exakt wie Blattlesen: 3 gleich breite Spalten */
-  #rhythmMode .rhythm-controls{
-    display:grid!important;
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
-    gap:9px!important;
-    width:100%!important;
-  }
-  #rhythmMode .rhythm-control{
-    min-width:0!important;
-    width:100%!important;
-  }
-  #rhythmMode .rhythm-control select,
-  #rhythmMode .tempo-line{
-    width:100%!important;
-    min-width:0!important;
-    height:38px!important;
-    min-height:38px!important;
-    border-radius:9px!important;
-    box-sizing:border-box!important;
-  }
-
-  /* Material-/Aktionsbereiche nutzen dieselbe volle Innenbreite */
-  #rhythmMode .material-panel{
-    padding:11px!important;
-    border-radius:11px!important;
-  }
-  #rhythmMode .material-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:6px 12px!important;
-  }
-  #rhythmMode .rhythm-actions{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:7px!important;
-  }
-  #rhythmMode .rhythm-actions button{
-    width:100%!important;
-    height:40px!important;
-    min-height:40px!important;
-    box-sizing:border-box!important;
-  }
-}
-
-/* Tablet: gemeinsame responsive Regeln, keine Desktop-Sonderbreite */
-@media (max-width:1000px){
-  #rhythmMode .rhythm-view-toolbar{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  }
-}
-
-/* Übungsmodus bleibt vollbreit */
-.rhythm-exercise-stage #rhythmMode,
-.rhythm-exercise-stage #rhythmNote{
-  width:100%!important;
-  max-width:none!important;
-}
-
-/* V0.4yze – obere Bedienfelder in allen drei Modi EXAKT gleich gross */
-@media (pointer:fine) and (min-width:1001px){
-  #toneMode .tone-view-toolbar,
-  #rhythmMode .rhythm-view-toolbar,
-  #melodyMode .melody-view-toolbar{
-    display:grid!important;
-    grid-template-columns:repeat(4,240px)!important;
-    gap:8px!important;
-    justify-content:start!important;
-    align-items:stretch!important;
-  }
-
-  #toneMode .tone-view-toolbar > button,
-  #toneMode .tone-view-toolbar > label,
-  #rhythmMode .rhythm-view-toolbar > button,
-  #rhythmMode .rhythm-view-toolbar > label,
-  #melodyMode .melody-view-toolbar > button,
-  #melodyMode .melody-view-toolbar > label{
-    width:240px!important;
-    min-width:240px!important;
-    max-width:240px!important;
-    height:40px!important;
-    min-height:40px!important;
-    max-height:40px!important;
-    box-sizing:border-box!important;
-    margin:0!important;
-    padding:7px 10px!important;
-  }
-}
-
-/* V0.4yze – Rhythmus-Wahlfelder auf iPad/Tablet exakt wie Einzelton/Blattlesen */
-@media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
-  #toneMode .trainer-controls,
-  #rhythmMode .rhythm-controls,
-  #melodyMode .rhythm-controls{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:9px!important;
-    width:100%!important;
-  }
-
-  #rhythmMode .rhythm-control,
-  #rhythmMode .rhythm-control select,
-  #rhythmMode .tempo-line{
-    width:100%!important;
-    min-width:0!important;
-    max-width:none!important;
-    box-sizing:border-box!important;
-  }
-
-  #rhythmMode .rhythm-control select,
-  #rhythmMode .tempo-line{
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    border-radius:9px!important;
-  }
-
-  #rhythmMode .rhythm-view-toolbar{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:8px!important;
-    width:100%!important;
-  }
-
-  #rhythmMode .rhythm-view-toolbar > button,
-  #rhythmMode .rhythm-view-toolbar > label{
-    width:100%!important;
-    min-width:0!important;
-    max-width:none!important;
-    height:40px!important;
-    min-height:40px!important;
-    max-height:40px!important;
-    box-sizing:border-box!important;
-    margin:0!important;
-    padding:7px 10px!important;
-  }
-
-  #rhythmMode .rhythm-settings,
-  #rhythmMode .material-panel{
-    width:100%!important;
-    max-width:none!important;
-    box-sizing:border-box!important;
-  }
-}
-
-/* V0.4yze – iPad: Rhythmus-Toolbar dieselbe Rasterlogik wie Einzelton/Blattlesen */
-@media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
-  #rhythmMode .rhythm-view-toolbar{
-    display:grid!important;
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
-    gap:8px!important;
-    width:100%!important;
-    align-items:stretch!important;
-  }
-  #rhythmMode .rhythm-view-toolbar > button,
-  #rhythmMode .rhythm-view-toolbar > label{
-    width:100%!important;
-    min-width:0!important;
-    max-width:none!important;
-    height:40px!important;
-    min-height:40px!important;
-    max-height:40px!important;
-    box-sizing:border-box!important;
-    margin:0!important;
-    padding:7px 10px!important;
-  }
-}
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4yze</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4yzf</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2" selected>B-Örgeli</option><option value="0">C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -1566,8 +1258,8 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4yze</div></div>
-  <div class="tone-view-toolbar">
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4yzf</div></div>
+  <div class="tone-view-toolbar an-toolbar">
     <button id="toneToggleSettings" type="button">Einstellungen einklappen</button>
     <button id="toneFocusMode" type="button">Übungsmodus</button>
     <label>Griffbrett
@@ -1584,14 +1276,14 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     </label>
   </div>
   <div class="tone-settings">
-  <div class="trainer-controls">
-    <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
-    <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
-    <div class="trainer-control"><label for="alteredNotes">Alterierte Töne</label><select id="alteredNotes"><option value="0">keine</option><option value="0.10" selected>selten</option><option value="0.20">manchmal</option><option value="0.35">häufig</option></select></div>
-    <div class="trainer-control"><label for="noteRange">Tonumfang</label><select id="noteRange"><option value="60-67">c'–g'</option><option value="60-72" selected>c'–c''</option><option value="60-79">c'–g''</option><option value="60-84">c'–c'''</option><option value="all">alle</option></select></div>
-    <div class="trainer-control"><label for="spellingMode">Schreibweise (chromatisch)</label><select id="spellingMode"><option value="mixed" selected># / b gemischt</option><option value="flat">b bevorzugen</option><option value="sharp"># bevorzugen</option></select></div>
-    <div class="trainer-control"><label for="autoNext">Weiter</label><select id="autoNext"><option value="auto" selected>automatisch nach richtig</option><option value="manual">manuell</option></select></div>
-    <div class="trainer-control"><label for="toneExerciseLength">Übungslänge</label><select id="toneExerciseLength"><option value="single">Einzelton</option><option value="1" selected>1 Takt</option><option value="2">2 Takte</option><option value="4">4 Takte</option><option value="8">8 Takte</option></select></div>
+  <div class="trainer-controls an-settings-grid">
+    <div class="trainer-control an-field"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
+    <div class="trainer-control an-field"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
+    <div class="trainer-control an-field"><label for="alteredNotes">Alterierte Töne</label><select id="alteredNotes"><option value="0">keine</option><option value="0.10" selected>selten</option><option value="0.20">manchmal</option><option value="0.35">häufig</option></select></div>
+    <div class="trainer-control an-field"><label for="noteRange">Tonumfang</label><select id="noteRange"><option value="60-67">c'–g'</option><option value="60-72" selected>c'–c''</option><option value="60-79">c'–g''</option><option value="60-84">c'–c'''</option><option value="all">alle</option></select></div>
+    <div class="trainer-control an-field"><label for="spellingMode">Schreibweise (chromatisch)</label><select id="spellingMode"><option value="mixed" selected># / b gemischt</option><option value="flat">b bevorzugen</option><option value="sharp"># bevorzugen</option></select></div>
+    <div class="trainer-control an-field"><label for="autoNext">Weiter</label><select id="autoNext"><option value="auto" selected>automatisch nach richtig</option><option value="manual">manuell</option></select></div>
+    <div class="trainer-control an-field"><label for="toneExerciseLength">Übungslänge</label><select id="toneExerciseLength"><option value="single">Einzelton</option><option value="1" selected>1 Takt</option><option value="2">2 Takte</option><option value="4">4 Takte</option><option value="8">8 Takte</option></select></div>
   </div>
   <div class="round-row"><div class="round-control"><label for="roundLength">Trainingsrunde</label><select id="roundLength"><option value="0" selected>Endlos</option><option value="10">10 Aufgaben</option><option value="20">20 Aufgaben</option><option value="30">30 Aufgaben</option></select></div><button id="resetRound" class="round-reset" type="button">Neu starten</button></div>
   <div class="round-progress" id="roundProgress">Endlos · 0 Aufgaben</div>
@@ -1609,19 +1301,19 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4yze</div></div>
-    <div class="tone-view-toolbar rhythm-view-toolbar">
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4yzf</div></div>
+    <div class="tone-view-toolbar rhythm-view-toolbar an-toolbar">
       <button id="rhythmToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="rhythmExerciseMode" type="button">Übungsmodus</button>
     </div>
     <div class="rhythm-settings">
-    <div class="rhythm-controls">
-      <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
-      <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
-      <div class="rhythm-control"><label for="metroMode">Metronom</label><select id="metroMode"><option value="both" selected>akustisch + optisch</option><option value="audio">nur akustisch</option><option value="visual">nur optisch</option></select></div>
-      <div class="rhythm-control"><label for="metroSubdivision">Metronom-Puls</label><select id="metroSubdivision"><option value="quarter" selected>Viertel</option><option value="eighth">Achtel</option></select></div>
-      <div class="rhythm-control"><label for="rhythmExerciseLength">Übungslänge</label><select id="rhythmExerciseLength"><option value="1" selected>1 Takt</option><option value="2">2 Takte</option><option value="4">4 Takte</option><option value="8">8 Takte</option></select></div>
-      <div class="rhythm-control"><label for="tempoRange">Tempo</label><div class="tempo-line"><input id="tempoRange" type="range" min="40" max="180" step="5" value="80"><div id="tempoValue" class="tempo-value">80 BPM</div></div></div>
+    <div class="rhythm-controls an-settings-grid">
+      <div class="rhythm-control an-field"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
+      <div class="rhythm-control an-field"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
+      <div class="rhythm-control an-field"><label for="metroMode">Metronom</label><select id="metroMode"><option value="both" selected>akustisch + optisch</option><option value="audio">nur akustisch</option><option value="visual">nur optisch</option></select></div>
+      <div class="rhythm-control an-field"><label for="metroSubdivision">Metronom-Puls</label><select id="metroSubdivision"><option value="quarter" selected>Viertel</option><option value="eighth">Achtel</option></select></div>
+      <div class="rhythm-control an-field"><label for="rhythmExerciseLength">Übungslänge</label><select id="rhythmExerciseLength"><option value="1" selected>1 Takt</option><option value="2">2 Takte</option><option value="4">4 Takte</option><option value="8">8 Takte</option></select></div>
+      <div class="rhythm-control an-field"><label for="tempoRange">Tempo</label><div class="tempo-line"><input id="tempoRange" type="range" min="40" max="180" step="5" value="80"><div id="tempoValue" class="tempo-value">80 BPM</div></div></div>
     </div>
     <div class="material-panel">
       <div class="material-title">Rhythmen-Material</div>
@@ -1667,8 +1359,8 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4yze</div></div>
-    <div class="melody-view-toolbar">
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4yzf</div></div>
+    <div class="melody-view-toolbar an-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Übungsmodus</button>
       <label title="Während des Spielens leuchtet die aktuell zu spielende Örgeli-Taste.">
@@ -1688,13 +1380,13 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
       </label>
     </div>
     <div class="melody-settings-top">
-    <div class="rhythm-controls">
-      <div class="rhythm-control"><label for="melodyMeter">Taktart</label><select id="melodyMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
-      <div class="rhythm-control"><label for="melodyPreset">Material-Preset</label><select id="melodyPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
-      <div class="rhythm-control"><label for="melodyMetroMode">Metronom</label><select id="melodyMetroMode"><option value="both" selected>akustisch + optisch</option><option value="audio">nur akustisch</option><option value="visual">nur optisch</option></select></div>
-      <div class="rhythm-control"><label for="melodyMetroSubdivision">Metronom-Puls</label><select id="melodyMetroSubdivision"><option value="quarter" selected>Viertel</option><option value="eighth">Achtel</option></select></div>
-      <div class="rhythm-control"><label for="melodyLength">Übungslänge</label><select id="melodyLength"><option value="1">1 Takt</option><option value="2" selected>2 Takte</option><option value="4">4 Takte</option><option value="8">8 Takte</option></select></div>
-      <div class="rhythm-control"><label for="melodyTempo">Tempo</label><div class="tempo-line"><input id="melodyTempo" type="range" min="40" max="180" step="5" value="80"><div id="melodyTempoValue" class="tempo-value">80 BPM</div></div></div>
+    <div class="rhythm-controls an-settings-grid">
+      <div class="rhythm-control an-field"><label for="melodyMeter">Taktart</label><select id="melodyMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
+      <div class="rhythm-control an-field"><label for="melodyPreset">Material-Preset</label><select id="melodyPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
+      <div class="rhythm-control an-field"><label for="melodyMetroMode">Metronom</label><select id="melodyMetroMode"><option value="both" selected>akustisch + optisch</option><option value="audio">nur akustisch</option><option value="visual">nur optisch</option></select></div>
+      <div class="rhythm-control an-field"><label for="melodyMetroSubdivision">Metronom-Puls</label><select id="melodyMetroSubdivision"><option value="quarter" selected>Viertel</option><option value="eighth">Achtel</option></select></div>
+      <div class="rhythm-control an-field"><label for="melodyLength">Übungslänge</label><select id="melodyLength"><option value="1">1 Takt</option><option value="2" selected>2 Takte</option><option value="4">4 Takte</option><option value="8">8 Takte</option></select></div>
+      <div class="rhythm-control an-field"><label for="melodyTempo">Tempo</label><div class="tempo-line"><input id="melodyTempo" type="range" min="40" max="180" step="5" value="80"><div id="melodyTempoValue" class="tempo-value">80 BPM</div></div></div>
     </div>    </div>
     <div class="task-head"><div class="label">Blattlesen · <span id="melodyExerciseLabel">2 Takte</span></div><div id="melodyMeterLabel" class="task-direction">4/4</div></div>
     <div id="melodyNote" class="melody-note-box">Blattlese-Übung wird erzeugt …</div>
@@ -1749,7 +1441,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 (()=>{
   const Core=window.AlpeNordGriffbrett;
   const tuningSelect=document.getElementById('tuningSelect'), displayModeSelect=document.getElementById('displayModeSelect'), bassMode=document.getElementById('bassMode'), crossTone1Select=document.getElementById('crossTone1Select'), crossTone10Select=document.getElementById('crossTone10Select');
-  // V0.4yze: Bei jedem Start ist B-Örgeli die feste Ausgangsstimmung.
+  // V0.4yzf: Bei jedem Start ist B-Örgeli die feste Ausgangsstimmung.
   tuningSelect.value='-2';
   const dirBtn=document.getElementById('directionBtn'), rotateBtn=document.getElementById('rotateDiskantBtn'), diskantFrame=document.querySelector('.diskant-frame');
   const trainingDirection=document.getElementById('trainingDirection'),noteMaterial=document.getElementById('noteMaterial'),alteredNotes=document.getElementById('alteredNotes'),noteRange=document.getElementById('noteRange'),spellingMode=document.getElementById('spellingMode'),autoNext=document.getElementById('autoNext'),toneExerciseLength=document.getElementById('toneExerciseLength'),toneExerciseProgress=document.getElementById('toneExerciseProgress'),showKeyNames=document.getElementById('showKeyNames'),showNoteNames=document.getElementById('showNoteNames'),roundLength=document.getElementById('roundLength'),resetRound=document.getElementById('resetRound'),roundProgress=document.getElementById('roundProgress'),roundResult=document.getElementById('roundResult'),toneToggleSettings=document.getElementById('toneToggleSettings'),toneFocusMode=document.getElementById('toneFocusMode'),toneBoardLayout=document.getElementById('toneBoardLayout'),toneBoardCalibration=document.getElementById('toneBoardCalibration'),toneBoardCalibrationValue=document.getElementById('toneBoardCalibrationValue');
@@ -1924,7 +1616,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     const pref=spellingMode.value==='sharp'?'sharp':spellingMode.value==='flat'?'flat':(currentPreference||'flat');
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
     t.setAttribute('class','pressedToneLabel');t.setAttribute('x','0');t.setAttribute('y','4');
-    // V0.4yze: Im Layout "unten quer" dreht das gesamte Griffbrett um +90°.
+    // V0.4yzf: Im Layout "unten quer" dreht das gesamte Griffbrett um +90°.
     // Den kurz eingeblendeten Notennamen gegenläufig drehen, damit er aufrecht lesbar bleibt.
     if(toneBoardLayout&&toneBoardLayout.value==='bottom')t.setAttribute('transform','rotate(-90 0 4)');
     t.textContent=germanPitchName(pitchForTrainingMidi(shown,pref));
@@ -2025,7 +1717,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
       else renderQuestionNote();
     }else{
       questionHadError=true;streak=0;updateScore();
-      // V0.4yze: Falsche Taste bleibt genau so lange rot wie ihr eingeblendeter Notenname.
+      // V0.4yzf: Falsche Taste bleibt genau so lange rot wie ihr eingeblendeter Notenname.
       const wrongFeedbackDuration=1500;
       el.classList.add('wrong');setTimeout(()=>el.classList.remove('wrong'),wrongFeedbackDuration);
       if(pitchCorrect&&!directionCorrect){
@@ -2595,7 +2287,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
           }
           for(const t of measures[bar]){
             const note=new VF.StaveNote({clef:'treble',keys:['b/4'],duration:vfDuration(t),auto_stem:true});
-            // V0.4yze – Rhythmusnoten wirklich grösser zeichnen.
+            // V0.4yzf – Rhythmusnoten wirklich grösser zeichnen.
             // Default liegt ungefähr bei 39; 49 ergibt ca. +25 % sichtbare Grösse.
             if(note.render_options) note.render_options.glyph_font_scale=49;
             if(t.dur===3||t.dur===6)VF.Dot.buildAndAttach([note],{all:true});
@@ -2642,7 +2334,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
         }
       }
 
-      // V0.4yze – Rhythmusdarstellung als GANZE Grafik skalieren.
+      // V0.4yzf – Rhythmusdarstellung als GANZE Grafik skalieren.
       // Dadurch bleiben Notenkopf, Hals, Balken, Pausen, Schlüssel und Linien
       // geometrisch exakt zusammen. Wir schneiden nur den grossen unsichtbaren
       // VexFlow-Rand weg und zeigen die komplette fertige Notengrafik grösser.
@@ -2830,7 +2522,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     const rhythmErrors=(exp.length-hits)+extras+holdErrors;
     const bars=Math.max(1,Number(rhythmExerciseLength.value||1));
 
-    // V0.4yze: 1 Takt ist ein fortlaufender Trainingsmodus.
+    // V0.4yzf: 1 Takt ist ein fortlaufender Trainingsmodus.
     // Keine Erfolgsmeldung nach jedem Takt; Statistik wird bis zum manuellen Stopp gesammelt.
     if(bars===1 && rhythmOneBarSession.active){
       rhythmOneBarSession.bars++;
@@ -2884,7 +2576,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   tapButton.addEventListener('touchend',e=>{e.preventDefault();releaseTap()},{passive:false});
   tapButton.addEventListener('touchcancel',e=>{e.preventDefault();releaseTap()},{passive:false});
 
-  // V0.4yze – robuste Eingabe auf Desktop und Tablet.
+  // V0.4yzf – robuste Eingabe auf Desktop und Tablet.
   // Trackpad/Maus/Stift reagieren direkt auf pointerdown.
   tapButton.addEventListener('pointerdown',e=>{
     if(e.pointerType==='touch')return;
@@ -2966,7 +2658,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   if(startRhythmBtn)startRhythmBtn.addEventListener('click',hideExerciseResult);
 
   const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue');
-  // V0.4yze: Bei jedem Start beginnt das Griffbrett unten quer – unabhängig von Browser-Wiederherstellung.
+  // V0.4yzf: Bei jedem Start beginnt das Griffbrett unten quer – unabhängig von Browser-Wiederherstellung.
   if(toneBoardLayout)toneBoardLayout.value='bottom';
   if(melodyBoardLayout)melodyBoardLayout.value='bottom';
   const tabletFocusStage=document.getElementById('tabletFocusStage'),tabletFocusExit=document.getElementById('tabletFocusExit'),tabletFocusScore=document.getElementById('tabletFocusScore'),tabletFocusBoardSlot=document.getElementById('tabletFocusBoardSlot'),tabletFocusNew=document.getElementById('tabletFocusNew'),tabletFocusStart=document.getElementById('tabletFocusStart');
