@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4l</title>
+<title>AlpeNord Lesetrainer V0.4m</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -125,7 +125,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
 
-/* V0.4l – Blattlesen: Griffbrett-Positionen */
+/* V0.4m – Blattlesen: Griffbrett-Positionen */
 .melody-view-toolbar select{
   margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
   background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
@@ -193,7 +193,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
 
 
-/* V0.4l – Rhythmus auf Touch-Geräten:
+/* V0.4m – Rhythmus auf Touch-Geräten:
    schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
 #tapButton,
 #rhythmNote,
@@ -225,7 +225,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4l – physische Originalgrösse auf Tablets.
+/* V0.4m – physische Originalgrösse auf Tablets.
    Mittlere Reihe: 18 cm Tastenmitte–Tastenmitte.
    Gesamtabstand Kreuztonreihe ↔ äussere Reihe: 3 cm.
    SVG-Höhe: 1600/1240 * 18 cm = 23.2258 cm. */
@@ -331,7 +331,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4l – Spielansicht: Noten + Griffbrett als direkte Einheit */
+/* V0.4m – Spielansicht: Noten + Griffbrett als direkte Einheit */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-left,
   .workspace.melody-mode.board-right{
@@ -427,13 +427,55 @@ html.rhythm-touch-lock #tapButton{
   }
 }
 
+
+/* V0.4m – Spielansicht: zentrale Aktionen immer erreichbar */
+@media (pointer:coarse) and (min-width:700px){
+  .workspace.melody-mode.board-bottom .melody-actions{
+    position:sticky;
+    bottom:8px;
+    z-index:30;
+    margin:8px 0 0!important;
+    padding:8px;
+    background:rgba(24,21,18,.96);
+    border:1px solid #51483e;
+    border-radius:10px;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    box-shadow:0 -3px 14px rgba(0,0,0,.28);
+  }
+  .workspace.melody-mode.board-bottom .melody-actions button{
+    height:46px;
+    font-size:13px;
+  }
+
+  /* In Seitenlayouts ebenfalls kompakt sichtbar, aber nicht störend fixiert. */
+  .workspace.melody-mode.board-left .melody-actions,
+  .workspace.melody-mode.board-right .melody-actions{
+    position:sticky;
+    bottom:8px;
+    z-index:20;
+    background:rgba(24,21,18,.94);
+    padding:6px;
+    border-radius:9px;
+  }
+}
+
+/* Querformat: Aktionsleiste besonders schlank halten. */
+@media (pointer:coarse) and (min-width:900px) and (orientation:landscape){
+  .workspace.melody-mode.board-bottom .melody-actions{
+    width:min(100%,980px);
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+}
+
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4l</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4m</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -697,7 +739,7 @@ html.rhythm-touch-lock #tapButton{
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4l</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4m</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -721,7 +763,7 @@ html.rhythm-touch-lock #tapButton{
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4l</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4m</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -773,7 +815,7 @@ html.rhythm-touch-lock #tapButton{
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4l</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4m</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
@@ -807,7 +849,7 @@ html.rhythm-touch-lock #tapButton{
     <div class="melody-status"><div id="melodyStatusLine" class="melody-status-line">Bereit · Start drücken</div><div id="melodyBeatLights" class="beat-lights"></div></div>
     <div id="melodyFeedback" class="rhythm-feedback neutral">Nach einem vollen Takt Anzähler die Übung auf der Computertastatur spielen.</div>
     <div id="melodyResult" class="melody-result" hidden></div>
-    <div class="melody-actions"><button id="newMelody" type="button">Neue Übung</button><button id="startMelody" class="primary" type="button">▶ Anzählen &amp; starten</button></div>
+    <div class="melody-actions melody-play-actions"><button id="newMelody" type="button">Neue Übung</button><button id="startMelody" class="primary" type="button">▶ Anzählen &amp; starten</button></div>
     <div class="score"><div class="score-box"><span>Ton/Taste</span><strong id="melodyPitchScore">–</strong></div><div class="score-box"><span>Timing</span><strong id="melodyTimingScore">–</strong></div><div class="score-box"><span>Haltedauer</span><strong id="melodyHoldScore">–</strong></div></div>
     <div class="melody-settings-bottom">
     <div class="material-panel">
