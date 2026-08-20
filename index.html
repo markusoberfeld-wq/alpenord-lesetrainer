@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4r</title>
+<title>AlpeNord Lesetrainer V0.4s</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -125,7 +125,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
 
-/* V0.4r – Blattlesen: Griffbrett-Positionen */
+/* V0.4s – Blattlesen: Griffbrett-Positionen */
 .melody-view-toolbar select{
   margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
   background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
@@ -193,7 +193,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
 
 
-/* V0.4r – Rhythmus auf Touch-Geräten:
+/* V0.4s – Rhythmus auf Touch-Geräten:
    schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
 #tapButton,
 #rhythmNote,
@@ -225,7 +225,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4r – physische Originalgrösse auf Tablets.
+/* V0.4s – physische Originalgrösse auf Tablets.
    Mittlere Reihe: 18 cm Tastenmitte–Tastenmitte.
    Gesamtabstand Kreuztonreihe ↔ äussere Reihe: 3 cm.
    SVG-Höhe: 1600/1240 * 18 cm = 23.2258 cm. */
@@ -331,7 +331,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4r – Spielansicht: Noten + Griffbrett als direkte Einheit */
+/* V0.4s – Spielansicht: Noten + Griffbrett als direkte Einheit */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-left,
   .workspace.melody-mode.board-right{
@@ -428,7 +428,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4r – Spielansicht: zentrale Aktionen immer erreichbar */
+/* V0.4s – Spielansicht: zentrale Aktionen immer erreichbar */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-bottom .melody-actions{
     position:sticky;
@@ -470,7 +470,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4r – echter Tablet-Fokusmodus */
+/* V0.4s – echter Tablet-Fokusmodus */
 .tablet-focus-stage{
   position:fixed;
   inset:0;
@@ -580,7 +580,9 @@ html.rhythm-touch-lock #tapButton{
 
 /* Quer unten: Noten oben, Griffbrett quer darunter, Buttons ganz unten. */
 .tablet-focus-stage.layout-bottom .tablet-focus-board .diskant-frame svg{
-  height:min(calc(100vw - 16px), 52vh)!important;
+  /* V0.4s: JS misst im Fokusmodus die tatsächlich verfügbare Board-Fläche.
+     Fallback bleibt breit genug, falls die Messung noch nicht erfolgt ist. */
+  height:var(--tablet-focus-board-svg-height, calc(100vw - 16px))!important;
   width:auto!important;
   max-width:none!important;
   transform:rotate(90deg)!important;
@@ -630,7 +632,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4r – eigene horizontale Balg-Leuchtanimation für unten-quer */
+/* V0.4s – eigene horizontale Balg-Leuchtanimation für unten-quer */
 .horizontal-bellows-flow{
   display:none;
   position:absolute;
@@ -688,7 +690,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4r – Fokusmodus: Notenfenster selbstständig, Griffbrett bleibt fix */
+/* V0.4s – Fokusmodus: Notenfenster selbstständig, Griffbrett bleibt fix */
 .tablet-focus-notes{
   background:#fffdf8;
   border:1px solid #4a433c;
@@ -746,7 +748,7 @@ html.tablet-focus-lock body{
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4r</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4s</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -1010,7 +1012,7 @@ html.tablet-focus-lock body{
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4r</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4s</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -1034,7 +1036,7 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4r</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4s</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -1086,7 +1088,7 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4r</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4s</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
@@ -2542,9 +2544,9 @@ html.tablet-focus-lock body{
     if(!melodyMode.hidden)setTimeout(()=>renderMelody(),50);
   }
 
-  melodyBoardLayout.addEventListener('change',applyMelodyBoardLayout);
-  window.addEventListener('resize',()=>{if(!melodyMode.hidden){applyMelodyBoardLayout();setTimeout(()=>renderMelody(),80)}});
-  window.addEventListener('orientationchange',()=>setTimeout(()=>{if(!melodyMode.hidden)applyMelodyBoardLayout()},120));
+  melodyBoardLayout.addEventListener('change',()=>{applyMelodyBoardLayout();if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,40)});
+  window.addEventListener('resize',()=>{if(!melodyMode.hidden){applyMelodyBoardLayout();setTimeout(()=>renderMelody(),80)}if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,90)});
+  window.addEventListener('orientationchange',()=>setTimeout(()=>{if(!melodyMode.hidden)applyMelodyBoardLayout();if(tabletFocusRestore)fitTabletFocusBoard()},120));
   melodyToggleSettings.addEventListener('click',()=>{
     const collapsed=melodyMode.classList.toggle('settings-collapsed');
     melodyToggleSettings.textContent=collapsed?'Einstellungen ausklappen':'Einstellungen einklappen';
@@ -2558,6 +2560,27 @@ html.tablet-focus-lock body{
 
   function syncTabletFocusStartButton(){
     if(tabletFocusStart)tabletFocusStart.textContent=startMelodyBtn.textContent;
+  }
+
+  // V0.4s – Griffbrett im Tablet-Fokusmodus exakt in die reale freie Fläche einpassen.
+  // Das Diskant-SVG hat 690 × 1600 Einheiten. Im Layout „unten“ wird es um 90° gedreht.
+  // Darum entspricht die sichtbare Breite der ungedrehten SVG-Höhe; die sichtbare Höhe
+  // beträgt davon 690/1600. Gemessen wird erst NACH dem Einblenden des Fokus-DOMs.
+  function fitTabletFocusBoard(){
+    if(!tabletFocusStage||tabletFocusStage.hidden||!tabletFocusStage.classList.contains('active'))return;
+    const svg=tabletFocusBoardSlot&&tabletFocusBoardSlot.querySelector('.diskant-frame svg');
+    if(!svg)return;
+
+    if(tabletFocusStage.classList.contains('layout-bottom')){
+      const rect=tabletFocusBoardSlot.getBoundingClientRect();
+      if(rect.width>0&&rect.height>0){
+        const svgAspect=1600/690;
+        const target=Math.max(1,Math.min(rect.width,rect.height*svgAspect));
+        svg.style.setProperty('--tablet-focus-board-svg-height',`${Math.floor(target)}px`);
+      }
+    }else{
+      svg.style.removeProperty('--tablet-focus-board-svg-height');
+    }
   }
 
   function enterTabletFocus(){
@@ -2587,6 +2610,10 @@ html.tablet-focus-lock body{
     syncTabletFocusStartButton();
     cloneNormalMelodyIntoFocus();
     renderTabletFocusSystem(0);
+    requestAnimationFrame(()=>{
+      fitTabletFocusBoard();
+      requestAnimationFrame(fitTabletFocusBoard);
+    });
     return true;
   }
 
@@ -2599,6 +2626,8 @@ html.tablet-focus-lock body{
     const next=tabletFocusRestore.boardNext;
 
     if(instrumentCard&&parent){
+      const svg=instrumentCard.querySelector('.diskant-frame svg');
+      if(svg)svg.style.removeProperty('--tablet-focus-board-svg-height');
       if(next&&next.parentNode===parent)parent.insertBefore(instrumentCard,next);
       else parent.appendChild(instrumentCard);
     }

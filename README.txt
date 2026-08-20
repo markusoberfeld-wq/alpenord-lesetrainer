@@ -1,7 +1,15 @@
-AlpeNord Lesetrainer V0.4r – DOM/Verovio Initialisierung repariert
-Basis: V0.4q; eingefrorener Referenzstand bleibt V0.4c.
-- Ursache der gesamten hängenden Notendarstellung gefunden: Fokus-DOM lag nach dem Hauptscript.
-- Fokus-DOM wird nun vor dem Hauptscript geladen, sodass alle getElementById-Referenzen beim Start existieren.
-- Zusätzliche Null-Guards verhindern, dass fehlende Fokus-Elemente künftig die gesamte App-Initialisierung abbrechen.
-- Dadurch kann waitForVerovio wieder ausgeführt werden und Einzelton/Blattlesen werden normal gerendert.
-- 2-Takt-Nachrücken im Fokusmodus bleibt unverändert erhalten.
+AlpeNord Lesetrainer V0.4s – Fokus-Griffbrett wieder sauber eingepasst
+
+Basis: V0.4r DOM/Verovio Init-Fix.
+
+Änderung gegenüber V0.4r:
+- Im Tablet-Fokusmodus „Griffbrett unten quer“ wird das Diskant-Griffbrett nach dem Einblenden anhand der tatsächlich verfügbaren Fläche neu vermessen.
+- Die 90° gedrehte SVG-Geometrie (690 × 1600) wird berücksichtigt, damit das Griffbrett die verfügbare Breite nutzt, ohne in die Noten- oder Button-Zone zu ragen.
+- Re-Fit bei Resize/Orientierungswechsel.
+- Beim Verlassen des Fokusmodus wird die Fokus-Grössenanpassung sauber entfernt.
+
+Unverändert aus V0.4r:
+- DOM/Verovio Initialisierungs-Fix.
+- Schutzabfragen für Fokus-Elemente.
+- 2-Takt-Nachrücken im Fokusmodus.
+- Sonstige Trainingslogik und Griffbrett-Core.
