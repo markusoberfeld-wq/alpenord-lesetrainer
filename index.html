@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4c</title>
+<title>AlpeNord Lesetrainer V0.4g</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -124,13 +124,97 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-top{margin-bottom:10px}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
+
+/* V0.4g – Blattlesen: Griffbrett-Positionen */
+.melody-view-toolbar select{
+  margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
+  background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
+}
+
+/* links = bisheriger Stand */
+.workspace.melody-mode.board-left .instrument-card{order:1}
+.workspace.melody-mode.board-left .trainer-card{order:2}
+
+/* rechts: Noten/Trainer links, Griffbrett rechts */
+.workspace.melody-mode.board-right{
+  grid-template-columns:minmax(560px,760px) minmax(380px,430px)
+}
+.workspace.melody-mode.board-right .trainer-card{order:1}
+.workspace.melody-mode.board-right .instrument-card{order:2}
+
+/* unten quer: Trainer oben, Griffbrett quer darunter.
+   90° nach rechts = Balgrahmen oben. */
+.workspace.melody-mode.board-bottom{
+  grid-template-columns:minmax(680px,1040px);
+  justify-items:center;
+}
+.workspace.melody-mode.board-bottom .trainer-card{
+  order:1;width:min(100%,1040px)
+}
+.workspace.melody-mode.board-bottom .instrument-card{
+  order:2;width:min(100%,900px)
+}
+.workspace.melody-mode.board-bottom .instrument-stage{
+  width:100%;height:390px;display:flex;justify-content:center;align-items:center;
+  padding:10px;overflow:hidden
+}
+.workspace.melody-mode.board-bottom .diskant-frame{
+  width:850px;height:370px;overflow:visible
+}
+.workspace.melody-mode.board-bottom .diskant-frame svg{
+  height:840px!important;width:auto!important;
+  transform:rotate(90deg)!important;
+  transform-origin:center center
+}
+.workspace.melody-mode.board-bottom .cardhead{
+  max-width:850px;margin-left:auto;margin-right:auto
+}
+.workspace.melody-mode.board-bottom .hint{
+  max-width:850px;margin-left:auto;margin-right:auto
+}
+
+/* Tablet: Tasten sichtbar und als Touch-Ziele ca. 20% grösser.
+   SVG-r ist eine CSS-Geometrieeigenschaft in Safari/Chrome. */
+@media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
+  #diskantVisual .diskantKeyVisual .keyRim{r:52px}
+  #diskantVisual .diskantKeyVisual .keyFace{r:47px}
+  #diskantVisual .diskantKeyVisual .keyGloss{r:8px}
+}
+
+/* Auf Tablet darf der Quer-Modus die verfügbare Breite besser nutzen. */
+@media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
+  .workspace.melody-mode.board-bottom{width:100%;grid-template-columns:minmax(0,1fr)}
+  .workspace.melody-mode.board-bottom .trainer-card{width:min(100%,980px)}
+  .workspace.melody-mode.board-bottom .instrument-card{width:min(100%,980px)}
+  .workspace.melody-mode.board-bottom .diskant-frame{width:min(92vw,900px)}
+}
+
+
+#diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
+
+
+/* V0.4g – Rhythmus auf Touch-Geräten:
+   schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
+#tapButton,
+#rhythmNote,
+#timingStrip,
+#rhythmMode .metro-panel,
+#rhythmMode .rhythm-feedback{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+#tapButton{
+  user-select:none;
+  -webkit-user-select:none;
+}
+
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4c</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4g</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -394,7 +478,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4c</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4g</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -418,7 +502,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4c</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4g</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -470,12 +554,19 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4c</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4g</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
       <label title="Während des Spielens leuchtet die aktuell zu spielende Örgeli-Taste.">
         <input id="melodyShowCurrentKey" type="checkbox"> Aktuelle Taste anzeigen
+      </label>
+      <label>Griffbrett
+        <select id="melodyBoardLayout">
+          <option value="left" selected>links</option>
+          <option value="right">rechts</option>
+          <option value="bottom">unten quer</option>
+        </select>
       </label>
     </div>
     <div class="melody-settings-top">
@@ -740,13 +831,85 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     }else{
       questionHadError=true;streak=0;updateScore();el.classList.add('wrong');setTimeout(()=>el.classList.remove('wrong'),520);
       if(pitchCorrect&&!directionCorrect){
-        setFeedback(`Ton stimmt, aber Balgrichtung nicht · ${direction==='druck'?'Shift = Stossen':'ohne Shift = Ziehen'}`,'wrong');
+        setFeedback('Ton stimmt, aber die Balgrichtung passt nicht zur Aufgabe.','wrong');
       }else{
         setFeedback('Noch nicht – versuche es nochmals.','wrong');
       }
     }
   }
-  document.querySelectorAll('.diskantKeyVisual').forEach(el=>{const act=()=>handleDiskantKey(el);el.addEventListener('click',act);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act()}})});
+  // --- Einheitliche direkte Griffbrett-Eingabe (Maus / Touch / Stift) ---
+  // Grundregel in allen Modi:
+  // Die angeklickte/angetippte Fläche bestimmt nur die physische Örgeli-Taste.
+  // Die Balgrichtung wird NICHT vom Benutzer zusätzlich gewählt, sondern kommt
+  // automatisch aus der aktuell gestellten Aufgabe bzw. der aktuellen Blattlese-Note.
+  function directDiskantPress(el,inputToken=null){
+    const keyNo=Number(el.dataset.key);
+    if(!keyNo)return false;
+
+    if(!toneMode.hidden){
+      // Einzelton: die aktuelle Aufgabe legt Ziehen/Stossen fest.
+      handleDiskantKey(el,direction);
+      return true;
+    }
+
+    if(!melodyMode.hidden){
+      // Blattlesen: die zum Zeitpunkt erwartete Note legt die Balgrichtung fest.
+      return melodyRegisterKey(keyNo,inputToken);
+    }
+    return false;
+  }
+
+  function directDiskantRelease(inputToken){
+    if(!melodyMode.hidden&&inputToken)melodyReleaseKey(inputToken);
+  }
+
+  // Pointer-ID kann auf Tablets zwischen mehreren Berührungen wiederverwendet werden.
+  // Darum erhält JEDE neue Berührung einen eindeutigen Token.
+  let directPointerSerial=0;
+  const directPointerTokens=new Map();
+
+  document.querySelectorAll('.diskantKeyVisual').forEach(el=>{
+    el.addEventListener('pointerdown',e=>{
+      if(rhythmMode&&!rhythmMode.hidden)return;
+      e.preventDefault();
+
+      const token=`pointer:${e.pointerId}:${++directPointerSerial}`;
+      directPointerTokens.set(e.pointerId,token);
+
+      el.classList.add('keyboard-pressed');
+      const registered=directDiskantPress(el,token);
+
+      // Falls im Blattlesen noch Anzähler/Bereit aktiv ist, darf kein verwaister
+      // Held-Key-Eintrag zurückbleiben.
+      if(!registered && !melodyMode.hidden){
+        directPointerTokens.delete(e.pointerId);
+      }
+    });
+
+    // Tastaturbedienung eines fokussierten SVG-Buttons (Enter/Leertaste).
+    el.addEventListener('keydown',e=>{
+      if(e.key!=='Enter'&&e.key!==' ')return;
+      e.preventDefault();
+      if(!toneMode.hidden)handleDiskantKey(el,direction);
+      else if(!melodyMode.hidden)melodyRegisterKey(Number(el.dataset.key),`svgkey:${el.dataset.key}`);
+    });
+    el.addEventListener('keyup',e=>{
+      if(e.key!=='Enter'&&e.key!==' ')return;
+      if(!melodyMode.hidden)melodyReleaseKey(`svgkey:${el.dataset.key}`);
+    });
+  });
+
+  // Zentraler Release: funktioniert auch, wenn Finger/Maus ausserhalb der Taste endet.
+  function releaseDirectPointer(e){
+    const token=directPointerTokens.get(e.pointerId);
+    if(!token)return;
+    directDiskantRelease(token);
+    directPointerTokens.delete(e.pointerId);
+    document.querySelectorAll('.diskantKeyVisual.keyboard-pressed').forEach(el=>el.classList.remove('keyboard-pressed'));
+  }
+  document.addEventListener('pointerup',releaseDirectPointer,true);
+  document.addEventListener('pointercancel',releaseDirectPointer,true);
+
   // --- Computertastatur als Schwyzerörgeli-Diskant ---
   // Kreuztonreihe 1–10: Q W E R T Z U I O P
   // mittlere Reihe 11–21: A S D F G H J K L Ö Ä
@@ -815,11 +978,12 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     toneMode.hidden=!tone;rhythmMode.hidden=!rhythm;melodyMode.hidden=!melody;
     workspace.classList.toggle('rhythm-only',rhythm);workspace.classList.toggle('tone-diskant-only',tone);workspace.classList.toggle('melody-mode',melody);
     if(rhythm){setVisualDirectionOverride(null);stopMelodyRun(true);renderRhythm();buildBeatLights()}
-    else if(melody){stopRhythmRun(true);generateMelody(false)}
+    else if(melody){stopRhythmRun(true);applyMelodyBoardLayout();generateMelody(false)}
     else{setVisualDirectionOverride(null);stopRhythmRun(true);stopMelodyRun(true)}
   }
   toneTab.addEventListener('click',()=>setTrainerMode('tone'));rhythmTab.addEventListener('click',()=>setTrainerMode('rhythm'));melodyTab.addEventListener('click',()=>setTrainerMode('melody'));
   workspace.classList.add('tone-diskant-only');
+  workspace.classList.add('board-left');
 
   // --- Rhythmustrainer ---
   const rhythmMeter=document.getElementById('rhythmMeter'),rhythmPreset=document.getElementById('rhythmPreset'),metroMode=document.getElementById('metroMode'),metroSubdivision=document.getElementById('metroSubdivision'),rhythmExerciseLength=document.getElementById('rhythmExerciseLength'),rhythmExerciseLabel=document.getElementById('rhythmExerciseLabel'),tempoRange=document.getElementById('tempoRange'),tempoValue=document.getElementById('tempoValue'),rhythmMeterLabel=document.getElementById('rhythmMeterLabel'),rhythmNote=document.getElementById('rhythmNote'),metroStatus=document.getElementById('metroStatus'),beatLights=document.getElementById('beatLights'),tapButton=document.getElementById('tapButton'),rhythmFeedback=document.getElementById('rhythmFeedback'),timingStrip=document.getElementById('timingStrip'),newRhythmBtn=document.getElementById('newRhythm'),startRhythmBtn=document.getElementById('startRhythm'),rhythmCorrectEl=document.getElementById('rhythmCorrect'),rhythmWrongEl=document.getElementById('rhythmWrong'),rhythmStreakEl=document.getElementById('rhythmStreak');
@@ -1324,6 +1488,11 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     buildBeatLights();
     if(rhythmPreset.value!=='custom')applyPreset();
     else{updateMaterialDependencies();generateRhythm()}
+  // iPad/Safari: schnelle Rhythmus-Tipps dürfen keinen Doppeltipp-Zoom auslösen.
+  tapButton.addEventListener('touchend',e=>{
+    e.preventDefault();
+  },{passive:false});
+
   });rhythmExerciseLength.addEventListener('change',()=>{generateRhythm()});rhythmPreset.addEventListener('change',applyPreset);materialChecks.forEach(el=>el.addEventListener('change',setCustom));newRhythmBtn.addEventListener('click',generateRhythm);startRhythmBtn.addEventListener('click',()=>{if(rhythmRunning)stopRhythmRun();else startRhythm()});tapButton.addEventListener('click',registerTap);document.addEventListener('keydown',e=>{if(rhythmMode.hidden||e.repeat)return;const tag=(e.target&&e.target.tagName||'').toLowerCase();if(['input','select','textarea'].includes(tag))return;if(e.code==='Space'){e.preventDefault();if(rhythmRunning)stopRhythmRun();else startRhythm();return}const isTapKey=e.code==='Period'||e.code==='NumpadDecimal'||e.key==='.';if(isTapKey){e.preventDefault();registerTap()}});
   const oldInitVerovio=initVerovio;initVerovio=function(){const ok=oldInitVerovio();if(ok&&rhythmPattern.length)renderRhythm();return ok};
   generateRhythm();buildBeatLights();
@@ -1335,7 +1504,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   const melBlkTwo8=document.getElementById('melBlkTwo8'),melBlkFour16=document.getElementById('melBlkFour16'),melBlk8_16_16=document.getElementById('melBlk8_16_16'),melBlk16_16_8=document.getElementById('melBlk16_16_8'),melBlk16_8_16=document.getElementById('melBlk16_8_16'),melBlkDot8_16=document.getElementById('melBlkDot8_16'),melBlk16_Dot8=document.getElementById('melBlk16_Dot8');
   const melodyMaterialChecks=[melWhole,melHalf,melQuarter,melEighth,melSixteenth,melRests,melDotted,melSync,melTies,melBlkTwo8,melBlkFour16,melBlk8_16_16,melBlk16_16_8,melBlk16_8_16,melBlkDot8_16,melBlk16_Dot8];
   const melodyExerciseLabel=document.getElementById('melodyExerciseLabel'),melodyMeterLabel=document.getElementById('melodyMeterLabel'),melodyNote=document.getElementById('melodyNote'),melodyStatusLine=document.getElementById('melodyStatusLine'),melodyBeatLights=document.getElementById('melodyBeatLights'),melodyFeedback=document.getElementById('melodyFeedback'),melodyResult=document.getElementById('melodyResult'),newMelodyBtn=document.getElementById('newMelody'),startMelodyBtn=document.getElementById('startMelody'),melodyPitchScore=document.getElementById('melodyPitchScore'),melodyTimingScore=document.getElementById('melodyTimingScore'),melodyHoldScore=document.getElementById('melodyHoldScore');
-  const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey');
+  const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout');
   let melodyPattern=[],melodyEvents=[],melodyRunning=false,melodyPhase='idle',melodyStartPerf=0,melodyPlayed=[],melodyTimers=[],melodyHeldKeys=new Map();
   const melodyBeats=()=>Number(melodyMeter.value||4),melodyBars=()=>Number(melodyLength.value||2),melodyBeatMs=()=>60000/Number(melodyTempo.value||80),melodyUnitMs=()=>melodyBeatMs()/4,melodyMetroStepsPerBeat=()=>melodyMetroSubdivision.value==='eighth'?2:1,melodyPulseUnits=()=>melodyMetroSubdivision.value==='eighth'?2:4;
   const melodyPresets={
@@ -1374,7 +1543,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   }
 
   function melodyMetroClick(accent=false){if(!['audio','both'].includes(melodyMetroMode.value))return;ensureAudio();const t=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='square';o.frequency.value=accent?1280:920;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(accent?.09:.055,t+.002);g.gain.exponentialRampToValueAtTime(.0001,t+.055);o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+.065)}
-  function stopMelodyRun(silent=false){melodyClearTimers();melodyRunning=false;melodyPhase='idle';melodyHeldKeys.clear();melodyClearCurrentKey();melodySetBeatLight(-1);if(startMelodyBtn){startMelodyBtn.textContent='▶ Anzählen & starten';startMelodyBtn.disabled=false}if(!silent&&melodyStatusLine)melodyStatusLine.textContent='Bereit · Start drücken';melodySyncVisualDirection()}
+  function stopMelodyRun(silent=false){directPointerTokens.clear();melodyClearTimers();melodyRunning=false;melodyPhase='idle';melodyHeldKeys.clear();melodyClearCurrentKey();melodySetBeatLight(-1);if(startMelodyBtn){startMelodyBtn.textContent='▶ Anzählen & starten';startMelodyBtn.disabled=false}if(!silent&&melodyStatusLine)melodyStatusLine.textContent='Bereit · Start drücken';melodySyncVisualDirection()}
   function melodySetDisabledOption(input,disabled){input.disabled=!!disabled;const label=input.closest('label');if(label)label.classList.toggle('material-disabled',!!disabled)}
   function updateMelodyMaterialDependencies(){const beats=melodyBeats();melodySetDisabledOption(melWhole,beats!==4);melodySetDisabledOption(melBlkTwo8,!melEighth.checked);const no16=!melSixteenth.checked;melodySetDisabledOption(melBlkFour16,no16);melodySetDisabledOption(melBlk8_16_16,no16||!melEighth.checked);melodySetDisabledOption(melBlk16_16_8,no16||!melEighth.checked);melodySetDisabledOption(melBlk16_8_16,no16||!melEighth.checked);melodySetDisabledOption(melBlkDot8_16,!melDotted.checked||!melEighth.checked||no16);melodySetDisabledOption(melBlk16_Dot8,!melDotted.checked||!melEighth.checked||no16);melodySetDisabledOption(melSync,!melQuarter.checked||!melEighth.checked);melodySetDisabledOption(melTies,!melEighth.checked);melodyAltered.disabled=melodyMaterial.value==='chromatic';melodySpelling.disabled=melodyMaterial.value!=='chromatic'}
   function applyMelodyPreset(){const p=melodyPresets[melodyPreset.value];if(!p)return;const mediumLongMeter=melodyPreset.value==='medium'&&melodyBeats()!==2;melodyRange.value=p.range;melodyDirection.value=p.direction;melodyAltered.value=p.altered;melWhole.checked=!!p.whole&&melodyBeats()===4;melHalf.checked=!!p.half;melQuarter.checked=!!p.quarter;melEighth.checked=!!p.eighth;melSixteenth.checked=mediumLongMeter?false:!!p.sixteenth;melRests.checked=!!p.rests;melDotted.checked=mediumLongMeter?false:!!p.dotted;melSync.checked=!!p.sync;melTies.checked=!!p.ties;melBlkTwo8.checked=p.blocks.includes('two8');melBlkFour16.checked=mediumLongMeter?false:p.blocks.includes('four16');melBlk8_16_16.checked=mediumLongMeter?false:p.blocks.includes('8_16_16');melBlk16_16_8.checked=mediumLongMeter?false:p.blocks.includes('16_16_8');melBlk16_8_16.checked=mediumLongMeter?false:p.blocks.includes('16_8_16');melBlkDot8_16.checked=mediumLongMeter?false:p.blocks.includes('dot8_16');melBlk16_Dot8.checked=mediumLongMeter?false:p.blocks.includes('16_dot8');updateMelodyMaterialDependencies();generateMelody(true)}
@@ -1492,7 +1661,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   function renderMelody(){if(!vrvReady||!vrvToolkit){melodyNote.textContent='Notendarstellung wird geladen …';return}try{const bars=melodyBars();vrvToolkit.setOptions({inputFrom:'musicxml',breaks:'auto',pageWidth:bars<=2?1200:bars<=4?1000:850,pageHeight:bars>=8?1500:900,adjustPageHeight:true,scale:48,header:'none',footer:'none',pageMarginTop:35,pageMarginBottom:20,pageMarginLeft:25,pageMarginRight:25});melodyNote.innerHTML=vrvToolkit.renderData(melodyXml(),{})}catch(e){console.error(e);melodyNote.textContent='Melodie konnte nicht dargestellt werden'}}
   function startMelody(){
     if(melodyRunning||!melodyEvents.length)return;
-    ensureAudio();melodyClearTimers();melodyPlayed=[];melodyHeldKeys.clear();melodyResult.hidden=true;melodyRunning=true;melodyPhase='countin';startMelodyBtn.textContent='■ Stopp';
+    ensureAudio();directPointerTokens.clear();melodyClearTimers();melodyPlayed=[];melodyHeldKeys.clear();melodyResult.hidden=true;melodyRunning=true;melodyPhase='countin';startMelodyBtn.textContent='■ Stopp';
     const beats=melodyBeats(),bars=melodyBars(),bms=melodyBeatMs(),steps=melodyMetroStepsPerBeat(),stepMs=bms/steps,countinMs=beats*bms,totalMs=beats*bars*bms;
     melodyStartPerf=performance.now()+countinMs;
     melodySetFeedback('Anzähler …','neutral');
@@ -1522,14 +1691,14 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     melodySchedule(()=>{melodyPhase='evaluate';melodySetBeatLight(-1);evaluateMelody()},countinMs+totalMs+180)
   }
   function melodyRegisterKey(keyNo,code){
-    if(!melodyRunning)return;
+    if(!melodyRunning)return false;
     const now=performance.now()-melodyStartPerf;
     const firstEarlyWindow=Math.min(240,Math.max(150,melodyBeatMs()*.30));
     const allowed=melodyPhase==='play'||(melodyPhase==='countin'&&now>=-firstEarlyWindow&&melodyPlayed.length===0);
-    if(!allowed)return;
+    if(!allowed)return false;
 
-    // Dieselbe physische Taste kann erst nach keyup erneut angeschlagen werden.
-    if(code && melodyHeldKeys.has(code))return;
+    // Derselbe Eingabekontakt darf bis zum Loslassen nicht doppelt auslösen.
+    if(code && melodyHeldKeys.has(code))return false;
 
     const playedDirection=melodyNearestEventDirection(now)||melodyEvents[0]?.dir||'zug';
     melodySyncVisualDirection(now);
@@ -1541,6 +1710,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     const played={time:now,key:keyNo,dir:playedDirection,upTime:null,code:code||null};
     melodyPlayed.push(played);
     if(code)melodyHeldKeys.set(code,played);
+    return true;
   }
 
   function melodyReleaseKey(code){
@@ -1552,6 +1722,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   }
 
   function evaluateMelody(){
+    directPointerTokens.clear();
     melodyClearCurrentKey();
     melodyRunning=false;melodyPhase='idle';startMelodyBtn.textContent='▶ Anzählen & starten';
 
@@ -1641,6 +1812,16 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   melodySpelling.addEventListener('change',()=>generateMelody(true));
   [melodyLength,melodyTempo,melodyMetroMode,melodyMetroSubdivision].forEach(el=>el.addEventListener('change',()=>generateMelody(true)));
 
+
+  function applyMelodyBoardLayout(){
+    workspace.classList.remove('board-left','board-right','board-bottom');
+    const layout=melodyBoardLayout.value||'left';
+    workspace.classList.add(`board-${layout}`);
+    // Verovio bekommt nach dem Layoutwechsel Gelegenheit, auf die neue Breite zu reagieren.
+    if(!melodyMode.hidden)setTimeout(()=>renderMelody(),30);
+  }
+
+  melodyBoardLayout.addEventListener('change',applyMelodyBoardLayout);
   melodyToggleSettings.addEventListener('click',()=>{
     const collapsed=melodyMode.classList.toggle('settings-collapsed');
     melodyToggleSettings.textContent=collapsed?'Einstellungen ausklappen':'Einstellungen einklappen';
