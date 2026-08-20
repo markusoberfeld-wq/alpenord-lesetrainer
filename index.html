@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4yzd</title>
+<title>AlpeNord Lesetrainer V0.4yze</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -786,13 +786,13 @@ html.tablet-focus-lock body{
 html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!important;height:100%!important;overscroll-behavior:none!important}
 
 
-/* V0.4yzd – 1:1-Kalibrierung nur auf Touch-Tablets/iPad sichtbar */
+/* V0.4yze – 1:1-Kalibrierung nur auf Touch-Tablets/iPad sichtbar */
 .board-calibration{display:none!important}
 @media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
   .board-calibration{display:inline-flex!important;align-items:center;gap:6px}
 }
 
-/* V0.4yzd – gemeinsame Bedienoberfläche für Einzelton, Rhythmus und Blattlesen */
+/* V0.4yze – gemeinsame Bedienoberfläche für Einzelton, Rhythmus und Blattlesen */
 :root{
   --an-control-h:38px;
   --an-control-radius:9px;
@@ -973,13 +973,13 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   }
 }
 
-/* V0.4yzd – grössere Rhythmusnotation: etwas mehr Luft in der Notenbox */
+/* V0.4yze – grössere Rhythmusnotation: etwas mehr Luft in der Notenbox */
 #rhythmMode .rhythm-note-box{height:280px}
 #rhythmMode .rhythm-note-box.multibar-2{height:320px}
 #rhythmMode .rhythm-note-box.multibar-4{height:430px}
 #rhythmMode .rhythm-note-box.multibar-8{height:690px}
 
-/* V0.4yzd – Rhythmus optisch an Einzelton/Blattlesen angleichen */
+/* V0.4yze – Rhythmus optisch an Einzelton/Blattlesen angleichen */
 #rhythmMode .rhythm-note-box{
   min-height:280px;
   height:auto!important;
@@ -1002,7 +1002,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   max-height:100%!important;
 }
 
-/* V0.4yzd – Desktopbreite der drei Modi vereinheitlichen */
+/* V0.4yze – Desktopbreite der drei Modi vereinheitlichen */
 @media (pointer:fine) and (min-width:1001px){
   #rhythmMode{
     width:min(100%,1040px)!important;
@@ -1031,7 +1031,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   width:100%!important;
 }
 
-/* V0.4yzd – Rhythmus auf Desktop inklusive Kopf/Modus-Tabs gleich breit */
+/* V0.4yze – Rhythmus auf Desktop inklusive Kopf/Modus-Tabs gleich breit */
 @media (pointer:fine) and (min-width:1001px){
   .workspace.rhythm-only{
     width:min(100%,1040px)!important;
@@ -1052,7 +1052,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   max-width:none!important;
 }
 
-/* V0.4yzd – Rhythmus exakt gleiche Desktopbreite wie Einzelton/Blattlesen unten quer */
+/* V0.4yze – Rhythmus exakt gleiche Desktopbreite wie Einzelton/Blattlesen unten quer */
 @media (pointer:fine) and (min-width:1001px){
   .workspace.rhythm-only{
     display:grid!important;
@@ -1073,7 +1073,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   }
 }
 
-/* V0.4yzd – Rhythmus-Bedienoberfläche: KEINE eigenen Sondermasse mehr */
+/* V0.4yze – Rhythmus-Bedienoberfläche: KEINE eigenen Sondermasse mehr */
 @media (pointer:fine) and (min-width:1001px){
   /* Äusserer Container exakt wie Einzelton/Blattlesen unten quer */
   .workspace.rhythm-only{
@@ -1188,7 +1188,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   max-width:none!important;
 }
 
-/* V0.4yzd – obere Bedienfelder in allen drei Modi EXAKT gleich gross */
+/* V0.4yze – obere Bedienfelder in allen drei Modi EXAKT gleich gross */
 @media (pointer:fine) and (min-width:1001px){
   #toneMode .tone-view-toolbar,
   #rhythmMode .rhythm-view-toolbar,
@@ -1218,7 +1218,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   }
 }
 
-/* V0.4yzd – Rhythmus-Wahlfelder auf iPad/Tablet exakt wie Einzelton/Blattlesen */
+/* V0.4yze – Rhythmus-Wahlfelder auf iPad/Tablet exakt wie Einzelton/Blattlesen */
 @media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
   #toneMode .trainer-controls,
   #rhythmMode .rhythm-controls,
@@ -1273,13 +1273,36 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     box-sizing:border-box!important;
   }
 }
+
+/* V0.4yze – iPad: Rhythmus-Toolbar dieselbe Rasterlogik wie Einzelton/Blattlesen */
+@media (pointer:coarse) and (min-width:700px) and (max-width:1400px){
+  #rhythmMode .rhythm-view-toolbar{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:8px!important;
+    width:100%!important;
+    align-items:stretch!important;
+  }
+  #rhythmMode .rhythm-view-toolbar > button,
+  #rhythmMode .rhythm-view-toolbar > label{
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:40px!important;
+    min-height:40px!important;
+    max-height:40px!important;
+    box-sizing:border-box!important;
+    margin:0!important;
+    padding:7px 10px!important;
+  }
+}
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4yzd</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4yze</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2" selected>B-Örgeli</option><option value="0">C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -1543,7 +1566,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4yzd</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4yze</div></div>
   <div class="tone-view-toolbar">
     <button id="toneToggleSettings" type="button">Einstellungen einklappen</button>
     <button id="toneFocusMode" type="button">Übungsmodus</button>
@@ -1586,7 +1609,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4yzd</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4yze</div></div>
     <div class="tone-view-toolbar rhythm-view-toolbar">
       <button id="rhythmToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="rhythmExerciseMode" type="button">Übungsmodus</button>
@@ -1644,7 +1667,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4yzd</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4yze</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Übungsmodus</button>
@@ -1726,7 +1749,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 (()=>{
   const Core=window.AlpeNordGriffbrett;
   const tuningSelect=document.getElementById('tuningSelect'), displayModeSelect=document.getElementById('displayModeSelect'), bassMode=document.getElementById('bassMode'), crossTone1Select=document.getElementById('crossTone1Select'), crossTone10Select=document.getElementById('crossTone10Select');
-  // V0.4yzd: Bei jedem Start ist B-Örgeli die feste Ausgangsstimmung.
+  // V0.4yze: Bei jedem Start ist B-Örgeli die feste Ausgangsstimmung.
   tuningSelect.value='-2';
   const dirBtn=document.getElementById('directionBtn'), rotateBtn=document.getElementById('rotateDiskantBtn'), diskantFrame=document.querySelector('.diskant-frame');
   const trainingDirection=document.getElementById('trainingDirection'),noteMaterial=document.getElementById('noteMaterial'),alteredNotes=document.getElementById('alteredNotes'),noteRange=document.getElementById('noteRange'),spellingMode=document.getElementById('spellingMode'),autoNext=document.getElementById('autoNext'),toneExerciseLength=document.getElementById('toneExerciseLength'),toneExerciseProgress=document.getElementById('toneExerciseProgress'),showKeyNames=document.getElementById('showKeyNames'),showNoteNames=document.getElementById('showNoteNames'),roundLength=document.getElementById('roundLength'),resetRound=document.getElementById('resetRound'),roundProgress=document.getElementById('roundProgress'),roundResult=document.getElementById('roundResult'),toneToggleSettings=document.getElementById('toneToggleSettings'),toneFocusMode=document.getElementById('toneFocusMode'),toneBoardLayout=document.getElementById('toneBoardLayout'),toneBoardCalibration=document.getElementById('toneBoardCalibration'),toneBoardCalibrationValue=document.getElementById('toneBoardCalibrationValue');
@@ -1901,7 +1924,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     const pref=spellingMode.value==='sharp'?'sharp':spellingMode.value==='flat'?'flat':(currentPreference||'flat');
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
     t.setAttribute('class','pressedToneLabel');t.setAttribute('x','0');t.setAttribute('y','4');
-    // V0.4yzd: Im Layout "unten quer" dreht das gesamte Griffbrett um +90°.
+    // V0.4yze: Im Layout "unten quer" dreht das gesamte Griffbrett um +90°.
     // Den kurz eingeblendeten Notennamen gegenläufig drehen, damit er aufrecht lesbar bleibt.
     if(toneBoardLayout&&toneBoardLayout.value==='bottom')t.setAttribute('transform','rotate(-90 0 4)');
     t.textContent=germanPitchName(pitchForTrainingMidi(shown,pref));
@@ -2002,7 +2025,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
       else renderQuestionNote();
     }else{
       questionHadError=true;streak=0;updateScore();
-      // V0.4yzd: Falsche Taste bleibt genau so lange rot wie ihr eingeblendeter Notenname.
+      // V0.4yze: Falsche Taste bleibt genau so lange rot wie ihr eingeblendeter Notenname.
       const wrongFeedbackDuration=1500;
       el.classList.add('wrong');setTimeout(()=>el.classList.remove('wrong'),wrongFeedbackDuration);
       if(pitchCorrect&&!directionCorrect){
@@ -2572,7 +2595,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
           }
           for(const t of measures[bar]){
             const note=new VF.StaveNote({clef:'treble',keys:['b/4'],duration:vfDuration(t),auto_stem:true});
-            // V0.4yzd – Rhythmusnoten wirklich grösser zeichnen.
+            // V0.4yze – Rhythmusnoten wirklich grösser zeichnen.
             // Default liegt ungefähr bei 39; 49 ergibt ca. +25 % sichtbare Grösse.
             if(note.render_options) note.render_options.glyph_font_scale=49;
             if(t.dur===3||t.dur===6)VF.Dot.buildAndAttach([note],{all:true});
@@ -2619,7 +2642,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
         }
       }
 
-      // V0.4yzd – Rhythmusdarstellung als GANZE Grafik skalieren.
+      // V0.4yze – Rhythmusdarstellung als GANZE Grafik skalieren.
       // Dadurch bleiben Notenkopf, Hals, Balken, Pausen, Schlüssel und Linien
       // geometrisch exakt zusammen. Wir schneiden nur den grossen unsichtbaren
       // VexFlow-Rand weg und zeigen die komplette fertige Notengrafik grösser.
@@ -2807,7 +2830,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     const rhythmErrors=(exp.length-hits)+extras+holdErrors;
     const bars=Math.max(1,Number(rhythmExerciseLength.value||1));
 
-    // V0.4yzd: 1 Takt ist ein fortlaufender Trainingsmodus.
+    // V0.4yze: 1 Takt ist ein fortlaufender Trainingsmodus.
     // Keine Erfolgsmeldung nach jedem Takt; Statistik wird bis zum manuellen Stopp gesammelt.
     if(bars===1 && rhythmOneBarSession.active){
       rhythmOneBarSession.bars++;
@@ -2861,7 +2884,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   tapButton.addEventListener('touchend',e=>{e.preventDefault();releaseTap()},{passive:false});
   tapButton.addEventListener('touchcancel',e=>{e.preventDefault();releaseTap()},{passive:false});
 
-  // V0.4yzd – robuste Eingabe auf Desktop und Tablet.
+  // V0.4yze – robuste Eingabe auf Desktop und Tablet.
   // Trackpad/Maus/Stift reagieren direkt auf pointerdown.
   tapButton.addEventListener('pointerdown',e=>{
     if(e.pointerType==='touch')return;
@@ -2943,7 +2966,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   if(startRhythmBtn)startRhythmBtn.addEventListener('click',hideExerciseResult);
 
   const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue');
-  // V0.4yzd: Bei jedem Start beginnt das Griffbrett unten quer – unabhängig von Browser-Wiederherstellung.
+  // V0.4yze: Bei jedem Start beginnt das Griffbrett unten quer – unabhängig von Browser-Wiederherstellung.
   if(toneBoardLayout)toneBoardLayout.value='bottom';
   if(melodyBoardLayout)melodyBoardLayout.value='bottom';
   const tabletFocusStage=document.getElementById('tabletFocusStage'),tabletFocusExit=document.getElementById('tabletFocusExit'),tabletFocusScore=document.getElementById('tabletFocusScore'),tabletFocusBoardSlot=document.getElementById('tabletFocusBoardSlot'),tabletFocusNew=document.getElementById('tabletFocusNew'),tabletFocusStart=document.getElementById('tabletFocusStart');
