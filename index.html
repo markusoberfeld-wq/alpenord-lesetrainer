@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4y</title>
+<title>AlpeNord Lesetrainer V0.4z</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -180,7 +180,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 }
 .workspace.melody-mode.board-bottom .diskant-frame svg{
   height:840px!important;width:auto!important;
-  transform:rotate(90deg)!important;
+  transform:rotate(calc(90deg + var(--board-tilt)))!important;
   transform-origin:center center
 }
 .workspace.melody-mode.board-bottom .cardhead{
@@ -246,11 +246,14 @@ html.rhythm-touch-lock #tapButton{
    Mittlere Reihe: 18 cm Tastenmitte–Tastenmitte.
    Gesamtabstand Kreuztonreihe ↔ äussere Reihe: 3 cm.
    SVG-Höhe: 1600/1240 * 18 cm = 23.2258 cm. */
-:root{--board-calibration:1}
+:root{--board-calibration:1;--board-tilt:0deg;--board-live-svg-height:auto}
 
 .board-calibration{gap:6px!important}
 .board-calibration input{width:90px}
 .board-calibration span{min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
+.board-tilt{gap:6px!important}
+.board-tilt input{width:100px}
+.board-tilt span{min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
 
 @media (pointer:coarse) and (min-width:700px){
   body{min-height:100dvh}
@@ -268,6 +271,8 @@ html.rhythm-touch-lock #tapButton{
     height:calc(23.2258cm * var(--board-calibration))!important;
     width:auto!important;
     max-width:none!important;
+    transform:rotate(var(--board-tilt));
+    transform-origin:center center;
   }
 
   /* Die Karte soll in Seitenlayout die ganze verfügbare Bildschirmhöhe nutzen. */
@@ -331,7 +336,7 @@ html.rhythm-touch-lock #tapButton{
   }
   .workspace.melody-mode.board-bottom .diskant-frame svg{
     height:calc(23.2258cm * var(--board-calibration))!important;
-    transform:rotate(90deg)!important;
+    transform:rotate(calc(90deg + var(--board-tilt)))!important;
     transform-origin:center center;
   }
 }
@@ -364,6 +369,8 @@ html.rhythm-touch-lock #tapButton{
   .workspace.melody-mode.board-left .diskant-frame svg,
   .workspace.melody-mode.board-right .diskant-frame svg{
     height:max(calc(23.2258cm * var(--board-calibration)), calc(100dvh - 125px))!important;
+    transform:rotate(var(--board-tilt))!important;
+    transform-origin:center center!important;
   }
 
   /* Unten quer: Instrument steckt direkt unter dem Notenfenster im Trainer. */
@@ -425,7 +432,7 @@ html.rhythm-touch-lock #tapButton{
     height:calc(100vw - 16px)!important;
     width:auto!important;
     max-width:none!important;
-    transform:rotate(90deg)!important;
+    transform:rotate(calc(90deg + var(--board-tilt)))!important;
     transform-origin:center center!important;
   }
 
@@ -602,7 +609,7 @@ html.rhythm-touch-lock #tapButton{
   height:var(--tablet-focus-board-svg-height, calc(100vw - 16px))!important;
   width:auto!important;
   max-width:none!important;
-  transform:rotate(90deg)!important;
+  transform:rotate(calc(90deg + var(--board-tilt)))!important;
   transform-origin:center center!important;
 }
 
@@ -633,7 +640,8 @@ html.rhythm-touch-lock #tapButton{
   height:min(calc(100dvh - 74px), 94vh)!important;
   width:auto!important;
   max-width:none!important;
-  transform:none!important;
+  transform:rotate(var(--board-tilt))!important;
+  transform-origin:center center!important;
 }
 
 /* Während echtem Fokusmodus darf die Seite selbst nicht scrollen. */
@@ -707,7 +715,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4y – Fokusmodus: ganze Blattleseübung bleibt sichtbar, Griffbrett bleibt fix */
+/* V0.4z – Fokusmodus: ganze Blattleseübung bleibt sichtbar, Griffbrett bleibt fix */
 .tablet-focus-notes{
   background:#fffdf8;
   border:1px solid #4a433c;
@@ -761,7 +769,7 @@ html.tablet-focus-lock body{
 
 
 
-/* V0.4y – Rhythmus: eigener Übungsmodus über die volle Bildschirmbreite. */
+/* V0.4z – Rhythmus: eigener Übungsmodus über die volle Bildschirmbreite. */
 .rhythm-exercise-stage{position:fixed;inset:0;z-index:10050;background:#15120f;padding:8px;box-sizing:border-box;overflow:hidden}
 .rhythm-exercise-stage.active{display:block!important}
 .rhythm-exercise-content{width:100%;height:100%;display:grid;grid-template-rows:auto minmax(210px,1fr) auto auto auto auto;gap:7px;padding-top:40px;box-sizing:border-box;min-width:0;min-height:0}
@@ -776,13 +784,33 @@ html.tablet-focus-lock body{
 .rhythm-exercise-stage .rhythm-actions button{height:46px!important}
 html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!important;height:100%!important;overscroll-behavior:none!important}
 
+
+/* V0.4zb – Neigung auch auf Desktop für links/rechts wirklich anwenden. */
+.workspace.melody-mode.board-left .diskant-frame svg,
+.workspace.melody-mode.board-right .diskant-frame svg{
+  transform:rotate(var(--board-tilt))!important;
+  transform-origin:center center!important;
+}
+
+/* V0.4z – bestehende 180°-Drehfunktion mit der neuen Neigung kombinieren. */
+.workspace.melody-mode.board-left .diskant-frame.rotated svg,
+.workspace.melody-mode.board-right .diskant-frame.rotated svg,
+.tablet-focus-stage.layout-left .diskant-frame.rotated svg,
+.tablet-focus-stage.layout-right .diskant-frame.rotated svg{
+  transform:rotate(calc(180deg + var(--board-tilt)))!important;
+}
+.workspace.melody-mode.board-bottom .diskant-frame.rotated svg,
+.tablet-focus-stage.layout-bottom .diskant-frame.rotated svg{
+  transform:rotate(calc(270deg + var(--board-tilt)))!important;
+}
+
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4y</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4zb</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -1046,7 +1074,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4y</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4z</div></div>
   <div class="tone-view-toolbar">
     <button id="toneFocusMode" type="button">Übungsmodus</button>
     <label>Griffbrett
@@ -1060,6 +1088,11 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
       1:1
       <input id="toneBoardCalibration" type="range" min="90" max="110" step="1" value="100">
       <span id="toneBoardCalibrationValue">100%</span>
+    </label>
+    <label class="board-tilt" title="Griffbrett leicht neigen. Die App verkleinert es bei Bedarf automatisch, damit alle Tasten sichtbar bleiben.">
+      Neigung
+      <input id="toneBoardTilt" type="range" min="-20" max="20" step="5" value="0">
+      <span id="toneBoardTiltValue">0°</span>
     </label>
   </div>
   <div class="trainer-controls">
@@ -1085,7 +1118,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4y</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4z</div></div>
     <div class="tone-view-toolbar rhythm-view-toolbar">
       <button id="rhythmExerciseMode" type="button">Übungsmodus</button>
     </div>
@@ -1140,7 +1173,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4y</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4z</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Übungsmodus</button>
@@ -1158,6 +1191,11 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
         1:1
         <input id="boardCalibration" type="range" min="90" max="110" step="1" value="100">
         <span id="boardCalibrationValue">100%</span>
+      </label>
+      <label class="board-tilt" title="Griffbrett leicht neigen. Die App verkleinert es bei Bedarf automatisch, damit alle Tasten sichtbar bleiben.">
+        Neigung
+        <input id="boardTilt" type="range" min="-20" max="20" step="5" value="0">
+        <span id="boardTiltValue">0°</span>
       </label>
     </div>
     <div class="melody-settings-top">
@@ -1221,7 +1259,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   const Core=window.AlpeNordGriffbrett;
   const tuningSelect=document.getElementById('tuningSelect'), displayModeSelect=document.getElementById('displayModeSelect'), bassMode=document.getElementById('bassMode'), crossTone1Select=document.getElementById('crossTone1Select'), crossTone10Select=document.getElementById('crossTone10Select');
   const dirBtn=document.getElementById('directionBtn'), rotateBtn=document.getElementById('rotateDiskantBtn'), diskantFrame=document.querySelector('.diskant-frame');
-  const trainingDirection=document.getElementById('trainingDirection'),noteMaterial=document.getElementById('noteMaterial'),alteredNotes=document.getElementById('alteredNotes'),noteRange=document.getElementById('noteRange'),spellingMode=document.getElementById('spellingMode'),autoNext=document.getElementById('autoNext'),toneExerciseLength=document.getElementById('toneExerciseLength'),toneExerciseProgress=document.getElementById('toneExerciseProgress'),showKeyNames=document.getElementById('showKeyNames'),roundLength=document.getElementById('roundLength'),resetRound=document.getElementById('resetRound'),roundProgress=document.getElementById('roundProgress'),roundResult=document.getElementById('roundResult'),toneFocusMode=document.getElementById('toneFocusMode'),toneBoardLayout=document.getElementById('toneBoardLayout'),toneBoardCalibration=document.getElementById('toneBoardCalibration'),toneBoardCalibrationValue=document.getElementById('toneBoardCalibrationValue');
+  const trainingDirection=document.getElementById('trainingDirection'),noteMaterial=document.getElementById('noteMaterial'),alteredNotes=document.getElementById('alteredNotes'),noteRange=document.getElementById('noteRange'),spellingMode=document.getElementById('spellingMode'),autoNext=document.getElementById('autoNext'),toneExerciseLength=document.getElementById('toneExerciseLength'),toneExerciseProgress=document.getElementById('toneExerciseProgress'),showKeyNames=document.getElementById('showKeyNames'),roundLength=document.getElementById('roundLength'),resetRound=document.getElementById('resetRound'),roundProgress=document.getElementById('roundProgress'),roundResult=document.getElementById('roundResult'),toneFocusMode=document.getElementById('toneFocusMode'),toneBoardLayout=document.getElementById('toneBoardLayout'),toneBoardCalibration=document.getElementById('toneBoardCalibration'),toneBoardCalibrationValue=document.getElementById('toneBoardCalibrationValue'),toneBoardTilt=document.getElementById('toneBoardTilt'),toneBoardTiltValue=document.getElementById('toneBoardTiltValue');
   const trainerNote=document.getElementById('trainerNote'),feedback=document.getElementById('feedback'),taskDirection=document.getElementById('taskDirection'),showSolution=document.getElementById('showSolution'),nextQuestion=document.getElementById('nextQuestion');
   let tabletFocusRestore=null;
   let tabletFocusKind='melody';
@@ -1392,7 +1430,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   function finishRound(forceAtExerciseEnd=false){
     const limit=roundLimit();
     if(!limit||completed<limit)return false;
-    // V0.4y: Eine begonnene 1/2/4/8-Takt-Aufgabe wird immer vollständig beendet.
+    // V0.4z: Eine begonnene 1/2/4/8-Takt-Aufgabe wird immer vollständig beendet.
     // Das Rundenziel darf deshalb erst am Ende der aktuellen Aufgabe abschliessen.
     const atExerciseEnd=toneExercise.length>0&&toneExerciseIndex>=toneExercise.length-1;
     if(!forceAtExerciseEnd&&!atExerciseEnd)return false;
@@ -2192,7 +2230,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   const melBlkTwo8=document.getElementById('melBlkTwo8'),melBlkFour16=document.getElementById('melBlkFour16'),melBlk8_16_16=document.getElementById('melBlk8_16_16'),melBlk16_16_8=document.getElementById('melBlk16_16_8'),melBlk16_8_16=document.getElementById('melBlk16_8_16'),melBlkDot8_16=document.getElementById('melBlkDot8_16'),melBlk16_Dot8=document.getElementById('melBlk16_Dot8');
   const melodyMaterialChecks=[melWhole,melHalf,melQuarter,melEighth,melSixteenth,melRests,melDotted,melSync,melTies,melBlkTwo8,melBlkFour16,melBlk8_16_16,melBlk16_16_8,melBlk16_8_16,melBlkDot8_16,melBlk16_Dot8];
   const melodyExerciseLabel=document.getElementById('melodyExerciseLabel'),melodyMeterLabel=document.getElementById('melodyMeterLabel'),melodyNote=document.getElementById('melodyNote'),melodyStatusLine=document.getElementById('melodyStatusLine'),melodyBeatLights=document.getElementById('melodyBeatLights'),melodyFeedback=document.getElementById('melodyFeedback'),melodyResult=document.getElementById('melodyResult'),newMelodyBtn=document.getElementById('newMelody'),startMelodyBtn=document.getElementById('startMelody'),melodyPitchScore=document.getElementById('melodyPitchScore'),melodyTimingScore=document.getElementById('melodyTimingScore'),melodyHoldScore=document.getElementById('melodyHoldScore');
-  // V0.4y – Rhythmus-Übungsmodus: dieselben Live-Elemente werden in die Vollbildfläche verschoben.
+  // V0.4z – Rhythmus-Übungsmodus: dieselben Live-Elemente werden in die Vollbildfläche verschoben.
   function enterRhythmExerciseMode(){
     if(!rhythmExerciseStage||!rhythmExerciseContent||rhythmExerciseRestore)return false;
     const nodes=[rhythmMode.querySelector('.task-head'),rhythmNote,rhythmMode.querySelector('.metro-panel'),tapButton,rhythmFeedback,timingStrip,rhythmMode.querySelector('.rhythm-actions')].filter(Boolean);
@@ -2218,7 +2256,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   if(rhythmExerciseMode)rhythmExerciseMode.addEventListener('click',()=>{if(rhythmExerciseRestore)exitRhythmExerciseMode();else enterRhythmExerciseMode()});
   if(rhythmExerciseExit)rhythmExerciseExit.addEventListener('click',exitRhythmExerciseMode);
 
-  const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue');
+  const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue'),boardTilt=document.getElementById('boardTilt'),boardTiltValue=document.getElementById('boardTiltValue');
   const tabletFocusStage=document.getElementById('tabletFocusStage'),tabletFocusExit=document.getElementById('tabletFocusExit'),tabletFocusScore=document.getElementById('tabletFocusScore'),tabletFocusBoardSlot=document.getElementById('tabletFocusBoardSlot'),tabletFocusNew=document.getElementById('tabletFocusNew'),tabletFocusStart=document.getElementById('tabletFocusStart');
   let melodyPattern=[],melodyEvents=[],melodyRunning=false,melodyPhase='idle',melodyStartPerf=0,melodyPlayed=[],melodyTimers=[],melodyHeldKeys=new Map();
   const melodyBeats=()=>Number(melodyMeter.value||4),melodyBars=()=>Number(melodyLength.value||2),melodyBeatMs=()=>60000/Number(melodyTempo.value||80),melodyUnitMs=()=>melodyBeatMs()/4,melodyMetroStepsPerBeat=()=>melodyMetroSubdivision.value==='eighth'?2:1,melodyPulseUnits=()=>melodyMetroSubdivision.value==='eighth'?2:4;
@@ -2395,7 +2433,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     if(!tabletFocusStage.classList.contains('active'))return;
 
     const bars=melodyBars();
-    // V0.4y: Im Blattlesen-Fokus bleibt die komplette Aufgabe immer sichtbar.
+    // V0.4z: Im Blattlesen-Fokus bleibt die komplette Aufgabe immer sichtbar.
     // 2/4 Takte = eine Zeile; 8 Takte = zwei Zeilen à 4 Takte.
     // Es gibt während des Spielens kein Nachrücken mehr.
     tabletFocusSystem=0;
@@ -2605,7 +2643,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     boardCalibrationValue.textContent=`${pct}%`;
     if(toneBoardCalibration){toneBoardCalibration.value=String(pct);toneBoardCalibrationValue.textContent=`${pct}%`;}
     try{localStorage.setItem('alpenord-board-calibration',String(pct))}catch(_){}
-    if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,30);
+    setTimeout(()=>{fitNormalBoard();if(tabletFocusRestore)fitTabletFocusBoard()},30);
   }
   function applyBoardCalibration(){setBoardCalibration(boardCalibration.value)}
 
@@ -2616,6 +2654,70 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
   applyBoardCalibration();
   boardCalibration.addEventListener('input',applyBoardCalibration);
   if(toneBoardCalibration)toneBoardCalibration.addEventListener('input',()=>setBoardCalibration(toneBoardCalibration.value));
+
+  // V0.4z – gemeinsame Griffbrett-Neigung für Einzelton und Blattlesen.
+  function currentBoardTilt(){
+    return Number((toneBoardTilt&&toneBoardTilt.value)||(boardTilt&&boardTilt.value)||0);
+  }
+  function boardMaxSvgHeight(slotW,slotH,baseAngleDeg){
+    if(!(slotW>0&&slotH>0))return 0;
+    const a=(baseAngleDeg+currentBoardTilt())*Math.PI/180;
+    const c=Math.abs(Math.cos(a)),sn=Math.abs(Math.sin(a));
+    const r=690/1600;
+    return Math.max(1,Math.min(slotW/(r*c+sn),slotH/(r*sn+c)));
+  }
+  // V0.4zb – Neigungs-Fit anhand der TATSÄCHLICH verfügbaren Griffbrettfläche.
+  // Nicht mehr aus der Fensterbreite schätzen: genau das führte bei Desktop links/rechts
+  // dazu, dass das gedrehte Instrument trotz kleinerer Skalierung aus dem Rahmen ragte.
+  function fitNormalBoard(){
+    if(tabletFocusRestore)return;
+    const instrumentCard=document.querySelector('.instrument-card');
+    const frame=instrumentCard&&instrumentCard.querySelector('.diskant-frame');
+    const stage=instrumentCard&&instrumentCard.querySelector('.instrument-stage');
+    const svg=frame&&frame.querySelector('svg');
+    if(!svg)return;
+    const layout=(!toneMode.hidden&&toneBoardLayout)?(toneBoardLayout.value||'left'):(melodyBoardLayout.value||'left');
+    const pct=Number((toneBoardCalibration&&toneBoardCalibration.value)||(boardCalibration&&boardCalibration.value)||100)/100;
+    const idealPx=(23.2258*96/2.54)*pct;
+
+    // Der Slot selbst ist die verbindliche Grenze. Bei flexiblen Tablet-Layouts kann
+    // der Frame zunächst keine brauchbare Höhe liefern; dann auf die Stage zurückfallen.
+    const fr=frame.getBoundingClientRect();
+    const sr=stage?stage.getBoundingClientRect():null;
+    let maxW=(fr.width>40?fr.width:(sr&&sr.width>40?sr.width:window.innerWidth*.4));
+    let maxH=(fr.height>40?fr.height:(sr&&sr.height>40?sr.height:window.innerHeight-150));
+
+    // Seitenlayout: die Stage ist oft die engere horizontale Grenze als ein durch das
+    // SVG selbst aufgeweiteter Frame. Darum stets die kleinere reale Breite verwenden.
+    if(layout!=='bottom'&&sr&&sr.width>40)maxW=Math.min(maxW,sr.width);
+    if(sr&&sr.height>40)maxH=Math.min(maxH,sr.height);
+
+    // Sicherheitsrand, damit Holzrahmen/Antialiasing auch bei 20° nie angeschnitten wird.
+    maxW=Math.max(1,maxW-20);
+    maxH=Math.max(1,maxH-20);
+    const fit=boardMaxSvgHeight(maxW,maxH,layout==='bottom'?90:0);
+    const target=Math.max(1,Math.floor(Math.min(idealPx,fit||idealPx)));
+    svg.style.setProperty('height',`${target}px`,'important');
+  }
+  function setBoardTilt(deg){
+    deg=Math.max(-20,Math.min(20,Math.round(Number(deg||0)/5)*5));
+    document.documentElement.style.setProperty('--board-tilt',`${deg}deg`);
+    if(boardTilt){boardTilt.value=String(deg);boardTiltValue.textContent=`${deg}°`;}
+    if(toneBoardTilt){toneBoardTilt.value=String(deg);toneBoardTiltValue.textContent=`${deg}°`;}
+    try{localStorage.setItem('alpenord-board-tilt',String(deg))}catch(_){}
+    requestAnimationFrame(()=>{fitNormalBoard();if(tabletFocusRestore)fitTabletFocusBoard()});
+  }
+  try{
+    const savedTilt=Number(localStorage.getItem('alpenord-board-tilt'));
+    if(Number.isFinite(savedTilt)&&savedTilt>=-20&&savedTilt<=20){
+      if(boardTilt)boardTilt.value=String(savedTilt);
+      if(toneBoardTilt)toneBoardTilt.value=String(savedTilt);
+    }
+  }catch(_){}
+  setBoardTilt((boardTilt&&boardTilt.value)||0);
+  if(boardTilt)boardTilt.addEventListener('input',()=>setBoardTilt(boardTilt.value));
+  if(toneBoardTilt)toneBoardTilt.addEventListener('input',()=>setBoardTilt(toneBoardTilt.value));
+  setTimeout(fitNormalBoard,80);
 
   function applyToneBoardLayout(){
     if(!toneBoardLayout)return;
@@ -2637,7 +2739,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     setTimeout(()=>renderQuestionNote(),40);
   }
 
-  if(toneBoardLayout)toneBoardLayout.addEventListener('change',()=>{applyToneBoardLayout();if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,40)});
+  if(toneBoardLayout)toneBoardLayout.addEventListener('change',()=>{applyToneBoardLayout();setTimeout(()=>{fitNormalBoard();if(tabletFocusRestore)fitTabletFocusBoard()},40)});
   if(toneFocusMode)toneFocusMode.addEventListener('click',()=>{
     if(tabletFocusRestore){exitTabletFocus();return}
     enterTabletFocus('tone');
@@ -2672,9 +2774,9 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     if(!melodyMode.hidden)setTimeout(()=>renderMelody(),50);
   }
 
-  melodyBoardLayout.addEventListener('change',()=>{applyMelodyBoardLayout();if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,40)});
-  window.addEventListener('resize',()=>{if(!melodyMode.hidden){applyMelodyBoardLayout();setTimeout(()=>renderMelody(),80)}else if(!toneMode.hidden){applyToneBoardLayout()}else if(!rhythmMode.hidden){setTimeout(()=>renderRhythm(),80)}if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,90)});
-  window.addEventListener('orientationchange',()=>setTimeout(()=>{if(!melodyMode.hidden)applyMelodyBoardLayout();else if(!toneMode.hidden)applyToneBoardLayout();if(tabletFocusRestore)fitTabletFocusBoard()},120));
+  melodyBoardLayout.addEventListener('change',()=>{applyMelodyBoardLayout();setTimeout(()=>{fitNormalBoard();if(tabletFocusRestore)fitTabletFocusBoard()},40)});
+  window.addEventListener('resize',()=>{if(!melodyMode.hidden){applyMelodyBoardLayout();setTimeout(()=>renderMelody(),80)}else if(!toneMode.hidden){applyToneBoardLayout()}else if(!rhythmMode.hidden){setTimeout(()=>renderRhythm(),80)}setTimeout(()=>{fitNormalBoard();if(tabletFocusRestore)fitTabletFocusBoard()},90)});
+  window.addEventListener('orientationchange',()=>setTimeout(()=>{if(!melodyMode.hidden)applyMelodyBoardLayout();else if(!toneMode.hidden)applyToneBoardLayout();fitNormalBoard();if(tabletFocusRestore)fitTabletFocusBoard()},120));
   melodyToggleSettings.addEventListener('click',()=>{
     const collapsed=melodyMode.classList.toggle('settings-collapsed');
     melodyToggleSettings.textContent=collapsed?'Einstellungen ausklappen':'Einstellungen einklappen';
@@ -2696,17 +2798,15 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     if(!tabletFocusStage||tabletFocusStage.hidden||!tabletFocusStage.classList.contains('active'))return;
     const svg=tabletFocusBoardSlot&&tabletFocusBoardSlot.querySelector('.diskant-frame svg');
     if(!svg)return;
-
-    if(tabletFocusStage.classList.contains('layout-bottom')){
-      const rect=tabletFocusBoardSlot.getBoundingClientRect();
-      if(rect.width>0&&rect.height>0){
-        const svgAspect=1600/690;
-        const target=Math.max(1,Math.min(rect.width,rect.height*svgAspect));
-        svg.style.setProperty('--tablet-focus-board-svg-height',`${Math.floor(target)}px`);
-      }
-    }else{
-      svg.style.removeProperty('--tablet-focus-board-svg-height');
-    }
+    const rect=tabletFocusBoardSlot.getBoundingClientRect();
+    if(!(rect.width>0&&rect.height>0))return;
+    const isBottom=tabletFocusStage.classList.contains('layout-bottom');
+    const fit=boardMaxSvgHeight(Math.max(1,rect.width-20),Math.max(1,rect.height-20),isBottom?90:0);
+    const pct=Number((toneBoardCalibration&&toneBoardCalibration.value)||(boardCalibration&&boardCalibration.value)||100)/100;
+    const idealPx=(23.2258*96/2.54)*pct;
+    const target=Math.max(1,Math.floor(Math.min(idealPx,fit||idealPx)));
+    svg.style.setProperty('--tablet-focus-board-svg-height',`${target}px`);
+    svg.style.setProperty('height',`${target}px`,'important');
   }
 
   function cloneToneIntoFocus(){
@@ -2765,7 +2865,7 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
 
     if(instrumentCard&&parent){
       const svg=instrumentCard.querySelector('.diskant-frame svg');
-      if(svg)svg.style.removeProperty('--tablet-focus-board-svg-height');
+      if(svg){svg.style.removeProperty('--tablet-focus-board-svg-height');svg.style.removeProperty('height');}
       if(next&&next.parentNode===parent)parent.insertBefore(instrumentCard,next);
       else parent.appendChild(instrumentCard);
     }
@@ -2778,8 +2878,8 @@ html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!importa
     melodyFocusMode.textContent='Übungsmodus';
     if(toneFocusMode)toneFocusMode.textContent='Übungsmodus';
 
-    if(exitingKind==='tone'){applyToneBoardLayout();setTimeout(()=>renderQuestionNote(),60)}
-    else{applyMelodyBoardLayout();setTimeout(()=>renderMelody(),60)}
+    if(exitingKind==='tone'){applyToneBoardLayout();setTimeout(()=>{renderQuestionNote();fitNormalBoard()},60)}
+    else{applyMelodyBoardLayout();setTimeout(()=>{renderMelody();fitNormalBoard()},60)}
   }
 
   melodyFocusMode.addEventListener('click',()=>{
