@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4j</title>
+<title>AlpeNord Lesetrainer V0.4k</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -125,7 +125,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
 
-/* V0.4j – Blattlesen: Griffbrett-Positionen */
+/* V0.4k – Blattlesen: Griffbrett-Positionen */
 .melody-view-toolbar select{
   margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
   background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
@@ -193,7 +193,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
 
 
-/* V0.4j – Rhythmus auf Touch-Geräten:
+/* V0.4k – Rhythmus auf Touch-Geräten:
    schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
 #tapButton,
 #rhythmNote,
@@ -224,13 +224,119 @@ html.rhythm-touch-lock #tapButton{
   -webkit-touch-callout:none;
 }
 
+
+/* V0.4k – physische Originalgrösse auf Tablets.
+   Mittlere Reihe: 18 cm Tastenmitte–Tastenmitte.
+   Gesamtabstand Kreuztonreihe ↔ äussere Reihe: 3 cm.
+   SVG-Höhe: 1600/1240 * 18 cm = 23.2258 cm. */
+:root{--board-calibration:1}
+
+.board-calibration{gap:6px!important}
+.board-calibration input{width:90px}
+.board-calibration span{min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
+
+@media (pointer:coarse) and (min-width:700px){
+  body{min-height:100dvh}
+  .page{width:100%;max-width:none;padding-left:10px;padding-right:10px}
+  .workspace.melody-mode{
+    width:100%;
+    max-width:none;
+    margin:0;
+    gap:10px;
+    align-items:start;
+  }
+
+  /* Originalmass: gleichmässig skalieren, damit Kreise Kreise bleiben. */
+  .workspace.melody-mode .diskant-frame svg{
+    height:calc(23.2258cm * var(--board-calibration))!important;
+    width:auto!important;
+    max-width:none!important;
+  }
+
+  /* Die Karte soll in Seitenlayout die ganze verfügbare Bildschirmhöhe nutzen. */
+  .workspace.melody-mode.board-left,
+  .workspace.melody-mode.board-right{
+    grid-template-columns:max-content minmax(0,1fr);
+    min-height:calc(100dvh - 150px);
+  }
+  .workspace.melody-mode.board-right{
+    grid-template-columns:minmax(0,1fr) max-content;
+  }
+  .workspace.melody-mode.board-left .instrument-card,
+  .workspace.melody-mode.board-right .instrument-card{
+    min-height:calc(100dvh - 165px);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+  }
+  .workspace.melody-mode.board-left .instrument-stage,
+  .workspace.melody-mode.board-right .instrument-stage{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:auto;
+    min-width:0;
+    height:auto;
+    padding:4px;
+  }
+  .workspace.melody-mode.board-left .diskant-frame,
+  .workspace.melody-mode.board-right .diskant-frame{
+    height:auto;
+    overflow:visible;
+  }
+
+  /* Unten quer: Quergriffbrett nutzt im iPad-Querformat die volle verfügbare Breite. */
+  .workspace.melody-mode.board-bottom{
+    grid-template-columns:minmax(0,1fr);
+    width:100%;
+    max-width:none;
+  }
+  .workspace.melody-mode.board-bottom .trainer-card,
+  .workspace.melody-mode.board-bottom .instrument-card{
+    width:100%!important;
+    max-width:none!important;
+  }
+  .workspace.melody-mode.board-bottom .instrument-stage{
+    width:100%;
+    height:calc(10.4cm * var(--board-calibration));
+    min-height:300px;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .workspace.melody-mode.board-bottom .diskant-frame{
+    width:100%;
+    height:100%;
+    overflow:visible;
+  }
+  .workspace.melody-mode.board-bottom .diskant-frame svg{
+    height:calc(23.2258cm * var(--board-calibration))!important;
+    transform:rotate(90deg)!important;
+    transform-origin:center center;
+  }
+}
+
+/* Im iPad-Querformat darf die Queransicht bis an die verfügbare Breite gehen. */
+@media (pointer:coarse) and (min-width:900px) and (orientation:landscape){
+  .workspace.melody-mode.board-bottom .instrument-card{
+    margin-left:0!important;margin-right:0!important;
+  }
+  .workspace.melody-mode.board-bottom .instrument-stage{
+    width:calc(100vw - 20px);
+    max-width:none;
+  }
+}
+
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4j</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4k</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -303,61 +409,61 @@ html.rhythm-touch-lock #tapButton{
 <rect class="woodOuter" x="255" y="20" width="430" height="1560" rx="34"/>
 <rect class="panel" x="300" y="95" width="340" height="1410" rx="8"/>
 
-<g class="diskantKeyVisual" data-key="1" tabindex="0" transform="translate(388.35 1344.85)">
+<g class="diskantKeyVisual" data-key="1" tabindex="0" transform="translate(376.35 1344.85)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="2" tabindex="0" transform="translate(389.46 1213.46)">
+<g class="diskantKeyVisual" data-key="2" tabindex="0" transform="translate(377.61 1213.46)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="3" tabindex="0" transform="translate(387.25 1088.68)">
+<g class="diskantKeyVisual" data-key="3" tabindex="0" transform="translate(375.11 1088.68)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="4" tabindex="0" transform="translate(389.46 963.91)">
+<g class="diskantKeyVisual" data-key="4" tabindex="0" transform="translate(377.61 963.91)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="5" tabindex="0" transform="translate(388.35 834.72)">
+<g class="diskantKeyVisual" data-key="5" tabindex="0" transform="translate(376.35 834.72)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="6" tabindex="0" transform="translate(389.46 711.05)">
+<g class="diskantKeyVisual" data-key="6" tabindex="0" transform="translate(377.61 711.05)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="7" tabindex="0" transform="translate(388.35 588.49)">
+<g class="diskantKeyVisual" data-key="7" tabindex="0" transform="translate(376.35 588.49)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="8" tabindex="0" transform="translate(387.25 465.92)">
+<g class="diskantKeyVisual" data-key="8" tabindex="0" transform="translate(375.11 465.92)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="9" tabindex="0" transform="translate(388.35 345.57)">
+<g class="diskantKeyVisual" data-key="9" tabindex="0" transform="translate(376.35 345.57)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="10" tabindex="0" transform="translate(386.14 226.31)">
+<g class="diskantKeyVisual" data-key="10" tabindex="0" transform="translate(373.85 226.31)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
@@ -429,61 +535,61 @@ html.rhythm-touch-lock #tapButton{
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="22" tabindex="0" transform="translate(573.86 1344.85)">
+<g class="diskantKeyVisual" data-key="22" tabindex="0" transform="translate(586.15 1344.85)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="23" tabindex="0" transform="translate(573.86 1211.25)">
+<g class="diskantKeyVisual" data-key="23" tabindex="0" transform="translate(586.15 1211.25)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="24" tabindex="0" transform="translate(573.86 1087.58)">
+<g class="diskantKeyVisual" data-key="24" tabindex="0" transform="translate(586.15 1087.58)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="25" tabindex="0" transform="translate(573.86 959.49)">
+<g class="diskantKeyVisual" data-key="25" tabindex="0" transform="translate(586.15 959.49)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="26" tabindex="0" transform="translate(572.75 834.72)">
+<g class="diskantKeyVisual" data-key="26" tabindex="0" transform="translate(584.89 834.72)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="27" tabindex="0" transform="translate(571.65 712.15)">
+<g class="diskantKeyVisual" data-key="27" tabindex="0" transform="translate(583.65 712.15)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="28" tabindex="0" transform="translate(569.44 591.80)">
+<g class="diskantKeyVisual" data-key="28" tabindex="0" transform="translate(581.15 591.80)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="29" tabindex="0" transform="translate(568.33 467.03)">
+<g class="diskantKeyVisual" data-key="29" tabindex="0" transform="translate(579.89 467.03)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="30" tabindex="0" transform="translate(567.23 346.67)">
+<g class="diskantKeyVisual" data-key="30" tabindex="0" transform="translate(578.65 346.67)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
 
-<g class="diskantKeyVisual" data-key="31" tabindex="0" transform="translate(565.02 227.42)">
+<g class="diskantKeyVisual" data-key="31" tabindex="0" transform="translate(576.15 227.42)">
   <circle class="keyRim" r="44.06"/>
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
@@ -494,7 +600,7 @@ html.rhythm-touch-lock #tapButton{
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4j</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4k</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -518,7 +624,7 @@ html.rhythm-touch-lock #tapButton{
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4j</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4k</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -570,7 +676,7 @@ html.rhythm-touch-lock #tapButton{
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4j</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4k</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
@@ -583,6 +689,11 @@ html.rhythm-touch-lock #tapButton{
           <option value="right">rechts</option>
           <option value="bottom">unten quer</option>
         </select>
+      </label>
+      <label class="board-calibration" title="Mit einem Lineal kalibrieren: Abstand unterste–oberste Taste der mittleren Reihe = 18 cm.">
+        1:1
+        <input id="boardCalibration" type="range" min="90" max="110" step="1" value="100">
+        <span id="boardCalibrationValue">100%</span>
       </label>
     </div>
     <div class="melody-settings-top">
@@ -1562,7 +1673,7 @@ html.rhythm-touch-lock #tapButton{
   const melBlkTwo8=document.getElementById('melBlkTwo8'),melBlkFour16=document.getElementById('melBlkFour16'),melBlk8_16_16=document.getElementById('melBlk8_16_16'),melBlk16_16_8=document.getElementById('melBlk16_16_8'),melBlk16_8_16=document.getElementById('melBlk16_8_16'),melBlkDot8_16=document.getElementById('melBlkDot8_16'),melBlk16_Dot8=document.getElementById('melBlk16_Dot8');
   const melodyMaterialChecks=[melWhole,melHalf,melQuarter,melEighth,melSixteenth,melRests,melDotted,melSync,melTies,melBlkTwo8,melBlkFour16,melBlk8_16_16,melBlk16_16_8,melBlk16_8_16,melBlkDot8_16,melBlk16_Dot8];
   const melodyExerciseLabel=document.getElementById('melodyExerciseLabel'),melodyMeterLabel=document.getElementById('melodyMeterLabel'),melodyNote=document.getElementById('melodyNote'),melodyStatusLine=document.getElementById('melodyStatusLine'),melodyBeatLights=document.getElementById('melodyBeatLights'),melodyFeedback=document.getElementById('melodyFeedback'),melodyResult=document.getElementById('melodyResult'),newMelodyBtn=document.getElementById('newMelody'),startMelodyBtn=document.getElementById('startMelody'),melodyPitchScore=document.getElementById('melodyPitchScore'),melodyTimingScore=document.getElementById('melodyTimingScore'),melodyHoldScore=document.getElementById('melodyHoldScore');
-  const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout');
+  const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue');
   let melodyPattern=[],melodyEvents=[],melodyRunning=false,melodyPhase='idle',melodyStartPerf=0,melodyPlayed=[],melodyTimers=[],melodyHeldKeys=new Map();
   const melodyBeats=()=>Number(melodyMeter.value||4),melodyBars=()=>Number(melodyLength.value||2),melodyBeatMs=()=>60000/Number(melodyTempo.value||80),melodyUnitMs=()=>melodyBeatMs()/4,melodyMetroStepsPerBeat=()=>melodyMetroSubdivision.value==='eighth'?2:1,melodyPulseUnits=()=>melodyMetroSubdivision.value==='eighth'?2:4;
   const melodyPresets={
@@ -1871,6 +1982,20 @@ html.rhythm-touch-lock #tapButton{
   [melodyLength,melodyTempo,melodyMetroMode,melodyMetroSubdivision].forEach(el=>el.addEventListener('change',()=>generateMelody(true)));
 
 
+  function applyBoardCalibration(){
+    const pct=Number(boardCalibration.value||100);
+    document.documentElement.style.setProperty('--board-calibration',String(pct/100));
+    boardCalibrationValue.textContent=`${pct}%`;
+    try{localStorage.setItem('alpenord-board-calibration',String(pct))}catch(_){}
+  }
+
+  try{
+    const saved=Number(localStorage.getItem('alpenord-board-calibration'));
+    if(saved>=90&&saved<=110)boardCalibration.value=String(saved);
+  }catch(_){}
+  applyBoardCalibration();
+  boardCalibration.addEventListener('input',applyBoardCalibration);
+
   function applyMelodyBoardLayout(){
     workspace.classList.remove('board-left','board-right','board-bottom');
     const layout=melodyBoardLayout.value||'left';
@@ -1887,6 +2012,8 @@ html.rhythm-touch-lock #tapButton{
   }
 
   melodyBoardLayout.addEventListener('change',applyMelodyBoardLayout);
+  window.addEventListener('resize',()=>{if(!melodyMode.hidden)applyMelodyBoardLayout()});
+  window.addEventListener('orientationchange',()=>setTimeout(()=>{if(!melodyMode.hidden)applyMelodyBoardLayout()},120));
   melodyToggleSettings.addEventListener('click',()=>{
     const collapsed=melodyMode.classList.toggle('settings-collapsed');
     melodyToggleSettings.textContent=collapsed?'Einstellungen ausklappen':'Einstellungen einklappen';
