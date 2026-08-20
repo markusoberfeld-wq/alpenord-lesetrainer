@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4p</title>
+<title>AlpeNord Lesetrainer V0.4q</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -125,7 +125,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
 
-/* V0.4p – Blattlesen: Griffbrett-Positionen */
+/* V0.4q – Blattlesen: Griffbrett-Positionen */
 .melody-view-toolbar select{
   margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
   background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
@@ -193,7 +193,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
 
 
-/* V0.4p – Rhythmus auf Touch-Geräten:
+/* V0.4q – Rhythmus auf Touch-Geräten:
    schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
 #tapButton,
 #rhythmNote,
@@ -225,7 +225,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4p – physische Originalgrösse auf Tablets.
+/* V0.4q – physische Originalgrösse auf Tablets.
    Mittlere Reihe: 18 cm Tastenmitte–Tastenmitte.
    Gesamtabstand Kreuztonreihe ↔ äussere Reihe: 3 cm.
    SVG-Höhe: 1600/1240 * 18 cm = 23.2258 cm. */
@@ -331,7 +331,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4p – Spielansicht: Noten + Griffbrett als direkte Einheit */
+/* V0.4q – Spielansicht: Noten + Griffbrett als direkte Einheit */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-left,
   .workspace.melody-mode.board-right{
@@ -428,7 +428,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4p – Spielansicht: zentrale Aktionen immer erreichbar */
+/* V0.4q – Spielansicht: zentrale Aktionen immer erreichbar */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-bottom .melody-actions{
     position:sticky;
@@ -470,7 +470,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4p – echter Tablet-Fokusmodus */
+/* V0.4q – echter Tablet-Fokusmodus */
 .tablet-focus-stage{
   position:fixed;
   inset:0;
@@ -630,7 +630,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4p – eigene horizontale Balg-Leuchtanimation für unten-quer */
+/* V0.4q – eigene horizontale Balg-Leuchtanimation für unten-quer */
 .horizontal-bellows-flow{
   display:none;
   position:absolute;
@@ -688,7 +688,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4p – Fokusmodus: Notenfenster selbstständig, Griffbrett bleibt fix */
+/* V0.4q – Fokusmodus: Notenfenster selbstständig, Griffbrett bleibt fix */
 .tablet-focus-notes{
   background:#fffdf8;
   border:1px solid #4a433c;
@@ -746,7 +746,7 @@ html.tablet-focus-lock body{
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4p</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4q</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -1010,7 +1010,7 @@ html.tablet-focus-lock body{
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4p</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4q</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -1034,7 +1034,7 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4p</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4q</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -1086,7 +1086,7 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4p</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4q</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
@@ -1255,11 +1255,19 @@ html.tablet-focus-lock body{
       vrvToolkit.setOptions({inputFrom:'musicxml',breaks:'auto',pageWidth:1000,pageHeight:480,adjustPageHeight:true,scale:54,header:'none',footer:'none',pageMarginTop:12,pageMarginBottom:12,pageMarginLeft:22,pageMarginRight:22});
       vrvReady=true;
       if(pendingRender)renderQuestionNote();
+      // Blattlesen kann bereits erzeugt worden sein, bevor Verovio bereit war.
+      // Deshalb nach erfolgreicher Initialisierung auch diese Ansicht nachziehen.
+      try{
+        if(typeof melodyPattern!=='undefined'&&melodyPattern.length){
+          renderMelody();
+          if(tabletFocusStage&&tabletFocusStage.classList.contains('active'))renderTabletFocusSystem(tabletFocusSystem||0);
+        }
+      }catch(_){}
       return true
     }catch(e){trainerNote.textContent='Verovio-Fehler';return false}
   }
 
-  function waitForVerovio(){let tries=0;const timer=setInterval(()=>{tries++;if(window.verovio&&verovio.module){clearInterval(timer);try{if(verovio.module.calledRun)initVerovio();else{const prev=verovio.module.onRuntimeInitialized;verovio.module.onRuntimeInitialized=()=>{try{if(typeof prev==='function')prev()}catch(e){}initVerovio()};setTimeout(()=>{if(!vrvReady)initVerovio()},700)}}catch(e){}}else if(tries>120){clearInterval(timer);trainerNote.textContent='Notendarstellung konnte nicht geladen werden'}},100)}
+  function waitForVerovio(){let tries=0;const timer=setInterval(()=>{tries++;if(window.verovio&&verovio.module){clearInterval(timer);try{if(verovio.module.calledRun)initVerovio();else{const prev=verovio.module.onRuntimeInitialized;verovio.module.onRuntimeInitialized=()=>{try{if(typeof prev==='function')prev()}catch(e){}initVerovio()};setTimeout(()=>{if(!vrvReady)initVerovio()},700)}}catch(e){}}else if(tries>120){clearInterval(timer);trainerNote.textContent='Notendarstellung konnte nicht geladen werden';try{if(tabletFocusStage.classList.contains('active'))cloneNormalMelodyIntoFocus()}catch(_){}}},100)}
 
   function renderQuestionNote(){
     if(!toneExercise.length)return;
@@ -2255,21 +2263,40 @@ html.tablet-focus-lock body{
   }
   let tabletFocusSystem=0;
 
+  let tabletFocusRenderRetry=null;
+
+  function cloneNormalMelodyIntoFocus(){
+    const svg=melodyNote.querySelector('svg');
+    if(!svg)return false;
+    tabletFocusScore.innerHTML='';
+    tabletFocusScore.appendChild(svg.cloneNode(true));
+    return true;
+  }
+
   function renderTabletFocusSystem(systemIndex=0){
     if(!tabletFocusStage.classList.contains('active'))return;
-    if(!vrvReady||!vrvToolkit){
-      tabletFocusScore.textContent='Notendarstellung wird geladen …';
-      return;
-    }
 
     const bars=melodyBars();
     const systems=Math.max(1,Math.ceil(bars/2));
     tabletFocusSystem=Math.max(0,Math.min(systems-1,systemIndex));
+
+    // Nie unnötig eine Lade-Meldung zeigen, wenn bereits Noten existieren.
+    if(!vrvReady||!vrvToolkit){
+      const cloned=cloneNormalMelodyIntoFocus();
+      if(!cloned) tabletFocusScore.textContent='Notendarstellung wird vorbereitet …';
+
+      clearTimeout(tabletFocusRenderRetry);
+      tabletFocusRenderRetry=setTimeout(()=>{
+        if(tabletFocusStage.classList.contains('active'))renderTabletFocusSystem(tabletFocusSystem);
+      },180);
+      return;
+    }
+
+    clearTimeout(tabletFocusRenderRetry);
     const startBar=tabletFocusSystem*2;
     const count=Math.min(2,bars-startBar);
 
     try{
-      // Fokus zeigt immer höchstens zwei Takte in gleicher gut lesbarer Grösse.
       vrvToolkit.setOptions({
         inputFrom:'musicxml',
         breaks:'auto',
@@ -2287,7 +2314,7 @@ html.tablet-focus-lock body{
       tabletFocusScore.innerHTML=vrvToolkit.renderData(melodyXml(startBar,count),{});
     }catch(e){
       console.error(e);
-      tabletFocusScore.textContent='Noten konnten nicht dargestellt werden';
+      if(!cloneNormalMelodyIntoFocus())tabletFocusScore.textContent='Noten konnten nicht dargestellt werden';
     }
   }
 
@@ -2548,12 +2575,14 @@ html.tablet-focus-lock body{
 
     tabletFocusSystem=0;
     syncTabletFocusStartButton();
+    cloneNormalMelodyIntoFocus();
     renderTabletFocusSystem(0);
     return true;
   }
 
   function exitTabletFocus(){
     if(!tabletFocusRestore)return;
+    clearTimeout(tabletFocusRenderRetry);
 
     const instrumentCard=tabletFocusBoardSlot.querySelector('.instrument-card');
     const parent=tabletFocusRestore.boardParent;
