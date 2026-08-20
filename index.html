@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4g</title>
+<title>AlpeNord Lesetrainer V0.4j</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -125,7 +125,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
 
-/* V0.4g – Blattlesen: Griffbrett-Positionen */
+/* V0.4j – Blattlesen: Griffbrett-Positionen */
 .melody-view-toolbar select{
   margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
   background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
@@ -193,7 +193,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
 
 
-/* V0.4g – Rhythmus auf Touch-Geräten:
+/* V0.4j – Rhythmus auf Touch-Geräten:
    schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
 #tapButton,
 #rhythmNote,
@@ -204,8 +204,24 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   -webkit-tap-highlight-color:transparent;
 }
 #tapButton{
+  touch-action:none!important;
   user-select:none;
   -webkit-user-select:none;
+  -webkit-touch-callout:none;
+}
+
+
+html.rhythm-touch-lock,
+html.rhythm-touch-lock body,
+html.rhythm-touch-lock #rhythmMode,
+html.rhythm-touch-lock #tapButton{
+  touch-action:none!important;
+  overscroll-behavior:none;
+}
+html.rhythm-touch-lock #tapButton{
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
 }
 
 </style>
@@ -214,7 +230,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4g</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4j</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -478,7 +494,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4g</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4j</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -502,7 +518,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4g</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4j</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -554,7 +570,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4g</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4j</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
@@ -743,6 +759,8 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   }
   function ensureAudio(){if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume()}
   function playMidi(midi,dur=.45,peak=.055){ensureAudio();const o=audioCtx.createOscillator(),g=audioCtx.createGain(),t=audioCtx.currentTime;o.type='triangle';o.frequency.value=440*Math.pow(2,(Number(midi)-69)/12);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(peak,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+dur+.03)}
+  function soundingMidiFromWritten(written){return Number(written)+tuningShift()}
+  function playWrittenMidi(written,dur=.45,peak=.055){playMidi(soundingMidiFromWritten(written),dur,peak)}
   let visualDirectionOverride=null;
   function currentVisualDirection(){return visualDirectionOverride||direction}
   function updateDirectionDisplayElements(dir){dirBtn.innerHTML=dir==='zug'?'← &nbsp; ZIEHEN':'→ &nbsp; STOSSEN';dirBtn.classList.toggle('druck',dir==='druck');taskDirection.textContent=dir==='zug'?'← Ziehen':'→ Stossen'}
@@ -811,7 +829,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 
   function handleDiskantKey(el,playedDirection=direction){
     const key=Number(el.dataset.key),written=diskantWrittenMidi(key,playedDirection),shown=displayMidi(written);
-    playMidi(written);
+    playWrittenMidi(written);
     if(roundFinished)return;
     const directionCorrect=playedDirection===direction;
     const pitchCorrect=shown===currentTargetShown;
@@ -837,23 +855,17 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
       }
     }
   }
-  // --- Einheitliche direkte Griffbrett-Eingabe (Maus / Touch / Stift) ---
-  // Grundregel in allen Modi:
-  // Die angeklickte/angetippte Fläche bestimmt nur die physische Örgeli-Taste.
-  // Die Balgrichtung wird NICHT vom Benutzer zusätzlich gewählt, sondern kommt
-  // automatisch aus der aktuell gestellten Aufgabe bzw. der aktuellen Blattlese-Note.
+  // --- Direkte Griffbrett-Eingabe: Touch sofort, Maus separat ---
   function directDiskantPress(el,inputToken=null){
     const keyNo=Number(el.dataset.key);
     if(!keyNo)return false;
 
     if(!toneMode.hidden){
-      // Einzelton: die aktuelle Aufgabe legt Ziehen/Stossen fest.
       handleDiskantKey(el,direction);
       return true;
     }
 
     if(!melodyMode.hidden){
-      // Blattlesen: die zum Zeitpunkt erwartete Note legt die Balgrichtung fest.
       return melodyRegisterKey(keyNo,inputToken);
     }
     return false;
@@ -863,30 +875,58 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     if(!melodyMode.hidden&&inputToken)melodyReleaseKey(inputToken);
   }
 
-  // Pointer-ID kann auf Tablets zwischen mehreren Berührungen wiederverwendet werden.
-  // Darum erhält JEDE neue Berührung einen eindeutigen Token.
-  let directPointerSerial=0;
-  const directPointerTokens=new Map();
+  let directTouchSerial=0;
+  const activeTouchTokens=new Map();
+  let suppressMouseUntil=0;
 
   document.querySelectorAll('.diskantKeyVisual').forEach(el=>{
-    el.addEventListener('pointerdown',e=>{
+    el.addEventListener('touchstart',e=>{
       if(rhythmMode&&!rhythmMode.hidden)return;
       e.preventDefault();
+      e.stopPropagation();
+      suppressMouseUntil=performance.now()+700;
 
-      const token=`pointer:${e.pointerId}:${++directPointerSerial}`;
-      directPointerTokens.set(e.pointerId,token);
-
-      el.classList.add('keyboard-pressed');
-      const registered=directDiskantPress(el,token);
-
-      // Falls im Blattlesen noch Anzähler/Bereit aktiv ist, darf kein verwaister
-      // Held-Key-Eintrag zurückbleiben.
-      if(!registered && !melodyMode.hidden){
-        directPointerTokens.delete(e.pointerId);
+      for(const touch of e.changedTouches){
+        const token=`touch:${touch.identifier}:${++directTouchSerial}`;
+        activeTouchTokens.set(touch.identifier,{token,el});
+        el.classList.add('keyboard-pressed');
+        directDiskantPress(el,token);
       }
+    },{passive:false});
+
+    const finishTouches=e=>{
+      e.preventDefault();
+      for(const touch of e.changedTouches){
+        const active=activeTouchTokens.get(touch.identifier);
+        if(!active)continue;
+        directDiskantRelease(active.token);
+        active.el.classList.remove('keyboard-pressed');
+        activeTouchTokens.delete(touch.identifier);
+      }
+    };
+    el.addEventListener('touchend',finishTouches,{passive:false});
+    el.addEventListener('touchcancel',finishTouches,{passive:false});
+
+    el.addEventListener('mousedown',e=>{
+      if(performance.now()<suppressMouseUntil)return;
+      if(rhythmMode&&!rhythmMode.hidden)return;
+      e.preventDefault();
+      const token=`mouse:${++directTouchSerial}`;
+      el.dataset.activeMouseToken=token;
+      el.classList.add('keyboard-pressed');
+      directDiskantPress(el,token);
     });
 
-    // Tastaturbedienung eines fokussierten SVG-Buttons (Enter/Leertaste).
+    const finishMouse=()=>{
+      const token=el.dataset.activeMouseToken;
+      if(!token)return;
+      directDiskantRelease(token);
+      delete el.dataset.activeMouseToken;
+      el.classList.remove('keyboard-pressed');
+    };
+    el.addEventListener('mouseup',finishMouse);
+    el.addEventListener('mouseleave',finishMouse);
+
     el.addEventListener('keydown',e=>{
       if(e.key!=='Enter'&&e.key!==' ')return;
       e.preventDefault();
@@ -898,17 +938,6 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
       if(!melodyMode.hidden)melodyReleaseKey(`svgkey:${el.dataset.key}`);
     });
   });
-
-  // Zentraler Release: funktioniert auch, wenn Finger/Maus ausserhalb der Taste endet.
-  function releaseDirectPointer(e){
-    const token=directPointerTokens.get(e.pointerId);
-    if(!token)return;
-    directDiskantRelease(token);
-    directPointerTokens.delete(e.pointerId);
-    document.querySelectorAll('.diskantKeyVisual.keyboard-pressed').forEach(el=>el.classList.remove('keyboard-pressed'));
-  }
-  document.addEventListener('pointerup',releaseDirectPointer,true);
-  document.addEventListener('pointercancel',releaseDirectPointer,true);
 
   // --- Computertastatur als Schwyzerörgeli-Diskant ---
   // Kreuztonreihe 1–10: Q W E R T Z U I O P
@@ -962,7 +991,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   });noteMaterial.addEventListener('change',()=>{updateMaterialControls();newQuestion()});alteredNotes.addEventListener('change',newQuestion);noteRange.addEventListener('change',newQuestion);toneExerciseLength.addEventListener('change',newQuestion);spellingMode.addEventListener('change',()=>{if(currentTargetShown!==null){currentPreference=choosePreference(currentTargetShown);renderQuestionNote();updateKeyLabels()}});showKeyNames.addEventListener('change',updateKeyLabels);
   dirBtn.addEventListener('click',()=>{setDirection(direction==='zug'?'druck':'zug');trainingDirection.value=direction;newQuestion()});
   rotateBtn.addEventListener('click',()=>{diskantFrame.classList.toggle('rotated');rotateBtn.classList.toggle('active',diskantFrame.classList.contains('rotated'));updateBellowsFlowDirection()});
-  function drawBass(){bassKeys.innerHTML='';const val=bassMode.value,mode=val==='18'?18:24,variant=val==='24-top'?'top':'bottom',labels=Core.rowLabels(mode,variant);for(const row of [{name:'A',pts:Core.G[mode].L},{name:'B',pts:Core.G[mode].R}])row.pts.forEach((pt,i)=>{const n=labels[i],g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','bassKey');g.setAttribute('transform',`translate(${pt.x} ${pt.y})`);g.dataset.bassN=String(n);g.dataset.bassRow=row.name;g.innerHTML=`<circle class="bass-rim" r="45"/><circle class="bass-face" r="38"/><text x="0" y="3" class="bass-label">${Core.bassKeyLabel(n,row.name,tuningShift(),displayMode())}</text>`;g.addEventListener('click',()=>{if(bassMuted)return;const m=Core.bassMidi(n);if(row.name==='A')playMidi(m,.7,.07);else Core.chordMidis(n).forEach(x=>playMidi(x,.7,.035));g.classList.add('playing');setTimeout(()=>g.classList.remove('playing'),450)});bassKeys.appendChild(g)})}
+  function drawBass(){bassKeys.innerHTML='';const val=bassMode.value,mode=val==='18'?18:24,variant=val==='24-top'?'top':'bottom',labels=Core.rowLabels(mode,variant);for(const row of [{name:'A',pts:Core.G[mode].L},{name:'B',pts:Core.G[mode].R}])row.pts.forEach((pt,i)=>{const n=labels[i],g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','bassKey');g.setAttribute('transform',`translate(${pt.x} ${pt.y})`);g.dataset.bassN=String(n);g.dataset.bassRow=row.name;g.innerHTML=`<circle class="bass-rim" r="45"/><circle class="bass-face" r="38"/><text x="0" y="3" class="bass-label">${Core.bassKeyLabel(n,row.name,tuningShift(),displayMode())}</text>`;g.addEventListener('click',()=>{if(bassMuted)return;const m=Core.bassMidi(n);if(row.name==='A')playWrittenMidi(m,.7,.07);else Core.chordMidis(n).forEach(x=>playWrittenMidi(x,.7,.035));g.classList.add('playing');setTimeout(()=>g.classList.remove('playing'),450)});bassKeys.appendChild(g)})}
   bassSoundToggle.addEventListener('click',()=>{bassMuted=!bassMuted;bassSoundToggle.textContent=bassMuted?'🔇':'🔊'});
   [tuningSelect,displayModeSelect,crossTone1Select,crossTone10Select].forEach(el=>el.addEventListener('change',()=>{drawBass();newQuestion()}));bassMode.addEventListener('change',drawBass);
   function resetSession(){clearTimeout(newQuestion.timer);correct=wrong=streak=completed=0;questionHadError=false;roundFinished=false;roundResult.hidden=true;updateScore();newQuestion()}
@@ -1438,11 +1467,12 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   function tapClick(){ensureAudio();const t=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='triangle';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(300,t+.045);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.09,t+.003);g.gain.exponentialRampToValueAtTime(.0001,t+.07);o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+.075)}
   function schedule(fn,delay){const id=setTimeout(fn,Math.max(0,delay));rhythmTimers.push(id);return id}
   function clearRhythmTimers(){rhythmTimers.forEach(clearTimeout);rhythmTimers=[]}
-  function stopRhythmRun(silent=false){clearRhythmTimers();rhythmRunning=false;rhythmPhase='idle';tapButton.disabled=true;setBeatLight(-1);startRhythmBtn.disabled=false;startRhythmBtn.textContent='▶ Anzählen & starten';if(!silent)metroStatus.textContent='Bereit · Start drücken'}
+  function stopRhythmRun(silent=false){setRhythmTouchLock(false);clearRhythmTimers();rhythmRunning=false;rhythmPhase='idle';tapButton.disabled=true;setBeatLight(-1);startRhythmBtn.disabled=false;startRhythmBtn.textContent='▶ Anzählen & starten';if(!silent)metroStatus.textContent='Bereit · Start drücken'}
   function setRhythmFeedback(text,state='neutral'){rhythmFeedback.textContent=text;rhythmFeedback.className='rhythm-feedback '+state}
   function expectedOnsets(){let u=0,a=[];for(const t of rhythmPattern){if(t.type==='note'&&t.soundOnset!==false)a.push(u*unitMs());u+=t.dur}return a}
   function startRhythm(){
     if(rhythmRunning||!rhythmPattern.length)return;
+    setRhythmTouchLock(true);
     ensureAudio();clearRhythmTimers();rhythmTaps=[];timingStrip.innerHTML='';
     rhythmRunning=true;rhythmPhase='countin';startRhythmBtn.disabled=false;startRhythmBtn.textContent='■ Stopp';tapButton.disabled=true;
 
@@ -1479,21 +1509,49 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     schedule(()=>{tapButton.disabled=true;rhythmPhase='evaluate';setBeatLight(-1);evaluateRhythm()},countinMs+beats*bars*bms);
   }
 
+  const viewportMeta=document.querySelector('meta[name="viewport"]');
+  const normalViewportContent=viewportMeta?viewportMeta.getAttribute('content'):'width=device-width,initial-scale=1';
+
+  function setRhythmTouchLock(active){
+    document.documentElement.classList.toggle('rhythm-touch-lock',!!active);
+    if(viewportMeta){
+      viewportMeta.setAttribute(
+        'content',
+        active
+          ? 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'
+          : normalViewportContent
+      );
+    }
+  }
+
   function registerTap(){if(!rhythmRunning)return;const t=performance.now()-rhythmStartPerf,firstEarlyWindow=Math.min(240,Math.max(150,beatMs()*.30));const allowed=rhythmPhase==='play'||(rhythmPhase==='countin'&&t>=-firstEarlyWindow&&rhythmTaps.length===0);if(!allowed)return;rhythmTaps.push(t);tapClick();tapButton.classList.add('pressed');schedule(()=>tapButton.classList.remove('pressed'),70)}
   function matchRhythm(exp,taps,offset,tol){const used=new Set(),results=[];let last=-1;for(let ei=0;ei<exp.length;ei++){const e0=exp[ei],e=e0+offset,currentTol=ei===0?Math.max(tol,Math.min(240,beatMs()*.30)):tol;let best=-1,bestD=Infinity;for(let i=last+1;i<taps.length;i++){if(used.has(i))continue;const d=Math.abs(taps[i]-e);if(d<bestD){bestD=d;best=i}if(taps[i]>e+currentTol&&best>=0)break}if(best>=0&&bestD<=currentTol){used.add(best);last=best;results.push({ok:true,delta:taps[best]-e0,rawDelta:taps[best]-e})}else results.push({ok:false})}const extras=taps.length-used.size,hits=results.filter(x=>x.ok).length,err=results.filter(x=>x.ok).reduce((a,x)=>a+Math.abs(x.rawDelta),0);return {offset,used,results,extras,hits,err}}
-  function evaluateRhythm(){const exp=expectedOnsets(),taps=[...rhythmTaps],tol=Math.max(65,Math.min(130,unitMs()*.70)),maxOffset=Math.min(220,beatMs()*.28);const offsets=[0];for(const t of taps)for(const e of exp){const d=t-e;if(Math.abs(d)<=maxOffset)offsets.push(d)}let best=null;for(const off of offsets){const m=matchRhythm(exp,taps,off,tol);if(!best||m.hits>best.hits||(m.hits===best.hits&&m.extras<best.extras)||(m.hits===best.hits&&m.extras===best.extras&&m.err<best.err))best=m}const {results,extras,hits,offset}=best||matchRhythm(exp,taps,0,tol),perfect=hits===exp.length&&extras===0;timingStrip.innerHTML='';results.forEach(r=>{const d=document.createElement('div');d.className='timing-dot '+(r.ok?'hit':'miss');d.title=r.ok?`${Math.round(r.rawDelta)} ms nach Latenzkorrektur`:'Anschlag fehlt';d.textContent=r.ok?'✓':'×';timingStrip.appendChild(d)});for(let i=0;i<extras;i++){const d=document.createElement('div');d.className='timing-dot extra';d.textContent='+';d.title='zusätzlicher Anschlag';timingStrip.appendChild(d)}if(perfect){rhythmCorrect++;rhythmStreak++;setRhythmFeedback(`Richtig · ${hits} von ${exp.length} Anschlägen getroffen`,'correct')}else{rhythmWrong++;rhythmStreak=0;const extraText=extras?` · ${extras} zusätzlicher${extras===1?'':'e'} Anschlag${extras===1?'':'e'}`:'';setRhythmFeedback(`Noch einmal · ${hits} von ${exp.length} Anschlägen getroffen${extraText}`,'wrong')}rhythmCorrectEl.textContent=rhythmCorrect;rhythmWrongEl.textContent=rhythmWrong;rhythmStreakEl.textContent=rhythmStreak;metroStatus.textContent=Math.abs(offset)>20?`Auswertung abgeschlossen · Timing-Korrektur ${Math.round(offset)} ms`:'Auswertung abgeschlossen';rhythmRunning=false;rhythmPhase='idle';startRhythmBtn.disabled=false;startRhythmBtn.textContent='▶ Anzählen & starten';if(perfect){if(rhythmMode.hidden)return;generateRhythm(true);startRhythm()}}
+  function evaluateRhythm(){setRhythmTouchLock(false);const exp=expectedOnsets(),taps=[...rhythmTaps],tol=Math.max(65,Math.min(130,unitMs()*.70)),maxOffset=Math.min(220,beatMs()*.28);const offsets=[0];for(const t of taps)for(const e of exp){const d=t-e;if(Math.abs(d)<=maxOffset)offsets.push(d)}let best=null;for(const off of offsets){const m=matchRhythm(exp,taps,off,tol);if(!best||m.hits>best.hits||(m.hits===best.hits&&m.extras<best.extras)||(m.hits===best.hits&&m.extras===best.extras&&m.err<best.err))best=m}const {results,extras,hits,offset}=best||matchRhythm(exp,taps,0,tol),perfect=hits===exp.length&&extras===0;timingStrip.innerHTML='';results.forEach(r=>{const d=document.createElement('div');d.className='timing-dot '+(r.ok?'hit':'miss');d.title=r.ok?`${Math.round(r.rawDelta)} ms nach Latenzkorrektur`:'Anschlag fehlt';d.textContent=r.ok?'✓':'×';timingStrip.appendChild(d)});for(let i=0;i<extras;i++){const d=document.createElement('div');d.className='timing-dot extra';d.textContent='+';d.title='zusätzlicher Anschlag';timingStrip.appendChild(d)}if(perfect){rhythmCorrect++;rhythmStreak++;setRhythmFeedback(`Richtig · ${hits} von ${exp.length} Anschlägen getroffen`,'correct')}else{rhythmWrong++;rhythmStreak=0;const extraText=extras?` · ${extras} zusätzlicher${extras===1?'':'e'} Anschlag${extras===1?'':'e'}`:'';setRhythmFeedback(`Noch einmal · ${hits} von ${exp.length} Anschlägen getroffen${extraText}`,'wrong')}rhythmCorrectEl.textContent=rhythmCorrect;rhythmWrongEl.textContent=rhythmWrong;rhythmStreakEl.textContent=rhythmStreak;metroStatus.textContent=Math.abs(offset)>20?`Auswertung abgeschlossen · Timing-Korrektur ${Math.round(offset)} ms`:'Auswertung abgeschlossen';rhythmRunning=false;rhythmPhase='idle';startRhythmBtn.disabled=false;startRhythmBtn.textContent='▶ Anzählen & starten';if(perfect){if(rhythmMode.hidden)return;generateRhythm(true);startRhythm()}}
   updateMaterialDependencies();
   metroSubdivision.addEventListener('change',()=>{if(rhythmRunning)stopRhythmRun();});
   tempoRange.addEventListener('input',()=>{tempoValue.textContent=`${tempoRange.value} BPM`});rhythmMeter.addEventListener('change',()=>{
     buildBeatLights();
     if(rhythmPreset.value!=='custom')applyPreset();
     else{updateMaterialDependencies();generateRhythm()}
-  // iPad/Safari: schnelle Rhythmus-Tipps dürfen keinen Doppeltipp-Zoom auslösen.
-  tapButton.addEventListener('touchend',e=>{
+  });rhythmExerciseLength.addEventListener('change',()=>{generateRhythm()});rhythmPreset.addEventListener('change',applyPreset);materialChecks.forEach(el=>el.addEventListener('change',setCustom));newRhythmBtn.addEventListener('click',generateRhythm);startRhythmBtn.addEventListener('click',()=>{if(rhythmRunning)stopRhythmRun();else startRhythm()});tapButton.addEventListener('touchstart',e=>{
     e.preventDefault();
+    e.stopPropagation();
+    registerTap();
   },{passive:false});
+  tapButton.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+  tapButton.addEventListener('touchend',e=>e.preventDefault(),{passive:false});
+  tapButton.addEventListener('touchcancel',e=>e.preventDefault(),{passive:false});
 
-  });rhythmExerciseLength.addEventListener('change',()=>{generateRhythm()});rhythmPreset.addEventListener('change',applyPreset);materialChecks.forEach(el=>el.addEventListener('change',setCustom));newRhythmBtn.addEventListener('click',generateRhythm);startRhythmBtn.addEventListener('click',()=>{if(rhythmRunning)stopRhythmRun();else startRhythm()});tapButton.addEventListener('click',registerTap);document.addEventListener('keydown',e=>{if(rhythmMode.hidden||e.repeat)return;const tag=(e.target&&e.target.tagName||'').toLowerCase();if(['input','select','textarea'].includes(tag))return;if(e.code==='Space'){e.preventDefault();if(rhythmRunning)stopRhythmRun();else startRhythm();return}const isTapKey=e.code==='Period'||e.code==='NumpadDecimal'||e.key==='.';if(isTapKey){e.preventDefault();registerTap()}});
+  tapButton.addEventListener('click',e=>{
+    if(e.detail===0 || !('ontouchstart' in window))registerTap();
+  });
+
+  ['gesturestart','gesturechange','gestureend'].forEach(type=>{
+    document.addEventListener(type,e=>{
+      if(rhythmRunning)e.preventDefault();
+    },{passive:false});
+  });
+
   const oldInitVerovio=initVerovio;initVerovio=function(){const ok=oldInitVerovio();if(ok&&rhythmPattern.length)renderRhythm();return ok};
   generateRhythm();buildBeatLights();
 
@@ -1543,7 +1601,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   }
 
   function melodyMetroClick(accent=false){if(!['audio','both'].includes(melodyMetroMode.value))return;ensureAudio();const t=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='square';o.frequency.value=accent?1280:920;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(accent?.09:.055,t+.002);g.gain.exponentialRampToValueAtTime(.0001,t+.055);o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+.065)}
-  function stopMelodyRun(silent=false){directPointerTokens.clear();melodyClearTimers();melodyRunning=false;melodyPhase='idle';melodyHeldKeys.clear();melodyClearCurrentKey();melodySetBeatLight(-1);if(startMelodyBtn){startMelodyBtn.textContent='▶ Anzählen & starten';startMelodyBtn.disabled=false}if(!silent&&melodyStatusLine)melodyStatusLine.textContent='Bereit · Start drücken';melodySyncVisualDirection()}
+  function stopMelodyRun(silent=false){activeTouchTokens.clear();melodyClearTimers();melodyRunning=false;melodyPhase='idle';melodyHeldKeys.clear();melodyClearCurrentKey();melodySetBeatLight(-1);if(startMelodyBtn){startMelodyBtn.textContent='▶ Anzählen & starten';startMelodyBtn.disabled=false}if(!silent&&melodyStatusLine)melodyStatusLine.textContent='Bereit · Start drücken';melodySyncVisualDirection()}
   function melodySetDisabledOption(input,disabled){input.disabled=!!disabled;const label=input.closest('label');if(label)label.classList.toggle('material-disabled',!!disabled)}
   function updateMelodyMaterialDependencies(){const beats=melodyBeats();melodySetDisabledOption(melWhole,beats!==4);melodySetDisabledOption(melBlkTwo8,!melEighth.checked);const no16=!melSixteenth.checked;melodySetDisabledOption(melBlkFour16,no16);melodySetDisabledOption(melBlk8_16_16,no16||!melEighth.checked);melodySetDisabledOption(melBlk16_16_8,no16||!melEighth.checked);melodySetDisabledOption(melBlk16_8_16,no16||!melEighth.checked);melodySetDisabledOption(melBlkDot8_16,!melDotted.checked||!melEighth.checked||no16);melodySetDisabledOption(melBlk16_Dot8,!melDotted.checked||!melEighth.checked||no16);melodySetDisabledOption(melSync,!melQuarter.checked||!melEighth.checked);melodySetDisabledOption(melTies,!melEighth.checked);melodyAltered.disabled=melodyMaterial.value==='chromatic';melodySpelling.disabled=melodyMaterial.value!=='chromatic'}
   function applyMelodyPreset(){const p=melodyPresets[melodyPreset.value];if(!p)return;const mediumLongMeter=melodyPreset.value==='medium'&&melodyBeats()!==2;melodyRange.value=p.range;melodyDirection.value=p.direction;melodyAltered.value=p.altered;melWhole.checked=!!p.whole&&melodyBeats()===4;melHalf.checked=!!p.half;melQuarter.checked=!!p.quarter;melEighth.checked=!!p.eighth;melSixteenth.checked=mediumLongMeter?false:!!p.sixteenth;melRests.checked=!!p.rests;melDotted.checked=mediumLongMeter?false:!!p.dotted;melSync.checked=!!p.sync;melTies.checked=!!p.ties;melBlkTwo8.checked=p.blocks.includes('two8');melBlkFour16.checked=mediumLongMeter?false:p.blocks.includes('four16');melBlk8_16_16.checked=mediumLongMeter?false:p.blocks.includes('8_16_16');melBlk16_16_8.checked=mediumLongMeter?false:p.blocks.includes('16_16_8');melBlk16_8_16.checked=mediumLongMeter?false:p.blocks.includes('16_8_16');melBlkDot8_16.checked=mediumLongMeter?false:p.blocks.includes('dot8_16');melBlk16_Dot8.checked=mediumLongMeter?false:p.blocks.includes('16_dot8');updateMelodyMaterialDependencies();generateMelody(true)}
@@ -1661,7 +1719,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   function renderMelody(){if(!vrvReady||!vrvToolkit){melodyNote.textContent='Notendarstellung wird geladen …';return}try{const bars=melodyBars();vrvToolkit.setOptions({inputFrom:'musicxml',breaks:'auto',pageWidth:bars<=2?1200:bars<=4?1000:850,pageHeight:bars>=8?1500:900,adjustPageHeight:true,scale:48,header:'none',footer:'none',pageMarginTop:35,pageMarginBottom:20,pageMarginLeft:25,pageMarginRight:25});melodyNote.innerHTML=vrvToolkit.renderData(melodyXml(),{})}catch(e){console.error(e);melodyNote.textContent='Melodie konnte nicht dargestellt werden'}}
   function startMelody(){
     if(melodyRunning||!melodyEvents.length)return;
-    ensureAudio();directPointerTokens.clear();melodyClearTimers();melodyPlayed=[];melodyHeldKeys.clear();melodyResult.hidden=true;melodyRunning=true;melodyPhase='countin';startMelodyBtn.textContent='■ Stopp';
+    ensureAudio();activeTouchTokens.clear();melodyClearTimers();melodyPlayed=[];melodyHeldKeys.clear();melodyResult.hidden=true;melodyRunning=true;melodyPhase='countin';startMelodyBtn.textContent='■ Stopp';
     const beats=melodyBeats(),bars=melodyBars(),bms=melodyBeatMs(),steps=melodyMetroStepsPerBeat(),stepMs=bms/steps,countinMs=beats*bms,totalMs=beats*bars*bms;
     melodyStartPerf=performance.now()+countinMs;
     melodySetFeedback('Anzähler …','neutral');
@@ -1702,7 +1760,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 
     const playedDirection=melodyNearestEventDirection(now)||melodyEvents[0]?.dir||'zug';
     melodySyncVisualDirection(now);
-    playMidi(displayMidi(diskantWrittenMidi(keyNo,playedDirection)),.32,.055);
+    playWrittenMidi(diskantWrittenMidi(keyNo,playedDirection),.32,.055);
 
     const el=document.querySelector(`.diskantKeyVisual[data-key="${keyNo}"]`);
     if(el){el.classList.add('keyboard-pressed');setTimeout(()=>el.classList.remove('keyboard-pressed'),100)}
@@ -1722,7 +1780,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
   }
 
   function evaluateMelody(){
-    directPointerTokens.clear();
+    activeTouchTokens.clear();
     melodyClearCurrentKey();
     melodyRunning=false;melodyPhase='idle';startMelodyBtn.textContent='▶ Anzählen & starten';
 
@@ -1817,8 +1875,15 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
     workspace.classList.remove('board-left','board-right','board-bottom');
     const layout=melodyBoardLayout.value||'left';
     workspace.classList.add(`board-${layout}`);
-    // Verovio bekommt nach dem Layoutwechsel Gelegenheit, auf die neue Breite zu reagieren.
-    if(!melodyMode.hidden)setTimeout(()=>renderMelody(),30);
+
+    const instrumentCard=workspace.querySelector('.instrument-card');
+    const trainerCard=workspace.querySelector('.trainer-card');
+    if(instrumentCard&&trainerCard){
+      if(layout==='left')workspace.insertBefore(instrumentCard,trainerCard);
+      else workspace.insertBefore(trainerCard,instrumentCard);
+    }
+
+    if(!melodyMode.hidden)setTimeout(()=>renderMelody(),40);
   }
 
   melodyBoardLayout.addEventListener('change',applyMelodyBoardLayout);

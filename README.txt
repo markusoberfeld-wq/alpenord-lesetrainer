@@ -1,6 +1,6 @@
-AlpeNord Lesetrainer V0.4g – Rhythmus Tablet Doppeltipp
-Basis: V0.4f; eingefrorener Referenzstand bleibt V0.4c.
-- Behebt auf iPad/Safari den Doppeltipp-Zoom beim schnellen Rhythmus-Tippen.
-- Rhythmus-Tippbutton und zugehöriger Bereich verwenden touch-action: manipulation.
-- Auf dem TIP-Button wird touchend mit preventDefault abgefangen.
-- Normales Scrollen ausserhalb des Rhythmus-Tippbereichs bleibt erhalten.
+AlpeNord Lesetrainer V0.4j – Örgeli-Stimmung in Audio
+Basis: V0.4i; eingefrorener Referenzstand bleibt V0.4c.
+- Tonausgabe berücksichtigt die gewählte Örgeli-Stimmung nun zentral.
+- C-Örgeli: 0 Halbtöne; B-Örgeli: -2 Halbtöne; A-Örgeli: -3 Halbtöne.
+- Die Klangtransposition ist unabhängig von der Anzeigeoption 'notiert/klingend'.
+- Einzelton, Blattlesen, direkte Griffbrett-Eingabe, Computertastatur und Bassklänge verwenden dieselbe klingende Transposition.
