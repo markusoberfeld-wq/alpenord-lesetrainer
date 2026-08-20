@@ -1,6 +1,8 @@
-AlpeNord Lesetrainer V0.4m – Spielansicht Aktionsleiste
-Basis: V0.4l; eingefrorener Referenzstand bleibt V0.4c.
-- 'Neue Übung' und 'Anzählen & starten' bleiben auf Tablets im Spielmodus sichtbar.
-- Unten-quer: Aktionen erscheinen als schmale sticky Bedienleiste direkt unter dem Griffbrett.
-- Dadurch muss im iPad-Querformat für die nächste Übung nicht mehr nach unten gescrollt werden.
-- Links/rechts erhalten ebenfalls eine kompakte sticky Aktionsleiste.
+AlpeNord Lesetrainer V0.4o – Quer-Balg horizontal
+Basis: V0.4n; eingefrorener Referenzstand bleibt V0.4c.
+- Unten-quer erhält eine eigene horizontale Balg-Leuchtanimation.
+- Ziehen = Bewegung nach links.
+- Stossen = Bewegung nach rechts.
+- Die durch die SVG-Drehung vertikal gewordene Originalanimation wird im Querlayout ausgeblendet.
+- Links/rechts hochkant behalten die bisherige Animation.
+- Funktioniert auch im festen Tablet-Fokusmodus unten quer.

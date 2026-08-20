@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4m</title>
+<title>AlpeNord Lesetrainer V0.4o</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -125,7 +125,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
 
-/* V0.4m – Blattlesen: Griffbrett-Positionen */
+/* V0.4o – Blattlesen: Griffbrett-Positionen */
 .melody-view-toolbar select{
   margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
   background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
@@ -193,7 +193,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
 
 
-/* V0.4m – Rhythmus auf Touch-Geräten:
+/* V0.4o – Rhythmus auf Touch-Geräten:
    schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
 #tapButton,
 #rhythmNote,
@@ -225,7 +225,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4m – physische Originalgrösse auf Tablets.
+/* V0.4o – physische Originalgrösse auf Tablets.
    Mittlere Reihe: 18 cm Tastenmitte–Tastenmitte.
    Gesamtabstand Kreuztonreihe ↔ äussere Reihe: 3 cm.
    SVG-Höhe: 1600/1240 * 18 cm = 23.2258 cm. */
@@ -331,7 +331,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4m – Spielansicht: Noten + Griffbrett als direkte Einheit */
+/* V0.4o – Spielansicht: Noten + Griffbrett als direkte Einheit */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-left,
   .workspace.melody-mode.board-right{
@@ -428,7 +428,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4m – Spielansicht: zentrale Aktionen immer erreichbar */
+/* V0.4o – Spielansicht: zentrale Aktionen immer erreichbar */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-bottom .melody-actions{
     position:sticky;
@@ -469,13 +469,231 @@ html.rhythm-touch-lock #tapButton{
   }
 }
 
+
+/* V0.4o – echter Tablet-Fokusmodus */
+.tablet-focus-stage{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#15120f;
+  overflow:hidden;
+  padding:8px;
+  box-sizing:border-box;
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr) auto;
+  gap:6px;
+}
+.tablet-focus-stage.active{display:grid!important}
+.tablet-focus-exit{
+  position:absolute;
+  top:8px;
+  right:8px;
+  z-index:10020;
+  height:34px;
+  padding:0 12px;
+  border:1px solid #665a4d;
+  border-radius:9px;
+  background:rgba(22,19,16,.94);
+  color:#f1e8dc;
+  font:inherit;
+  font-size:11px;
+  font-weight:850;
+}
+.tablet-focus-notes,
+.tablet-focus-board,
+.tablet-focus-actions{
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+}
+.tablet-focus-notes{
+  grid-row:1;
+  display:flex;
+  align-items:stretch;
+}
+.tablet-focus-notes #melodyNote{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  border-radius:10px!important;
+}
+.tablet-focus-board{
+  grid-row:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tablet-focus-board .instrument-card{
+  width:100%!important;
+  max-width:none!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+}
+.tablet-focus-board .instrument-card .cardhead,
+.tablet-focus-board .instrument-card .hint{
+  display:none!important;
+}
+.tablet-focus-board .instrument-stage{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+.tablet-focus-board .bass-column{display:none!important}
+.tablet-focus-board .diskant-frame{
+  width:100%!important;
+  height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:visible!important;
+}
+.tablet-focus-actions{
+  grid-row:3;
+}
+.tablet-focus-actions .melody-actions{
+  position:static!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.tablet-focus-actions .melody-actions button{
+  height:48px!important;
+  font-size:13px!important;
+}
+
+/* Quer unten: Noten oben, Griffbrett quer darunter, Buttons ganz unten. */
+.tablet-focus-stage.layout-bottom .tablet-focus-board .diskant-frame svg{
+  height:min(calc(100vw - 16px), 52vh)!important;
+  width:auto!important;
+  max-width:none!important;
+  transform:rotate(90deg)!important;
+  transform-origin:center center!important;
+}
+
+/* Links / rechts: Noten und Griffbrett nebeneinander, Buttons unten. */
+.tablet-focus-stage.layout-left,
+.tablet-focus-stage.layout-right{
+  grid-template-rows:minmax(0,1fr) auto;
+  grid-template-columns:minmax(0,1fr) minmax(250px,42vw);
+}
+.tablet-focus-stage.layout-left .tablet-focus-notes{
+  grid-row:1;grid-column:2;
+}
+.tablet-focus-stage.layout-left .tablet-focus-board{
+  grid-row:1;grid-column:1;
+}
+.tablet-focus-stage.layout-right .tablet-focus-notes{
+  grid-row:1;grid-column:1;
+}
+.tablet-focus-stage.layout-right .tablet-focus-board{
+  grid-row:1;grid-column:2;
+}
+.tablet-focus-stage.layout-left .tablet-focus-actions,
+.tablet-focus-stage.layout-right .tablet-focus-actions{
+  grid-row:2;grid-column:1/-1;
+}
+.tablet-focus-stage.layout-left .tablet-focus-board .diskant-frame svg,
+.tablet-focus-stage.layout-right .tablet-focus-board .diskant-frame svg{
+  height:min(calc(100dvh - 74px), 94vh)!important;
+  width:auto!important;
+  max-width:none!important;
+  transform:none!important;
+}
+
+/* Während echtem Fokusmodus darf die Seite selbst nicht scrollen. */
+html.tablet-focus-lock,
+html.tablet-focus-lock body{
+  overflow:hidden!important;
+  height:100%!important;
+  overscroll-behavior:none!important;
+}
+
+@media(max-width:699px){
+  .tablet-focus-stage{display:none!important}
+}
+
+
+/* V0.4o – eigene horizontale Balg-Leuchtanimation für unten-quer */
+.horizontal-bellows-flow{
+  display:none;
+  position:absolute;
+  z-index:6;
+  pointer-events:none;
+  overflow:hidden;
+  border-radius:18px;
+  opacity:.48;
+}
+
+/* Im Querlayout liegt der ehemalige linke Balgrahmen nach der 90°-Drehung oben.
+   Das Overlay deckt genau diesen oberen Bereich ab. */
+.workspace.melody-mode.board-bottom .horizontal-bellows-flow,
+.tablet-focus-stage.layout-bottom .horizontal-bellows-flow{
+  display:block;
+  left:3.5%;
+  right:3.5%;
+  top:3%;
+  height:15.5%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 55px,
+      rgba(255,231,179,.16) 70px,
+      rgba(255,231,179,.80) 92px,
+      rgba(255,231,179,.16) 114px,
+      transparent 129px,
+      transparent 165px
+    );
+  background-size:330px 100%;
+}
+
+/* Die im SVG eingebaute Animation wird im Querlayout ausgeblendet,
+   damit nicht gleichzeitig eine vertikale Bewegung sichtbar ist. */
+.workspace.melody-mode.board-bottom #diskantVisual .bellows-flow,
+.tablet-focus-stage.layout-bottom #diskantVisual .bellows-flow{
+  opacity:0!important;
+  animation:none!important;
+}
+
+.horizontal-bellows-flow.left{
+  animation:horizontalBellowsLeft 1.55s linear infinite;
+}
+.horizontal-bellows-flow.right{
+  animation:horizontalBellowsRight 1.55s linear infinite;
+}
+@keyframes horizontalBellowsLeft{
+  from{background-position-x:0}
+  to{background-position-x:-165px}
+}
+@keyframes horizontalBellowsRight{
+  from{background-position-x:-165px}
+  to{background-position-x:0}
+}
+
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4m</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4o</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -733,13 +951,13 @@ html.rhythm-touch-lock #tapButton{
   <circle class="keyFace" r="39.06"/>
   <circle class="keyGloss" cx="-10.94" cy="-11.72" r="7.03"/>
 </g>
-</svg></div></div><div class="hint">Diskanttaste anklicken oder Computertastatur spielen</div>
+</svg><div id="horizontalBellowsFlow" class="horizontal-bellows-flow" aria-hidden="true"></div></div></div><div class="hint">Diskanttaste anklicken oder Computertastatur spielen</div>
 <div class="hint keyboard-hint">Q–P = 1–10 · A–Ä = 11–21 · Y–- = 22–31 · Balgrichtung automatisch</div></section>
 
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4m</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4o</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -763,7 +981,7 @@ html.rhythm-touch-lock #tapButton{
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4m</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4o</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -815,7 +1033,7 @@ html.rhythm-touch-lock #tapButton{
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4m</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4o</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
@@ -1014,7 +1232,20 @@ html.rhythm-touch-lock #tapButton{
   let visualDirectionOverride=null;
   function currentVisualDirection(){return visualDirectionOverride||direction}
   function updateDirectionDisplayElements(dir){dirBtn.innerHTML=dir==='zug'?'← &nbsp; ZIEHEN':'→ &nbsp; STOSSEN';dirBtn.classList.toggle('druck',dir==='druck');taskDirection.textContent=dir==='zug'?'← Ziehen':'→ Stossen'}
-  function updateBellowsFlowDirection(){const flow=document.getElementById('bellowsFlow');if(!flow)return;const dir=currentVisualDirection();const goesLeft=dir==='zug';flow.classList.toggle('left',goesLeft);flow.classList.toggle('right',!goesLeft)}
+  function updateBellowsFlowDirection(){
+    const flow=document.getElementById('bellowsFlow');
+    const horizontal=document.getElementById('horizontalBellowsFlow');
+    const dir=currentVisualDirection();
+    const goesLeft=dir==='zug';
+    if(flow){
+      flow.classList.toggle('left',goesLeft);
+      flow.classList.toggle('right',!goesLeft);
+    }
+    if(horizontal){
+      horizontal.classList.toggle('left',goesLeft);
+      horizontal.classList.toggle('right',!goesLeft);
+    }
+  }
   function applyDirection(){updateDirectionDisplayElements(direction);updateBellowsFlowDirection();updateKeyLabels()}
   function setDirection(dir,fromQuestion=false){direction=dir;applyDirection();if(!fromQuestion&&trainingDirection.value!=='mixed')trainingDirection.value=dir}
   function setVisualDirectionOverride(dir=null){visualDirectionOverride=dir;updateDirectionDisplayElements(currentVisualDirection());updateBellowsFlowDirection()}
@@ -1252,6 +1483,7 @@ html.rhythm-touch-lock #tapButton{
   // --- Modusumschaltung Einzelton / Rhythmus / Melodien ---
   const workspace=document.querySelector('.workspace'),toneTab=document.getElementById('toneTab'),rhythmTab=document.getElementById('rhythmTab'),melodyTab=document.getElementById('melodyTab'),toneMode=document.getElementById('toneMode'),rhythmMode=document.getElementById('rhythmMode'),melodyMode=document.getElementById('melodyMode');
   function setTrainerMode(mode){
+    if(typeof tabletFocusRestore!=='undefined'&&tabletFocusRestore)exitTabletFocus();
     const tone=mode==='tone',rhythm=mode==='rhythm',melody=mode==='melody';
     toneTab.classList.toggle('active',tone);rhythmTab.classList.toggle('active',rhythm);melodyTab.classList.toggle('active',melody);
     toneMode.hidden=!tone;rhythmMode.hidden=!rhythm;melodyMode.hidden=!melody;
@@ -1813,6 +2045,7 @@ html.rhythm-touch-lock #tapButton{
   const melodyMaterialChecks=[melWhole,melHalf,melQuarter,melEighth,melSixteenth,melRests,melDotted,melSync,melTies,melBlkTwo8,melBlkFour16,melBlk8_16_16,melBlk16_16_8,melBlk16_8_16,melBlkDot8_16,melBlk16_Dot8];
   const melodyExerciseLabel=document.getElementById('melodyExerciseLabel'),melodyMeterLabel=document.getElementById('melodyMeterLabel'),melodyNote=document.getElementById('melodyNote'),melodyStatusLine=document.getElementById('melodyStatusLine'),melodyBeatLights=document.getElementById('melodyBeatLights'),melodyFeedback=document.getElementById('melodyFeedback'),melodyResult=document.getElementById('melodyResult'),newMelodyBtn=document.getElementById('newMelody'),startMelodyBtn=document.getElementById('startMelody'),melodyPitchScore=document.getElementById('melodyPitchScore'),melodyTimingScore=document.getElementById('melodyTimingScore'),melodyHoldScore=document.getElementById('melodyHoldScore');
   const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue');
+  const tabletFocusStage=document.getElementById('tabletFocusStage'),tabletFocusExit=document.getElementById('tabletFocusExit'),tabletFocusNotesSlot=document.getElementById('tabletFocusNotesSlot'),tabletFocusBoardSlot=document.getElementById('tabletFocusBoardSlot'),tabletFocusActionsSlot=document.getElementById('tabletFocusActionsSlot');
   let melodyPattern=[],melodyEvents=[],melodyRunning=false,melodyPhase='idle',melodyStartPerf=0,melodyPlayed=[],melodyTimers=[],melodyHeldKeys=new Map();
   const melodyBeats=()=>Number(melodyMeter.value||4),melodyBars=()=>Number(melodyLength.value||2),melodyBeatMs=()=>60000/Number(melodyTempo.value||80),melodyUnitMs=()=>melodyBeatMs()/4,melodyMetroStepsPerBeat=()=>melodyMetroSubdivision.value==='eighth'?2:1,melodyPulseUnits=()=>melodyMetroSubdivision.value==='eighth'?2:4;
   const melodyPresets={
@@ -2176,12 +2409,78 @@ html.rhythm-touch-lock #tapButton{
     }
   });
 
+  let tabletFocusRestore=null;
+
+  function enterTabletFocus(){
+    if(window.innerWidth<700)return false;
+
+    const instrumentCard=document.querySelector('.instrument-card');
+    const actions=document.querySelector('.melody-actions');
+    if(!instrumentCard||!actions)return false;
+
+    tabletFocusRestore={
+      noteParent:melodyNote.parentNode,
+      noteNext:melodyNote.nextSibling,
+      boardParent:instrumentCard.parentNode,
+      boardNext:instrumentCard.nextSibling,
+      actionsParent:actions.parentNode,
+      actionsNext:actions.nextSibling
+    };
+
+    tabletFocusStage.classList.remove('layout-left','layout-right','layout-bottom');
+    tabletFocusStage.classList.add(`layout-${melodyBoardLayout.value||'left'}`);
+
+    tabletFocusNotesSlot.appendChild(melodyNote);
+    tabletFocusBoardSlot.appendChild(instrumentCard);
+    tabletFocusActionsSlot.appendChild(actions);
+
+    tabletFocusStage.hidden=false;
+    tabletFocusStage.classList.add('active');
+    document.documentElement.classList.add('tablet-focus-lock');
+    melodyFocusMode.textContent='Fokusmodus beenden';
+    setTimeout(()=>renderMelody(),50);
+    return true;
+  }
+
+  function exitTabletFocus(){
+    if(!tabletFocusRestore)return;
+
+    const instrumentCard=tabletFocusBoardSlot.querySelector('.instrument-card');
+    const actions=tabletFocusActionsSlot.querySelector('.melody-actions');
+
+    const restore=(node,parent,next)=>{
+      if(!node||!parent)return;
+      if(next&&next.parentNode===parent)parent.insertBefore(node,next);
+      else parent.appendChild(node);
+    };
+
+    restore(melodyNote,tabletFocusRestore.noteParent,tabletFocusRestore.noteNext);
+    restore(instrumentCard,tabletFocusRestore.boardParent,tabletFocusRestore.boardNext);
+    restore(actions,tabletFocusRestore.actionsParent,tabletFocusRestore.actionsNext);
+
+    tabletFocusRestore=null;
+    tabletFocusStage.classList.remove('active','layout-left','layout-right','layout-bottom');
+    tabletFocusStage.hidden=true;
+    document.documentElement.classList.remove('tablet-focus-lock');
+    melodyFocusMode.textContent='Fokusmodus';
+
+    // Gewählte normale Griffbrettposition wieder sauber herstellen.
+    applyMelodyBoardLayout();
+    setTimeout(()=>renderMelody(),60);
+  }
+
   melodyFocusMode.addEventListener('click',()=>{
+    if(tabletFocusRestore){exitTabletFocus();return}
+    if(enterTabletFocus())return;
+
+    // Desktop: bisheriger kompakter Fokusmodus.
     const active=melodyMode.classList.toggle('focus-mode');
     melodyMode.classList.toggle('settings-collapsed',active);
     melodyFocusMode.textContent=active?'Fokusmodus beenden':'Fokusmodus';
     melodyToggleSettings.textContent=active?'Einstellungen ausklappen':'Einstellungen einklappen';
   });
+
+  tabletFocusExit.addEventListener('click',exitTabletFocus);
 
   melodyShowCurrentKey.addEventListener('change',()=>{
     if(!melodyShowCurrentKey.checked)melodyClearCurrentKey();
@@ -2197,4 +2496,12 @@ html.rhythm-touch-lock #tapButton{
   drawBass();applyDirection();updateMaterialControls();updateScore();waitForVerovio();newQuestion();
 })();
 </script>
+
+<div id="tabletFocusStage" class="tablet-focus-stage" hidden>
+  <button id="tabletFocusExit" class="tablet-focus-exit" type="button">Fokus beenden</button>
+  <div id="tabletFocusNotesSlot" class="tablet-focus-notes"></div>
+  <div id="tabletFocusBoardSlot" class="tablet-focus-board"></div>
+  <div id="tabletFocusActionsSlot" class="tablet-focus-actions"></div>
+</div>
+
 </body></html>
