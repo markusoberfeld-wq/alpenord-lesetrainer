@@ -1,13 +1,13 @@
-AlpeNord Lesetrainer V0.4u
+AlpeNord Lesetrainer V0.4v
 
-Basis: V0.4s.
+Basis: V0.4u.
 
-Änderungen in V0.4u:
-- Einzelton-Modus erhält dieselben Griffbrett-Positionen wie Blattlesen: links, rechts, unten quer.
-- Einzelton-Modus erhält den festen Tablet-/iPad-Fokusmodus mit Noten und Griffbrett.
-- 1:1-Griffbrettkalibrierung ist im Einzelton-Modus verfügbar und mit Blattlesen synchron.
-- Rhythmus-Modus nutzt die volle verfügbare Browserbreite; auch die Rhythmusdarstellung rendert auf diese Breite.
-- Blattlesen-Funktionalität aus V0.4s bleibt erhalten.
-- ÖrgeliNavigator ist nicht Bestandteil dieses Pakets und bleibt unverändert.
-
-V0.4u: Initialisierungsfix – Fokusvariablen werden vor dem Start der Einzelton-Layoutlogik angelegt, damit das Hauptscript und Verovio vollständig initialisieren.
+Änderungen in V0.4v:
+- Blattlesen im Fokusmodus: kein 2-Takt-Nachrücken mehr.
+- 2 Takte: vollständig auf einer Zeile sichtbar.
+- 4 Takte: vollständig auf einer Zeile sichtbar.
+- 8 Takte: vollständig auf zwei Zeilen à 4 Takte sichtbar.
+- Bei 8 Takten wird die Notendarstellung automatisch etwas kleiner skaliert.
+- Griffbrett und Fokus-Bedienelemente bleiben wie bisher fix sichtbar.
+- Einzelton-, Rhythmus- und Griffbrett-Funktionen aus V0.4u bleiben unverändert.
+- ÖrgeliNavigator V0.33b bleibt unverändert und ist nicht Bestandteil dieses Pakets.

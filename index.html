@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4u</title>
+<title>AlpeNord Lesetrainer V0.4w</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -707,7 +707,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4s – Fokusmodus: Notenfenster selbstständig, Griffbrett bleibt fix */
+/* V0.4w – Fokusmodus: ganze Blattleseübung bleibt sichtbar, Griffbrett bleibt fix */
 .tablet-focus-notes{
   background:#fffdf8;
   border:1px solid #4a433c;
@@ -759,13 +759,30 @@ html.tablet-focus-lock body{
   grid-template-rows:minmax(0,1fr) 52px!important;
 }
 
+
+
+/* V0.4w – Rhythmus: eigener Übungsmodus über die volle Bildschirmbreite. */
+.rhythm-exercise-stage{position:fixed;inset:0;z-index:10050;background:#15120f;padding:8px;box-sizing:border-box;overflow:hidden}
+.rhythm-exercise-stage.active{display:block!important}
+.rhythm-exercise-content{width:100%;height:100%;display:grid;grid-template-rows:auto minmax(210px,1fr) auto auto auto auto;gap:7px;padding-top:40px;box-sizing:border-box;min-width:0;min-height:0}
+.rhythm-exercise-stage .task-head{margin:0!important}
+.rhythm-exercise-stage #rhythmNote{width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important}
+.rhythm-exercise-stage #rhythmNote svg{width:100%!important;height:auto!important;max-height:100%!important}
+.rhythm-exercise-stage .metro-panel{margin:0!important;padding:6px 9px!important}
+.rhythm-exercise-stage #tapButton{height:64px!important;margin:0!important}
+.rhythm-exercise-stage #rhythmFeedback{min-height:38px!important;margin:0!important;padding:6px 10px!important}
+.rhythm-exercise-stage #timingStrip{margin:0!important;min-height:25px!important}
+.rhythm-exercise-stage .rhythm-actions{margin:0!important}
+.rhythm-exercise-stage .rhythm-actions button{height:46px!important}
+html.rhythm-exercise-lock,html.rhythm-exercise-lock body{overflow:hidden!important;height:100%!important;overscroll-behavior:none!important}
+
 </style>
 <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4s</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4w</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -1029,9 +1046,9 @@ html.tablet-focus-lock body{
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4u</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4w</div></div>
   <div class="tone-view-toolbar">
-    <button id="toneFocusMode" type="button">Fokusmodus</button>
+    <button id="toneFocusMode" type="button">Übungsmodus</button>
     <label>Griffbrett
       <select id="toneBoardLayout">
         <option value="left" selected>links</option>
@@ -1068,7 +1085,10 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4u</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4w</div></div>
+    <div class="tone-view-toolbar rhythm-view-toolbar">
+      <button id="rhythmExerciseMode" type="button">Übungsmodus</button>
+    </div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -1120,10 +1140,10 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4u</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4w</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
-      <button id="melodyFocusMode" type="button">Fokusmodus</button>
+      <button id="melodyFocusMode" type="button">Übungsmodus</button>
       <label title="Während des Spielens leuchtet die aktuell zu spielende Örgeli-Taste.">
         <input id="melodyShowCurrentKey" type="checkbox"> Aktuelle Taste anzeigen
       </label>
@@ -1182,13 +1202,18 @@ html.tablet-focus-lock body{
 </aside>
 </div></main>
 <div id="tabletFocusStage" class="tablet-focus-stage" hidden>
-  <button id="tabletFocusExit" class="tablet-focus-exit" type="button">Fokus beenden</button>
+  <button id="tabletFocusExit" class="tablet-focus-exit" type="button">Übungsmodus beenden</button>
   <div id="tabletFocusScore" class="tablet-focus-notes">Notendarstellung wird vorbereitet …</div>
   <div id="tabletFocusBoardSlot" class="tablet-focus-board"></div>
   <div class="tablet-focus-actions">
     <button id="tabletFocusNew" type="button">Neue Übung</button>
     <button id="tabletFocusStart" class="primary" type="button">▶ Anzählen &amp; starten</button>
   </div>
+</div>
+
+<div id="rhythmExerciseStage" class="rhythm-exercise-stage" hidden>
+  <button id="rhythmExerciseExit" class="tablet-focus-exit" type="button">Übungsmodus beenden</button>
+  <div id="rhythmExerciseContent" class="rhythm-exercise-content"></div>
 </div>
 
 <script>
@@ -1590,6 +1615,7 @@ html.tablet-focus-lock body{
   // --- Modusumschaltung Einzelton / Rhythmus / Melodien ---
   const workspace=document.querySelector('.workspace'),toneTab=document.getElementById('toneTab'),rhythmTab=document.getElementById('rhythmTab'),melodyTab=document.getElementById('melodyTab'),toneMode=document.getElementById('toneMode'),rhythmMode=document.getElementById('rhythmMode'),melodyMode=document.getElementById('melodyMode');
   function setTrainerMode(mode){
+    if(typeof rhythmExerciseRestore!=='undefined'&&rhythmExerciseRestore)exitRhythmExerciseMode();
     if(typeof tabletFocusRestore!=='undefined'&&tabletFocusRestore)exitTabletFocus();
     const tone=mode==='tone',rhythm=mode==='rhythm',melody=mode==='melody';
     toneTab.classList.toggle('active',tone);rhythmTab.classList.toggle('active',rhythm);melodyTab.classList.toggle('active',melody);
@@ -1606,6 +1632,8 @@ html.tablet-focus-lock body{
 
   // --- Rhythmustrainer ---
   const rhythmMeter=document.getElementById('rhythmMeter'),rhythmPreset=document.getElementById('rhythmPreset'),metroMode=document.getElementById('metroMode'),metroSubdivision=document.getElementById('metroSubdivision'),rhythmExerciseLength=document.getElementById('rhythmExerciseLength'),rhythmExerciseLabel=document.getElementById('rhythmExerciseLabel'),tempoRange=document.getElementById('tempoRange'),tempoValue=document.getElementById('tempoValue'),rhythmMeterLabel=document.getElementById('rhythmMeterLabel'),rhythmNote=document.getElementById('rhythmNote'),metroStatus=document.getElementById('metroStatus'),beatLights=document.getElementById('beatLights'),tapButton=document.getElementById('tapButton'),rhythmFeedback=document.getElementById('rhythmFeedback'),timingStrip=document.getElementById('timingStrip'),newRhythmBtn=document.getElementById('newRhythm'),startRhythmBtn=document.getElementById('startRhythm'),rhythmCorrectEl=document.getElementById('rhythmCorrect'),rhythmWrongEl=document.getElementById('rhythmWrong'),rhythmStreakEl=document.getElementById('rhythmStreak');
+  const rhythmExerciseMode=document.getElementById('rhythmExerciseMode'),rhythmExerciseStage=document.getElementById('rhythmExerciseStage'),rhythmExerciseExit=document.getElementById('rhythmExerciseExit'),rhythmExerciseContent=document.getElementById('rhythmExerciseContent');
+  let rhythmExerciseRestore=null;
   const matWhole=document.getElementById('matWhole'),matHalf=document.getElementById('matHalf'),matQuarter=document.getElementById('matQuarter'),matEighth=document.getElementById('matEighth'),matSixteenth=document.getElementById('matSixteenth'),matRests=document.getElementById('matRests'),matDotted=document.getElementById('matDotted'),matSync=document.getElementById('matSync'),matTies=document.getElementById('matTies');
   const blkTwo8=document.getElementById('blkTwo8'),blkFour16=document.getElementById('blkFour16'),blk8_16_16=document.getElementById('blk8_16_16'),blk16_16_8=document.getElementById('blk16_16_8'),blk16_8_16=document.getElementById('blk16_8_16'),blkDot8_16=document.getElementById('blkDot8_16'),blk16_Dot8=document.getElementById('blk16_Dot8');
   const materialChecks=[matWhole,matHalf,matQuarter,matEighth,matSixteenth,matRests,matDotted,matSync,matTies,blkTwo8,blkFour16,blk8_16_16,blk16_16_8,blk16_8_16,blkDot8_16,blk16_Dot8];
@@ -1934,14 +1962,12 @@ html.tablet-focus-lock body{
 
       const noteBoxWidth=Math.max(620,rhythmNote.clientWidth||720);
 
-      // Layout-Regel:
-      // 1 Takt = 1 System, kompakt und zentriert
-      // 2 Takte = 1 Zeile mit 2 Takten
-      // 4 Takte = 2 Zeilen à 2 Takte
-      // 8 Takte = 4 Zeilen à 2 Takte (damit nichts gestaucht wird)
-      let perRow = bars === 1 ? 1 : 2;
+      // Normale Ansicht bleibt kompakt. Im Übungsmodus wird die volle Breite genutzt:
+      // bis 4 Takte eine Zeile, 8 Takte zwei Zeilen à 4 Takte.
+      const inExerciseMode=!!(rhythmExerciseStage&&rhythmExerciseStage.classList.contains('active'));
+      let perRow = inExerciseMode ? (bars<=4?bars:4) : (bars===1?1:2);
       const rows = Math.ceil(bars / perRow);
-      const rowH = bars >= 8 ? 140 : 150;
+      const rowH = inExerciseMode ? 185 : (bars >= 8 ? 140 : 150);
       const height = Math.max(210, rows * rowH + 30);
 
       const renderer=new VF.Renderer(rhythmNote,VF.Renderer.Backends.SVG);
@@ -2152,6 +2178,32 @@ html.tablet-focus-lock body{
   const melBlkTwo8=document.getElementById('melBlkTwo8'),melBlkFour16=document.getElementById('melBlkFour16'),melBlk8_16_16=document.getElementById('melBlk8_16_16'),melBlk16_16_8=document.getElementById('melBlk16_16_8'),melBlk16_8_16=document.getElementById('melBlk16_8_16'),melBlkDot8_16=document.getElementById('melBlkDot8_16'),melBlk16_Dot8=document.getElementById('melBlk16_Dot8');
   const melodyMaterialChecks=[melWhole,melHalf,melQuarter,melEighth,melSixteenth,melRests,melDotted,melSync,melTies,melBlkTwo8,melBlkFour16,melBlk8_16_16,melBlk16_16_8,melBlk16_8_16,melBlkDot8_16,melBlk16_Dot8];
   const melodyExerciseLabel=document.getElementById('melodyExerciseLabel'),melodyMeterLabel=document.getElementById('melodyMeterLabel'),melodyNote=document.getElementById('melodyNote'),melodyStatusLine=document.getElementById('melodyStatusLine'),melodyBeatLights=document.getElementById('melodyBeatLights'),melodyFeedback=document.getElementById('melodyFeedback'),melodyResult=document.getElementById('melodyResult'),newMelodyBtn=document.getElementById('newMelody'),startMelodyBtn=document.getElementById('startMelody'),melodyPitchScore=document.getElementById('melodyPitchScore'),melodyTimingScore=document.getElementById('melodyTimingScore'),melodyHoldScore=document.getElementById('melodyHoldScore');
+  // V0.4w – Rhythmus-Übungsmodus: dieselben Live-Elemente werden in die Vollbildfläche verschoben.
+  function enterRhythmExerciseMode(){
+    if(!rhythmExerciseStage||!rhythmExerciseContent||rhythmExerciseRestore)return false;
+    const nodes=[rhythmMode.querySelector('.task-head'),rhythmNote,rhythmMode.querySelector('.metro-panel'),tapButton,rhythmFeedback,timingStrip,rhythmMode.querySelector('.rhythm-actions')].filter(Boolean);
+    rhythmExerciseRestore=nodes.map(node=>{const placeholder=document.createComment('rhythm-exercise-placeholder');node.parentNode.insertBefore(placeholder,node);return {node,placeholder}});
+    nodes.forEach(node=>rhythmExerciseContent.appendChild(node));
+    rhythmExerciseStage.hidden=false;
+    rhythmExerciseStage.classList.add('active');
+    document.documentElement.classList.add('rhythm-exercise-lock');
+    if(rhythmExerciseMode)rhythmExerciseMode.textContent='Übungsmodus beenden';
+    requestAnimationFrame(()=>renderRhythm());
+    return true;
+  }
+  function exitRhythmExerciseMode(){
+    if(!rhythmExerciseRestore)return;
+    rhythmExerciseRestore.forEach(({node,placeholder})=>{if(placeholder&&placeholder.parentNode)placeholder.replaceWith(node)});
+    rhythmExerciseRestore=null;
+    rhythmExerciseStage.classList.remove('active');
+    rhythmExerciseStage.hidden=true;
+    document.documentElement.classList.remove('rhythm-exercise-lock');
+    if(rhythmExerciseMode)rhythmExerciseMode.textContent='Übungsmodus';
+    requestAnimationFrame(()=>renderRhythm());
+  }
+  if(rhythmExerciseMode)rhythmExerciseMode.addEventListener('click',()=>{if(rhythmExerciseRestore)exitRhythmExerciseMode();else enterRhythmExerciseMode()});
+  if(rhythmExerciseExit)rhythmExerciseExit.addEventListener('click',exitRhythmExerciseMode);
+
   const melodyToggleSettings=document.getElementById('melodyToggleSettings'),melodyFocusMode=document.getElementById('melodyFocusMode'),melodyShowCurrentKey=document.getElementById('melodyShowCurrentKey'),melodyBoardLayout=document.getElementById('melodyBoardLayout'),boardCalibration=document.getElementById('boardCalibration'),boardCalibrationValue=document.getElementById('boardCalibrationValue');
   const tabletFocusStage=document.getElementById('tabletFocusStage'),tabletFocusExit=document.getElementById('tabletFocusExit'),tabletFocusScore=document.getElementById('tabletFocusScore'),tabletFocusBoardSlot=document.getElementById('tabletFocusBoardSlot'),tabletFocusNew=document.getElementById('tabletFocusNew'),tabletFocusStart=document.getElementById('tabletFocusStart');
   let melodyPattern=[],melodyEvents=[],melodyRunning=false,melodyPhase='idle',melodyStartPerf=0,melodyPlayed=[],melodyTimers=[],melodyHeldKeys=new Map();
@@ -2210,7 +2262,7 @@ html.tablet-focus-lock body{
   function melodyChooseTarget(prev){let dir=melodyDirection.value;if(dir==='mixed'){if(prev&&Math.random()<.68)dir=prev.dir;else dir=Math.random()<.5?'zug':'druck'}const alteredProb=melodyMaterial.value==='chromatic'?0:Number(melodyAltered.value||0),wantsAltered=Math.random()<alteredProb;let avail=melodyAvailableTargets(dir,wantsAltered?'altered':'normal');if(!avail.length){avail=melodyAvailableTargets(dir,'normal');if(!avail.length){dir=dir==='zug'?'druck':'zug';avail=melodyAvailableTargets(dir,'normal')}}if(!avail.length)return null;if(prev){const near=avail.filter(x=>Math.abs(x.shown-prev.shown)<=5&&x.shown!==prev.shown);if(near.length&&Math.random()<.82)avail=near}const chosen={...avail[Math.floor(Math.random()*avail.length)]};chosen.preference=melodyPreference(chosen.shown);chosen.isAltered=wantsAltered;return chosen}
   function generateMelody(stopFirst=true){tabletFocusSystem=0;melodyClearCurrentKey();if(stopFirst)stopMelodyRun(true);const rhythm=makeMelodyRhythm();if(!rhythm){melodyPattern=[];melodyEvents=[];melodyNote.textContent='Mit dieser Materialauswahl lässt sich die gewählte Taktart nicht vollständig füllen.';melodySetFeedback('Bitte passende Notenwerte oder Rhythmusbausteine wählen.','wrong');return}melodyPattern=[];melodyEvents=[];let pos=0,prev=null,eventIndex=0,activeTieEvent=null;for(const token of rhythm){const item={...token,startUnit:pos};if(token.type==='note'){if(token.tieStop&&activeTieEvent){Object.assign(item,{key:activeTieEvent.key,dir:activeTieEvent.dir,written:activeTieEvent.written,shown:activeTieEvent.shown,preference:activeTieEvent.preference,isAltered:activeTieEvent.isAltered});activeTieEvent.holdDurUnits=(activeTieEvent.holdDurUnits||activeTieEvent.dur)+token.dur;prev=activeTieEvent;activeTieEvent=null}else{const target=melodyChooseTarget(prev);if(!target){melodyNote.textContent='Für diese Einstellungen sind keine spielbaren Töne verfügbar.';return}Object.assign(item,target,{eventIndex,holdDurUnits:token.dur});if(token.soundOnset!==false){melodyEvents.push(item);eventIndex++}if(token.tieStart)activeTieEvent=item;prev=item}}melodyPattern.push(item);pos+=token.dur}melodyExerciseLabel.textContent=`${melodyBars()} ${melodyBars()===1?'Takt':'Takte'}`;melodyMeterLabel.textContent=`${melodyBeats()}/4`;melodyPitchScore.textContent=melodyTimingScore.textContent=melodyHoldScore.textContent='–';melodyResult.hidden=true;melodySetFeedback('Nach einem vollen Takt Anzähler die Übung auf der Computertastatur spielen.','neutral');melodyStatusLine.textContent='Bereit · Start drücken';melodyBuildBeatLights();renderMelody();melodySyncVisualDirection()}
   function melodyAccidental(pitch){const cfg=melodyKeyConfig();if(melodyMaterial.value==='chromatic')return pitch.alter===1?'sharp':pitch.alter===-1?'flat':'';const expected=keyAlterForStep(cfg.fifths,pitch.step);if(pitch.alter===expected)return'';if(pitch.alter===0)return'natural';return pitch.alter===1?'sharp':'flat'}
-  function melodyXml(startBar=0,barCount=melodyBars()){
+  function melodyXml(startBar=0,barCount=melodyBars(),systemEvery=0){
     const cfg=melodyKeyConfig();
     let measures='',globalIndex=0,prevDir=null;
 
@@ -2303,7 +2355,12 @@ html.tablet-focus-lock body{
         ? `<attributes><divisions>4</divisions><key><fifths>${cfg.fifths}</fifths></key><time><beats>${melodyBeats()}</beats><beat-type>4</beat-type></time><clef><sign>G</sign><line>2</line></clef></attributes>`
         : '';
 
-      measures+=`<measure number="${bar+1}">${attrs}${body}</measure>`;
+      // Im Fokusmodus können wir bei langen Übungen gezielt feste Systemumbrüche setzen.
+      // 8 Takte: Umbruch exakt nach Takt 4. Bei 2/4 Takten kein Umbruch.
+      const systemBreak=(systemEvery>0 && bar>startBar && (bar-startBar)%systemEvery===0)
+        ? '<print new-system="yes"/>'
+        : '';
+      measures+=`<measure number="${bar+1}">${systemBreak}${attrs}${body}</measure>`;
     }
 
     return `<?xml version="1.0" encoding="UTF-8"?><score-partwise version="4.0"><part-list><score-part id="P1"><part-name></part-name></score-part></part-list><part id="P1">${measures}</part></score-partwise>`;
@@ -2324,41 +2381,40 @@ html.tablet-focus-lock body{
     if(!tabletFocusStage.classList.contains('active'))return;
 
     const bars=melodyBars();
-    const systems=Math.max(1,Math.ceil(bars/2));
-    tabletFocusSystem=Math.max(0,Math.min(systems-1,systemIndex));
+    // V0.4w: Im Blattlesen-Fokus bleibt die komplette Aufgabe immer sichtbar.
+    // 2/4 Takte = eine Zeile; 8 Takte = zwei Zeilen à 4 Takte.
+    // Es gibt während des Spielens kein Nachrücken mehr.
+    tabletFocusSystem=0;
 
-    // Nie unnötig eine Lade-Meldung zeigen, wenn bereits Noten existieren.
     if(!vrvReady||!vrvToolkit){
       const cloned=cloneNormalMelodyIntoFocus();
       if(!cloned) tabletFocusScore.textContent='Notendarstellung wird vorbereitet …';
 
       clearTimeout(tabletFocusRenderRetry);
       tabletFocusRenderRetry=setTimeout(()=>{
-        if(tabletFocusStage.classList.contains('active')&&tabletFocusKind==='melody')renderTabletFocusSystem(tabletFocusSystem);
+        if(tabletFocusStage.classList.contains('active')&&tabletFocusKind==='melody')renderTabletFocusSystem(0);
       },180);
       return;
     }
 
     clearTimeout(tabletFocusRenderRetry);
-    const startBar=tabletFocusSystem*2;
-    const count=Math.min(2,bars-startBar);
-
     try{
+      const isEight=bars>=8;
       vrvToolkit.setOptions({
         inputFrom:'musicxml',
-        breaks:'auto',
-        pageWidth:1200,
-        pageHeight:500,
+        breaks:isEight?'encoded':'none',
+        pageWidth:1400,
+        pageHeight:isEight?900:520,
         adjustPageHeight:true,
-        scale:56,
+        scale:isEight?42:(bars>=4?50:58),
         header:'none',
         footer:'none',
-        pageMarginTop:30,
-        pageMarginBottom:20,
-        pageMarginLeft:25,
-        pageMarginRight:25
+        pageMarginTop:isEight?18:28,
+        pageMarginBottom:isEight?12:18,
+        pageMarginLeft:24,
+        pageMarginRight:24
       });
-      tabletFocusScore.innerHTML=vrvToolkit.renderData(melodyXml(startBar,count),{});
+      tabletFocusScore.innerHTML=vrvToolkit.renderData(melodyXml(0,bars,isEight?4:0),{});
     }catch(e){
       console.error(e);
       if(!cloneNormalMelodyIntoFocus())tabletFocusScore.textContent='Noten konnten nicht dargestellt werden';
@@ -2385,15 +2441,6 @@ html.tablet-focus-lock body{
       melodySchedule(()=>{if(main){melodySetBeatLight(beat,true);melodyStatusLine.textContent=`Anzähler · ${beat+1} / ${beats}`}melodyMetroClick(main&&beat===0)},s*stepMs)
     }
     melodySchedule(()=>{melodyPhase='play';melodySetFeedback('Jetzt spielen!','neutral');melodyStatusLine.textContent='Blattlesen läuft';melodySetBeatLight(0,false);melodyGuideAtTime(0);if(tabletFocusStage.classList.contains('active')&&tabletFocusKind==='melody')renderTabletFocusSystem(0)},countinMs);
-
-    // Im Fokusmodus rückt nur das Notenfenster alle zwei Takte weiter.
-    // Griffbrett und Buttons bleiben unverändert an derselben Position.
-    for(let bar=2;bar<bars;bar+=2){
-      const systemIndex=Math.floor(bar/2);
-      melodySchedule(()=>{
-        if(tabletFocusStage.classList.contains('active')&&tabletFocusKind==='melody')renderTabletFocusSystem(systemIndex);
-      },countinMs+bar*bms);
-    }
 
     for(const ev of melodyEvents){
       melodySchedule(()=>{melodySyncVisualDirection(ev.startUnit*melodyUnitMs())},countinMs+ev.startUnit*melodyUnitMs())
@@ -2611,14 +2658,14 @@ html.tablet-focus-lock body{
   }
 
   melodyBoardLayout.addEventListener('change',()=>{applyMelodyBoardLayout();if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,40)});
-  window.addEventListener('resize',()=>{if(!melodyMode.hidden){applyMelodyBoardLayout();setTimeout(()=>renderMelody(),80)}else if(!toneMode.hidden){applyToneBoardLayout()}if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,90)});
+  window.addEventListener('resize',()=>{if(!melodyMode.hidden){applyMelodyBoardLayout();setTimeout(()=>renderMelody(),80)}else if(!toneMode.hidden){applyToneBoardLayout()}else if(!rhythmMode.hidden){setTimeout(()=>renderRhythm(),80)}if(tabletFocusRestore)setTimeout(fitTabletFocusBoard,90)});
   window.addEventListener('orientationchange',()=>setTimeout(()=>{if(!melodyMode.hidden)applyMelodyBoardLayout();else if(!toneMode.hidden)applyToneBoardLayout();if(tabletFocusRestore)fitTabletFocusBoard()},120));
   melodyToggleSettings.addEventListener('click',()=>{
     const collapsed=melodyMode.classList.toggle('settings-collapsed');
     melodyToggleSettings.textContent=collapsed?'Einstellungen ausklappen':'Einstellungen einklappen';
     if(!collapsed&&melodyMode.classList.contains('focus-mode')){
       melodyMode.classList.remove('focus-mode');
-      melodyFocusMode.textContent='Fokusmodus';
+      melodyFocusMode.textContent='Übungsmodus';
     }
   });
 
@@ -2677,12 +2724,12 @@ html.tablet-focus-lock body{
     document.documentElement.classList.add('tablet-focus-lock');
 
     if(kind==='tone'){
-      toneFocusMode.textContent='Fokusmodus beenden';
+      toneFocusMode.textContent='Übungsmodus beenden';
       tabletFocusNew.textContent='Neue Aufgabe';
       tabletFocusStart.textContent='Lösung zeigen';
       cloneToneIntoFocus();
     }else{
-      melodyFocusMode.textContent='Fokusmodus beenden';
+      melodyFocusMode.textContent='Übungsmodus beenden';
       tabletFocusNew.textContent='Neue Übung';
       tabletFocusStart.textContent=startMelodyBtn.textContent;
       tabletFocusSystem=0;
@@ -2713,8 +2760,8 @@ html.tablet-focus-lock body{
     tabletFocusStage.classList.remove('active','layout-left','layout-right','layout-bottom');
     tabletFocusStage.hidden=true;
     document.documentElement.classList.remove('tablet-focus-lock');
-    melodyFocusMode.textContent='Fokusmodus';
-    if(toneFocusMode)toneFocusMode.textContent='Fokusmodus';
+    melodyFocusMode.textContent='Übungsmodus';
+    if(toneFocusMode)toneFocusMode.textContent='Übungsmodus';
 
     if(exitingKind==='tone'){applyToneBoardLayout();setTimeout(()=>renderQuestionNote(),60)}
     else{applyMelodyBoardLayout();setTimeout(()=>renderMelody(),60)}
@@ -2726,7 +2773,7 @@ html.tablet-focus-lock body{
 
     const active=melodyMode.classList.toggle('focus-mode');
     melodyMode.classList.toggle('settings-collapsed',active);
-    melodyFocusMode.textContent=active?'Fokusmodus beenden':'Fokusmodus';
+    melodyFocusMode.textContent=active?'Übungsmodus beenden':'Übungsmodus';
     melodyToggleSettings.textContent=active?'Einstellungen ausklappen':'Einstellungen einklappen';
   });
 
