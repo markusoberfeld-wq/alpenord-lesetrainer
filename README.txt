@@ -1,7 +1,7 @@
-AlpeNord Lesetrainer V0.4q – Fokus Verovio-Initialisierung repariert
-Basis: V0.4p; eingefrorener Referenzstand bleibt V0.4c.
-- Ursache der festhängenden Fokusmeldung behoben: initVerovio rendert nach Start nun auch Blattlesen und Fokus neu.
-- Fokus übernimmt sofort ein bereits vorhandenes normales Noten-SVG als Fallback.
-- Sobald Verovio bereit ist, wird dieses durch den korrekten 2-Takt-Fokusausschnitt ersetzt.
-- Fokus-Renderer prüft während der Initialisierung automatisch erneut, statt dauerhaft auf 'Notendarstellung wird geladen' zu bleiben.
-- 4/8-Takt-Nachrücken bleibt: jeweils 2 Takte, Griffbrett und Buttons fix.
+AlpeNord Lesetrainer V0.4r – DOM/Verovio Initialisierung repariert
+Basis: V0.4q; eingefrorener Referenzstand bleibt V0.4c.
+- Ursache der gesamten hängenden Notendarstellung gefunden: Fokus-DOM lag nach dem Hauptscript.
+- Fokus-DOM wird nun vor dem Hauptscript geladen, sodass alle getElementById-Referenzen beim Start existieren.
+- Zusätzliche Null-Guards verhindern, dass fehlende Fokus-Elemente künftig die gesamte App-Initialisierung abbrechen.
+- Dadurch kann waitForVerovio wieder ausgeführt werden und Einzelton/Blattlesen werden normal gerendert.
+- 2-Takt-Nachrücken im Fokusmodus bleibt unverändert erhalten.

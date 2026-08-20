@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AlpeNord Lesetrainer V0.4q</title>
+<title>AlpeNord Lesetrainer V0.4r</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#151310;color:#f4efe7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -125,7 +125,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #melodyMode .melody-settings-bottom{margin-top:14px}
 #melodyMode .melody-settings-bottom .material-panel{margin-bottom:10px}
 
-/* V0.4q – Blattlesen: Griffbrett-Positionen */
+/* V0.4r – Blattlesen: Griffbrett-Positionen */
 .melody-view-toolbar select{
   margin-left:6px;height:29px;border:1px solid #51483e;border-radius:7px;
   background:#27221e;color:#eee6dc;padding:0 7px;font:inherit;font-size:11px;font-weight:800
@@ -193,7 +193,7 @@ body{min-height:100vh;background:linear-gradient(180deg,#12100e,#191613)}
 #diskantVisual .diskantKeyVisual{touch-action:none;-webkit-tap-highlight-color:transparent}
 
 
-/* V0.4q – Rhythmus auf Touch-Geräten:
+/* V0.4r – Rhythmus auf Touch-Geräten:
    schnelles Tippen darf nicht als Safari-Doppeltipp-Zoom interpretiert werden. */
 #tapButton,
 #rhythmNote,
@@ -225,7 +225,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4q – physische Originalgrösse auf Tablets.
+/* V0.4r – physische Originalgrösse auf Tablets.
    Mittlere Reihe: 18 cm Tastenmitte–Tastenmitte.
    Gesamtabstand Kreuztonreihe ↔ äussere Reihe: 3 cm.
    SVG-Höhe: 1600/1240 * 18 cm = 23.2258 cm. */
@@ -331,7 +331,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4q – Spielansicht: Noten + Griffbrett als direkte Einheit */
+/* V0.4r – Spielansicht: Noten + Griffbrett als direkte Einheit */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-left,
   .workspace.melody-mode.board-right{
@@ -428,7 +428,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4q – Spielansicht: zentrale Aktionen immer erreichbar */
+/* V0.4r – Spielansicht: zentrale Aktionen immer erreichbar */
 @media (pointer:coarse) and (min-width:700px){
   .workspace.melody-mode.board-bottom .melody-actions{
     position:sticky;
@@ -470,7 +470,7 @@ html.rhythm-touch-lock #tapButton{
 }
 
 
-/* V0.4q – echter Tablet-Fokusmodus */
+/* V0.4r – echter Tablet-Fokusmodus */
 .tablet-focus-stage{
   position:fixed;
   inset:0;
@@ -630,7 +630,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4q – eigene horizontale Balg-Leuchtanimation für unten-quer */
+/* V0.4r – eigene horizontale Balg-Leuchtanimation für unten-quer */
 .horizontal-bellows-flow{
   display:none;
   position:absolute;
@@ -688,7 +688,7 @@ html.tablet-focus-lock body{
 }
 
 
-/* V0.4q – Fokusmodus: Notenfenster selbstständig, Griffbrett bleibt fix */
+/* V0.4r – Fokusmodus: Notenfenster selbstständig, Griffbrett bleibt fix */
 .tablet-focus-notes{
   background:#fffdf8;
   border:1px solid #4a433c;
@@ -746,7 +746,7 @@ html.tablet-focus-lock body{
 <script src="griffbrett-core.js"></script>
 </head>
 <body>
-<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4q</strong><div class="topControls">
+<div class="topbar"><strong>AlpeNord Lesetrainer – V0.4r</strong><div class="topControls">
 <label class="topControl">Örgeli-Stimmung <select id="tuningSelect"><option value="-2">B-Örgeli</option><option value="0" selected>C-Örgeli</option><option value="-3">A-Örgeli</option></select></label>
 <label class="topControl">Benennung <select id="displayModeSelect"><option value="written">notiert</option><option value="sounding">klingend</option></select></label>
 <label class="topControl">Bass <select id="bassMode"><option value="18" selected>18 Bass</option><option value="24-bottom">24 Bass – Ges unten</option><option value="24-top">24 Bass – Ges oben</option></select></label>
@@ -1010,7 +1010,7 @@ html.tablet-focus-lock body{
 <aside class="trainer-card">
   <div class="mode-tabs"><button id="toneTab" class="mode-tab active" type="button">Einzelton</button><button id="rhythmTab" class="mode-tab" type="button">Rhythmus</button><button id="melodyTab" class="mode-tab" type="button">Blattlesen</button></div>
   <section id="toneMode" class="mode-panel">
-  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4q</div></div>
+  <div class="trainer-title"><h2>Einzelton-Training</h2><div class="trainer-version">V0.4r</div></div>
   <div class="trainer-controls">
     <div class="trainer-control"><label for="trainingDirection">Balgrichtung</label><select id="trainingDirection"><option value="zug" selected>Ziehen</option><option value="druck">Stossen</option><option value="mixed">gemischt</option></select></div>
     <div class="trainer-control"><label for="noteMaterial">Tonart / Material</label><select id="noteMaterial"><option value="chromatic">Chromatisch / alle Töne</option><option value="F" selected>F-Dur</option><option value="Bb">B-Dur</option><option value="C">C-Dur</option><option value="Eb">Es-Dur</option><option value="Ab">As-Dur</option><option value="G">G-Dur</option><option value="Db">Des-Dur</option><option value="Gm">g-Moll</option><option value="Dm">d-Moll</option><option value="Cm">c-Moll</option><option value="Am">a-Moll</option><option value="Fm">f-Moll</option></select></div>
@@ -1034,7 +1034,7 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="rhythmMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4q</div></div>
+    <div class="trainer-title"><h2>Rhythmus-Training</h2><div class="trainer-version">V0.4r</div></div>
     <div class="rhythm-controls">
       <div class="rhythm-control"><label for="rhythmMeter">Taktart</label><select id="rhythmMeter"><option value="2">2/4</option><option value="3">3/4</option><option value="4" selected>4/4</option></select></div>
       <div class="rhythm-control"><label for="rhythmPreset">Material-Preset</label><select id="rhythmPreset"><option value="veryeasy">sehr einfach</option><option value="easy" selected>einfach</option><option value="medium">mittel</option><option value="advanced">fortgeschritten</option><option value="custom">benutzerdefiniert</option></select></div>
@@ -1086,7 +1086,7 @@ html.tablet-focus-lock body{
   </section>
 
   <section id="melodyMode" class="mode-panel" hidden>
-    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4q</div></div>
+    <div class="trainer-title"><h2>Blattlesen-Training</h2><div class="trainer-version">V0.4r</div></div>
     <div class="melody-view-toolbar">
       <button id="melodyToggleSettings" type="button">Einstellungen einklappen</button>
       <button id="melodyFocusMode" type="button">Fokusmodus</button>
@@ -1147,6 +1147,16 @@ html.tablet-focus-lock body{
   </section>
 </aside>
 </div></main>
+<div id="tabletFocusStage" class="tablet-focus-stage" hidden>
+  <button id="tabletFocusExit" class="tablet-focus-exit" type="button">Fokus beenden</button>
+  <div id="tabletFocusScore" class="tablet-focus-notes">Notendarstellung wird vorbereitet …</div>
+  <div id="tabletFocusBoardSlot" class="tablet-focus-board"></div>
+  <div class="tablet-focus-actions">
+    <button id="tabletFocusNew" type="button">Neue Übung</button>
+    <button id="tabletFocusStart" class="primary" type="button">▶ Anzählen &amp; starten</button>
+  </div>
+</div>
+
 <script>
 (()=>{
   const Core=window.AlpeNordGriffbrett;
@@ -2613,19 +2623,19 @@ html.tablet-focus-lock body{
     melodyToggleSettings.textContent=active?'Einstellungen ausklappen':'Einstellungen einklappen';
   });
 
-  tabletFocusExit.addEventListener('click',exitTabletFocus);
-  tabletFocusNew.addEventListener('click',()=>{
+  if(tabletFocusExit)tabletFocusExit.addEventListener('click',exitTabletFocus);
+  if(tabletFocusNew)tabletFocusNew.addEventListener('click',()=>{
     newMelodyBtn.click();
     tabletFocusSystem=0;
     setTimeout(()=>renderTabletFocusSystem(0),40);
   });
-  tabletFocusStart.addEventListener('click',()=>{
+  if(tabletFocusStart)tabletFocusStart.addEventListener('click',()=>{
     startMelodyBtn.click();
     syncTabletFocusStartButton();
   });
 
   // Start/Stopp-Beschriftung im Fokus immer synchron halten.
-  new MutationObserver(syncTabletFocusStartButton).observe(startMelodyBtn,{childList:true,subtree:true,characterData:true});
+  if(startMelodyBtn)new MutationObserver(syncTabletFocusStartButton).observe(startMelodyBtn,{childList:true,subtree:true,characterData:true});
 
   melodyShowCurrentKey.addEventListener('change',()=>{
     if(!melodyShowCurrentKey.checked)melodyClearCurrentKey();
@@ -2641,15 +2651,5 @@ html.tablet-focus-lock body{
   drawBass();applyDirection();updateMaterialControls();updateScore();waitForVerovio();newQuestion();
 })();
 </script>
-
-<div id="tabletFocusStage" class="tablet-focus-stage" hidden>
-  <button id="tabletFocusExit" class="tablet-focus-exit" type="button">Fokus beenden</button>
-  <div id="tabletFocusScore" class="tablet-focus-notes">Notendarstellung wird vorbereitet …</div>
-  <div id="tabletFocusBoardSlot" class="tablet-focus-board"></div>
-  <div class="tablet-focus-actions">
-    <button id="tabletFocusNew" type="button">Neue Übung</button>
-    <button id="tabletFocusStart" class="primary" type="button">▶ Anzählen &amp; starten</button>
-  </div>
-</div>
 
 </body></html>
